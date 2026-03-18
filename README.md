@@ -32,7 +32,7 @@ Browse the raw `SKILL.md` files at [damilares-skills.vercel.app](https://damilar
 
 ---
 
-### Without v-skills
+### Without skills
 
 - Ask Claude to build a UI and get a purple gradient, Inter font, and the same card layout it always produces
 - Ask it to write Vue 3 code and get Options API syntax copied from an outdated blog post
@@ -40,7 +40,7 @@ Browse the raw `SKILL.md` files at [damilares-skills.vercel.app](https://damilar
 - Ask it to animate something and get a `transition: all 0.3s ease` applied to everything
 - Ask it to audit your accessibility and get a quick scan for alt tags instead of a real WCAG 2.2 review
 
-### With v-skills
+### With skills
 
 | Skill | Mode | What it does |
 |---|---|---|
