@@ -10,16 +10,30 @@ export function GET() {
         style: {
           width: '1200px',
           height: '630px',
-          background: '#0d0d0b',
+          background: '#ffffff',
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'space-between',
-          padding: '80px 96px',
+          padding: '72px 80px',
           fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
           position: 'relative',
         },
         children: [
-          // top row: wordmark + count
+          // Top border line
+          {
+            type: 'div',
+            props: {
+              style: {
+                position: 'absolute',
+                top: '0',
+                left: '0',
+                right: '0',
+                height: '2px',
+                background: '#111110',
+              },
+            },
+          },
+
+          // Top row
           {
             type: 'div',
             props: {
@@ -27,46 +41,68 @@ export function GET() {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'flex-start',
+                marginBottom: 'auto',
               },
               children: [
+                // Wordmark
                 {
                   type: 'div',
                   props: {
                     style: {
                       fontFamily: '"Courier New", Courier, monospace',
-                      fontSize: '14px',
-                      letterSpacing: '0.1em',
-                      color: '#666660',
+                      fontSize: '13px',
+                      letterSpacing: '0.06em',
+                      color: '#a8a8a5',
                       textTransform: 'lowercase',
+                      fontWeight: '400',
                     },
                     children: 'damilares-skills',
                   },
                 },
+                // Stats row
                 {
                   type: 'div',
                   props: {
                     style: {
                       display: 'flex',
-                      gap: '32px',
+                      gap: '48px',
+                      alignItems: 'flex-start',
                     },
                     children: [
                       {
                         type: 'div',
                         props: {
-                          style: { display: 'flex', flexDirection: 'column', alignItems: 'flex-end' },
+                          style: {
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'flex-end',
+                            gap: '3px',
+                          },
                           children: [
                             {
                               type: 'div',
                               props: {
-                                style: { fontSize: '28px', fontWeight: '500', color: '#e8e4de', letterSpacing: '-0.03em', lineHeight: '1' },
+                                style: {
+                                  fontSize: '32px',
+                                  fontWeight: '500',
+                                  color: '#111110',
+                                  letterSpacing: '-0.04em',
+                                  lineHeight: '1',
+                                },
                                 children: '57',
                               },
                             },
                             {
                               type: 'div',
                               props: {
-                                style: { fontFamily: '"Courier New", Courier, monospace', fontSize: '10px', color: '#444440', letterSpacing: '0.08em', marginTop: '4px' },
-                                children: 'SKILLS',
+                                style: {
+                                  fontFamily: '"Courier New", Courier, monospace',
+                                  fontSize: '10px',
+                                  color: '#a8a8a5',
+                                  letterSpacing: '0.1em',
+                                  textTransform: 'uppercase',
+                                },
+                                children: 'skills',
                               },
                             },
                           ],
@@ -75,20 +111,37 @@ export function GET() {
                       {
                         type: 'div',
                         props: {
-                          style: { display: 'flex', flexDirection: 'column', alignItems: 'flex-end' },
+                          style: {
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'flex-end',
+                            gap: '3px',
+                          },
                           children: [
                             {
                               type: 'div',
                               props: {
-                                style: { fontSize: '28px', fontWeight: '500', color: '#e8e4de', letterSpacing: '-0.03em', lineHeight: '1' },
+                                style: {
+                                  fontSize: '32px',
+                                  fontWeight: '500',
+                                  color: '#111110',
+                                  letterSpacing: '-0.04em',
+                                  lineHeight: '1',
+                                },
                                 children: '8',
                               },
                             },
                             {
                               type: 'div',
                               props: {
-                                style: { fontFamily: '"Courier New", Courier, monospace', fontSize: '10px', color: '#444440', letterSpacing: '0.08em', marginTop: '4px' },
-                                children: 'CATEGORIES',
+                                style: {
+                                  fontFamily: '"Courier New", Courier, monospace',
+                                  fontSize: '10px',
+                                  color: '#a8a8a5',
+                                  letterSpacing: '0.1em',
+                                  textTransform: 'uppercase',
+                                },
+                                children: 'categories',
                               },
                             },
                           ],
@@ -101,27 +154,28 @@ export function GET() {
             },
           },
 
-          // center: the big title
+          // Center: headline block
           {
             type: 'div',
             props: {
               style: {
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '16px',
+                gap: '20px',
+                marginTop: '80px',
               },
               children: [
                 {
                   type: 'div',
                   props: {
                     style: {
-                      fontSize: '100px',
+                      fontSize: '108px',
                       fontWeight: '500',
-                      letterSpacing: '-0.045em',
-                      color: '#f0ece4',
-                      lineHeight: '0.95',
+                      letterSpacing: '-0.05em',
+                      color: '#111110',
+                      lineHeight: '0.9',
                     },
-                    children: 'The Arsenal',
+                    children: 'Expert Modes',
                   },
                 },
                 {
@@ -130,18 +184,18 @@ export function GET() {
                     style: {
                       fontSize: '20px',
                       fontWeight: '400',
-                      color: '#5a5a56',
+                      color: '#787874',
                       letterSpacing: '-0.01em',
-                      lineHeight: '1.5',
+                      lineHeight: '1.45',
                     },
-                    children: 'Curated AI coding skills — design, Vue, animation,\nengineering, accessibility, and more.',
+                    children: 'Curated AI coding skills — design, Vue, animation, engineering,\naccessibility, and more. For Claude Code and every intelligent harness.',
                   },
                 },
               ],
             },
           },
 
-          // bottom: url + platform tags
+          // Bottom row
           {
             type: 'div',
             props: {
@@ -149,6 +203,9 @@ export function GET() {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'flex-end',
+                marginTop: 'auto',
+                paddingTop: '48px',
+                borderTop: '1px solid #e2e2e0',
               },
               children: [
                 {
@@ -156,8 +213,8 @@ export function GET() {
                   props: {
                     style: {
                       fontFamily: '"Courier New", Courier, monospace',
-                      fontSize: '13px',
-                      color: '#444440',
+                      fontSize: '12px',
+                      color: '#a8a8a5',
                       letterSpacing: '0.04em',
                     },
                     children: 'damilares-skills.vercel.app',
@@ -168,17 +225,17 @@ export function GET() {
                   props: {
                     style: {
                       display: 'flex',
-                      gap: '8px',
+                      gap: '6px',
                     },
                     children: ['Claude Code', 'Codex', 'Cursor', 'Copilot'].map(p => ({
                       type: 'div',
                       props: {
                         style: {
                           padding: '5px 12px',
-                          border: '1px solid #282826',
+                          border: '1px solid #e2e2e0',
                           fontFamily: '"Courier New", Courier, monospace',
                           fontSize: '11px',
-                          color: '#484844',
+                          color: '#a8a8a5',
                           letterSpacing: '0.04em',
                         },
                         children: p,
