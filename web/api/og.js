@@ -10,30 +10,28 @@ export function GET() {
         style: {
           width: '1200px',
           height: '630px',
-          background: '#ffffff',
+          background: '#0c0c0a',
           display: 'flex',
           flexDirection: 'column',
-          padding: '72px 80px',
+          padding: '64px 80px',
           fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif',
           position: 'relative',
         },
         children: [
-          // Top border line
+          // Top rule
           {
             type: 'div',
             props: {
               style: {
                 position: 'absolute',
-                top: '0',
-                left: '0',
-                right: '0',
+                top: '0', left: '0', right: '0',
                 height: '2px',
-                background: '#111110',
+                background: '#dedad2',
               },
             },
           },
 
-          // Top row
+          // Top row: wordmark + stats
           {
             type: 'div',
             props: {
@@ -41,7 +39,6 @@ export function GET() {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'flex-start',
-                marginBottom: 'auto',
               },
               children: [
                 // Wordmark
@@ -49,59 +46,67 @@ export function GET() {
                   type: 'div',
                   props: {
                     style: {
-                      fontFamily: '"Courier New", Courier, monospace',
-                      fontSize: '13px',
-                      letterSpacing: '0.06em',
-                      color: '#a8a8a5',
-                      textTransform: 'lowercase',
-                      fontWeight: '400',
-                    },
-                    children: 'damilares-skills',
-                  },
-                },
-                // Stats row
-                {
-                  type: 'div',
-                  props: {
-                    style: {
                       display: 'flex',
-                      gap: '48px',
-                      alignItems: 'flex-start',
+                      alignItems: 'center',
+                      gap: '12px',
                     },
                     children: [
                       {
                         type: 'div',
                         props: {
                           style: {
+                            width: '32px', height: '32px',
+                            border: '1px solid #383835',
                             display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'flex-end',
-                            gap: '3px',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            fontFamily: '"Courier New", monospace',
+                            fontSize: '14px',
+                            color: '#7a7a75',
                           },
+                          children: 'v',
+                        },
+                      },
+                      {
+                        type: 'div',
+                        props: {
+                          style: {
+                            fontFamily: '"Courier New", monospace',
+                            fontSize: '13px',
+                            letterSpacing: '0.05em',
+                            color: '#565652',
+                          },
+                          children: 'damilares-skills',
+                        },
+                      },
+                    ],
+                  },
+                },
+                // Stats
+                {
+                  type: 'div',
+                  props: {
+                    style: {
+                      display: 'flex',
+                      gap: '48px',
+                    },
+                    children: [
+                      {
+                        type: 'div',
+                        props: {
+                          style: { display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' },
                           children: [
                             {
                               type: 'div',
                               props: {
-                                style: {
-                                  fontSize: '32px',
-                                  fontWeight: '500',
-                                  color: '#111110',
-                                  letterSpacing: '-0.04em',
-                                  lineHeight: '1',
-                                },
+                                style: { fontSize: '36px', fontWeight: '500', color: '#f0ece4', letterSpacing: '-0.04em', lineHeight: '1' },
                                 children: '57',
                               },
                             },
                             {
                               type: 'div',
                               props: {
-                                style: {
-                                  fontFamily: '"Courier New", Courier, monospace',
-                                  fontSize: '10px',
-                                  color: '#a8a8a5',
-                                  letterSpacing: '0.1em',
-                                  textTransform: 'uppercase',
-                                },
+                                style: { fontFamily: '"Courier New", monospace', fontSize: '10px', color: '#565652', letterSpacing: '0.1em', textTransform: 'uppercase' },
                                 children: 'skills',
                               },
                             },
@@ -111,36 +116,19 @@ export function GET() {
                       {
                         type: 'div',
                         props: {
-                          style: {
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'flex-end',
-                            gap: '3px',
-                          },
+                          style: { display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '4px' },
                           children: [
                             {
                               type: 'div',
                               props: {
-                                style: {
-                                  fontSize: '32px',
-                                  fontWeight: '500',
-                                  color: '#111110',
-                                  letterSpacing: '-0.04em',
-                                  lineHeight: '1',
-                                },
+                                style: { fontSize: '36px', fontWeight: '500', color: '#f0ece4', letterSpacing: '-0.04em', lineHeight: '1' },
                                 children: '8',
                               },
                             },
                             {
                               type: 'div',
                               props: {
-                                style: {
-                                  fontFamily: '"Courier New", Courier, monospace',
-                                  fontSize: '10px',
-                                  color: '#a8a8a5',
-                                  letterSpacing: '0.1em',
-                                  textTransform: 'uppercase',
-                                },
+                                style: { fontFamily: '"Courier New", monospace', fontSize: '10px', color: '#565652', letterSpacing: '0.1em', textTransform: 'uppercase' },
                                 children: 'categories',
                               },
                             },
@@ -154,26 +142,28 @@ export function GET() {
             },
           },
 
-          // Center: headline block
+          // Hero headline
           {
             type: 'div',
             props: {
               style: {
+                marginTop: '72px',
                 display: 'flex',
                 flexDirection: 'column',
-                gap: '20px',
-                marginTop: '80px',
+                gap: '18px',
               },
               children: [
                 {
                   type: 'div',
                   props: {
                     style: {
-                      fontSize: '108px',
-                      fontWeight: '500',
-                      letterSpacing: '-0.05em',
-                      color: '#111110',
-                      lineHeight: '0.9',
+                      fontSize: '120px',
+                      fontWeight: '400',
+                      fontStyle: 'italic',
+                      letterSpacing: '-0.035em',
+                      color: '#f0ece4',
+                      lineHeight: '0.88',
+                      fontFamily: 'Georgia, serif',
                     },
                     children: 'Expert Modes',
                   },
@@ -184,18 +174,18 @@ export function GET() {
                     style: {
                       fontSize: '20px',
                       fontWeight: '400',
-                      color: '#787874',
+                      color: '#7a7a75',
                       letterSpacing: '-0.01em',
-                      lineHeight: '1.45',
+                      lineHeight: '1.5',
                     },
-                    children: 'Curated AI coding skills — design, Vue, animation, engineering,\naccessibility, and more. For Claude Code and every intelligent harness.',
+                    children: 'Turn your AI coding assistant into a specialist.\nWorks across Claude Code, Codex, Cursor, and Copilot.',
                   },
                 },
               ],
             },
           },
 
-          // Bottom row
+          // Bottom bar
           {
             type: 'div',
             props: {
@@ -204,17 +194,17 @@ export function GET() {
                 justifyContent: 'space-between',
                 alignItems: 'flex-end',
                 marginTop: 'auto',
-                paddingTop: '48px',
-                borderTop: '1px solid #e2e2e0',
+                paddingTop: '40px',
+                borderTop: '1px solid #1f1f1d',
               },
               children: [
                 {
                   type: 'div',
                   props: {
                     style: {
-                      fontFamily: '"Courier New", Courier, monospace',
-                      fontSize: '12px',
-                      color: '#a8a8a5',
+                      fontFamily: '"Courier New", monospace',
+                      fontSize: '13px',
+                      color: '#383835',
                       letterSpacing: '0.04em',
                     },
                     children: 'damilares-skills.vercel.app',
@@ -223,19 +213,16 @@ export function GET() {
                 {
                   type: 'div',
                   props: {
-                    style: {
-                      display: 'flex',
-                      gap: '6px',
-                    },
+                    style: { display: 'flex', gap: '6px' },
                     children: ['Claude Code', 'Codex', 'Cursor', 'Copilot'].map(p => ({
                       type: 'div',
                       props: {
                         style: {
                           padding: '5px 12px',
-                          border: '1px solid #e2e2e0',
-                          fontFamily: '"Courier New", Courier, monospace',
+                          border: '1px solid #1f1f1d',
+                          fontFamily: '"Courier New", monospace',
                           fontSize: '11px',
-                          color: '#a8a8a5',
+                          color: '#383835',
                           letterSpacing: '0.04em',
                         },
                         children: p,

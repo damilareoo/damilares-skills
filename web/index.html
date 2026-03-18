@@ -3,628 +3,621 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>damilares-skills — AI coding skills by Damilare</title>
-  <meta name="description" content="57 curated AI coding skills for Claude Code, Codex, and every intelligent harness.">
+  <title>damilares-skills — Expert Modes for AI coding</title>
+  <meta name="description" content="57 curated skills that turn Claude Code into a specialist. Design, Vue, engineering, and more.">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <meta property="og:title" content="damilares-skills — AI coding skills by Damilare">
-  <meta property="og:description" content="57 curated skills. Works across Claude Code, Codex, and every intelligent harness.">
+  <meta property="og:title" content="damilares-skills — Expert Modes">
+  <meta property="og:description" content="57 curated skills that turn Claude Code into a specialist. Works across Claude Code, Codex, Cursor, and Copilot.">
   <meta property="og:url" content="https://damilares-skills.vercel.app">
   <meta property="og:image" content="https://damilares-skills.vercel.app/api/og">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="damilares-skills — AI coding skills by Damilare">
-  <meta name="twitter:description" content="57 curated skills. Works across Claude Code, Codex, and every intelligent harness.">
+  <meta name="twitter:title" content="damilares-skills — Expert Modes">
+  <meta name="twitter:description" content="57 curated skills. Works across Claude Code, Codex, Cursor, and Copilot.">
   <meta name="twitter:image" content="https://damilares-skills.vercel.app/api/og">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@1&display=swap" rel="stylesheet">
   <style>
+    /* ── Reset ─────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    button { background: none; border: none; cursor: pointer; font-family: inherit; }
+    a { text-decoration: none; color: inherit; }
 
+    /* ── Variables ──────────────────────────────────────── */
     :root {
-      --white:  #ffffff;
-      --paper:  #f8f8f6;
-      --rule:   #e2e2e0;
-      --mid:    #a8a8a5;
-      --soft:   #787874;
-      --text:   #111110;
-      --sans:   'Suisse Int\'l', 'Neue Helvetica', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      --mono:   'Suisse Mono', 'SF Mono', 'Fira Mono', 'Consolas', monospace;
+      --bg:      #0c0c0a;
+      --surface: #121210;
+      --hover:   #161614;
+      --rule:    #1f1f1d;
+      --muted:   #383835;
+      --dim:     #565652;
+      --mid:     #7a7a75;
+      --soft:    #9e9e98;
+      --text:    #dedad2;
+      --bright:  #f0ece4;
+      --white:   #ffffff;
+      --sans:    'Suisse Int\'l','Neue Helvetica','Helvetica Neue',Helvetica,Arial,sans-serif;
+      --mono:    'Suisse Mono','Fira Code','SF Mono','Consolas',monospace;
+      --serif:   'DM Serif Display',Georgia,serif;
+      --ticker-h: 32px;
+      --panel-w:  304px;
     }
 
+    /* ── Base ───────────────────────────────────────────── */
     html, body {
       width: 100%; height: 100%;
       overflow: hidden;
-      background: var(--white);
+      background: var(--bg);
       color: var(--text);
       font-family: var(--sans);
       -webkit-font-smoothing: antialiased;
-      font-size: 13px;
     }
 
-    /* ─── TOP RULE ─────────────────────────────────────────── */
+    /* ── Grain texture ──────────────────────────────────── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      z-index: 9999; pointer-events: none;
+      opacity: 0.045;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+    }
+
+    /* ── Top border ─────────────────────────────────────── */
     body::before {
       content: '';
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 1px;
-      background: var(--text);
-      z-index: 10;
+      position: fixed; top: 0; left: 0; right: 0;
+      height: 1px; background: var(--text); z-index: 200;
     }
 
-    /* ─── SHELL ────────────────────────────────────────────── */
+    /* ── Ticker ─────────────────────────────────────────── */
+    .ticker {
+      position: fixed; top: 1px; left: 0; right: 0;
+      height: var(--ticker-h);
+      background: var(--bg);
+      border-bottom: 1px solid var(--rule);
+      overflow: hidden; z-index: 100;
+      display: flex; align-items: center;
+    }
+    .ticker-track {
+      display: flex; white-space: nowrap;
+      animation: ticker-scroll 90s linear infinite;
+    }
+    .ticker-track:hover { animation-play-state: paused; }
+    .ticker-cmd {
+      font-family: var(--mono); font-size: 10px;
+      color: var(--muted); letter-spacing: 0.03em;
+      padding: 0 14px;
+    }
+    .ticker-dot {
+      color: var(--rule); font-size: 10px;
+      flex-shrink: 0;
+    }
+    @keyframes ticker-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── Shell ──────────────────────────────────────────── */
     .shell {
-      display: grid;
-      grid-template-columns: 280px 1fr 280px;
-      width: 100vw;
-      height: 100vh;
+      display: flex;
+      height: 100%;
+      padding-top: calc(1px + var(--ticker-h));
     }
 
-    /* ─── LEFT ─────────────────────────────────────────────── */
+    /* ── Left panel ─────────────────────────────────────── */
     .left {
+      width: var(--panel-w);
+      min-width: var(--panel-w);
+      height: 100%;
+      border-right: 1px solid var(--rule);
       display: flex;
       flex-direction: column;
-      border-right: 1px solid var(--rule);
-      padding: 48px 36px 40px;
       overflow: hidden;
     }
 
-    .site-id {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.08em;
-      color: var(--mid);
-      text-transform: lowercase;
-      margin-bottom: 48px;
-      opacity: 0;
-      animation: rise 0.5s ease forwards 0.05s;
-    }
-
-    .headline {
-      font-size: 52px;
-      font-weight: 500;
-      line-height: 1.0;
-      letter-spacing: -0.04em;
-      margin-bottom: 24px;
-      opacity: 0;
-      animation: rise 0.5s ease forwards 0.1s;
-    }
-
-    .sub {
-      font-size: 12.5px;
-      font-weight: 400;
-      line-height: 1.7;
-      color: var(--soft);
-      margin-bottom: 40px;
-      opacity: 0;
-      animation: rise 0.5s ease forwards 0.15s;
-    }
-
-    .counts {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      border-top: 1px solid var(--rule);
-      border-left: 1px solid var(--rule);
-      margin-bottom: 40px;
-      opacity: 0;
-      animation: rise 0.5s ease forwards 0.2s;
-    }
-
-    .count-cell {
-      padding: 16px 20px;
+    /* Left — header */
+    .left-header {
+      padding: 18px 22px;
       border-bottom: 1px solid var(--rule);
-      border-right: 1px solid var(--rule);
+      display: flex; align-items: center; gap: 10px;
+      flex-shrink: 0;
+    }
+    .brand-mark {
+      width: 26px; height: 26px;
+      border: 1px solid var(--muted);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--mono); font-size: 11px;
+      color: var(--mid); flex-shrink: 0;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .brand-mark:hover { border-color: var(--soft); color: var(--text); }
+    .brand-name {
+      font-family: var(--mono); font-size: 10px;
+      color: var(--dim); letter-spacing: 0.05em;
     }
 
-    .count-n {
-      font-size: 28px;
-      font-weight: 500;
-      letter-spacing: -0.04em;
-      line-height: 1;
-      margin-bottom: 3px;
+    /* Left — hero */
+    .left-hero {
+      padding: 24px 22px 20px;
+      border-bottom: 1px solid var(--rule);
+      flex-shrink: 0;
     }
-
-    .count-l {
-      font-family: var(--mono);
-      font-size: 9.5px;
-      letter-spacing: 0.06em;
-      color: var(--mid);
-      text-transform: uppercase;
+    .hero-title {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 58px;
+      line-height: 0.9;
+      letter-spacing: -0.015em;
+      color: var(--bright);
+      margin-bottom: 18px;
     }
-
-    .works-with-label {
-      font-family: var(--mono);
-      font-size: 9.5px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--mid);
+    .hero-stats {
+      display: flex; align-items: baseline; gap: 6px;
       margin-bottom: 12px;
     }
-
-    .platforms {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 0;
-      opacity: 0;
-      animation: rise 0.5s ease forwards 0.25s;
+    .hero-num {
+      font-size: 26px; font-weight: 500;
+      color: var(--bright); letter-spacing: -0.04em; line-height: 1;
+    }
+    .hero-unit {
+      font-family: var(--mono); font-size: 9px;
+      color: var(--dim); letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .hero-sub {
+      font-size: 11.5px; color: var(--mid); line-height: 1.65;
     }
 
-    .platform {
-      font-size: 12.5px;
-      color: var(--soft);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .platform::before {
-      content: '';
-      width: 4px; height: 1px;
-      background: var(--mid);
-      flex-shrink: 0;
-    }
-
-    .platform.primary {
-      color: var(--text);
-      font-weight: 500;
-    }
-
-    .platform.primary::before {
-      background: var(--text);
-      width: 12px;
-    }
-
-    .left-foot {
-      margin-top: auto;
-      opacity: 0;
-      animation: rise 0.5s ease forwards 0.3s;
-    }
-
-    .left-foot a {
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--mid);
-      text-decoration: none;
-      letter-spacing: 0.03em;
-    }
-
-    .left-foot a:hover { color: var(--text); }
-
-    /* ─── CENTER ───────────────────────────────────────────── */
-    .center {
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      border-right: 1px solid var(--rule);
-    }
-
-    .tabs {
-      display: flex;
+    /* Left — categories */
+    .left-cats {
       border-bottom: 1px solid var(--rule);
-      overflow-x: auto;
+      overflow-y: auto; flex-shrink: 0;
       scrollbar-width: none;
-      flex-shrink: 0;
-      opacity: 0;
-      animation: drop 0.4s ease forwards 0.1s;
     }
-
-    .tabs::-webkit-scrollbar { display: none; }
-
-    .tab {
-      padding: 15px 18px 13px;
-      border: none;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
-      background: transparent;
-      font-family: var(--sans);
-      font-size: 12px;
-      font-weight: 400;
-      color: var(--mid);
+    .left-cats::-webkit-scrollbar { display: none; }
+    .cat-row {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 8px 22px;
       cursor: pointer;
-      white-space: nowrap;
-      letter-spacing: -0.01em;
-      transition: color 0.1s;
-      outline: none;
-    }
-
-    .tab:hover { color: var(--text); }
-
-    .tab.on {
-      color: var(--text);
-      font-weight: 500;
-      border-bottom-color: var(--text);
-    }
-
-    .tab sup {
-      font-family: var(--mono);
-      font-size: 8.5px;
-      margin-left: 3px;
-      color: var(--rule);
-      vertical-align: top;
-      line-height: 2;
-    }
-
-    .tab.on sup { color: var(--mid); }
-
-    /* ─── GRID ─────────────────────────────────────────────── */
-    .scroll {
-      flex: 1;
-      overflow-y: auto;
-      padding: 28px 32px;
-      scrollbar-width: thin;
-      scrollbar-color: var(--rule) transparent;
-    }
-
-    .scroll::-webkit-scrollbar { width: 3px; }
-    .scroll::-webkit-scrollbar-thumb { background: var(--rule); }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1px;
-      background: var(--rule);
-      outline: 1px solid var(--rule);
-    }
-
-    .card {
-      background: var(--white);
-      padding: 18px 20px;
-      text-decoration: none;
-      color: inherit;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
       transition: background 0.1s;
-      opacity: 0;
-      animation: appear 0.35s ease forwards;
     }
-
-    .card:hover { background: var(--paper); }
-
-    .card-name {
-      font-family: var(--mono);
-      font-size: 11.5px;
-      font-weight: 400;
-      color: var(--text);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    .cat-row:hover { background: var(--hover); }
+    .cat-row.active { background: var(--hover); }
+    .cat-left { display: flex; align-items: center; gap: 10px; }
+    .cat-dot {
+      width: 5px; height: 5px;
+      border: 1px solid var(--muted);
+      border-radius: 50%; flex-shrink: 0;
+      transition: background 0.15s, border-color 0.15s;
     }
-
-    .card-desc {
-      font-size: 11.5px;
-      color: var(--soft);
-      line-height: 1.5;
+    .cat-row.active .cat-dot { background: var(--text); border-color: var(--text); }
+    .cat-name {
+      font-size: 12px; color: var(--mid);
+      transition: color 0.12s;
     }
-
-    /* ─── RIGHT ────────────────────────────────────────────── */
-    .right {
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
+    .cat-row:hover .cat-name,
+    .cat-row.active .cat-name { color: var(--text); }
+    .cat-num {
+      font-family: var(--mono); font-size: 10px;
+      color: var(--muted);
     }
+    .cat-row.active .cat-num { color: var(--dim); }
 
-    .right-head {
-      padding: 26px 32px 22px;
-      border-bottom: 1px solid var(--rule);
+    /* Left — install */
+    .left-install {
+      margin-top: auto;
+      padding: 18px 22px;
+      border-top: 1px solid var(--rule);
       flex-shrink: 0;
-      opacity: 0;
-      animation: drop 0.4s ease forwards 0.15s;
     }
-
-    .right-head-title {
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: -0.02em;
-      margin-bottom: 3px;
+    .install-heading {
+      font-family: var(--mono); font-size: 9px;
+      color: var(--dim); letter-spacing: 0.1em;
+      text-transform: uppercase; margin-bottom: 10px;
     }
-
-    .right-head-sub {
-      font-family: var(--mono);
-      font-size: 10px;
-      color: var(--mid);
-      letter-spacing: 0.03em;
-    }
-
-    .right-body {
-      flex: 1;
-      overflow-y: auto;
-      padding: 28px 32px;
-      scrollbar-width: thin;
-      scrollbar-color: var(--rule) transparent;
-      opacity: 0;
-      animation: rise 0.5s ease forwards 0.2s;
-    }
-
-    .right-body::-webkit-scrollbar { width: 3px; }
-    .right-body::-webkit-scrollbar-thumb { background: var(--rule); }
-
-    .install-block {
-      margin-bottom: 28px;
-    }
-
-    .install-platform {
-      font-family: var(--mono);
-      font-size: 9.5px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--mid);
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .install-platform::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: var(--rule);
-    }
-
-    .install-step + .install-step { margin-top: 8px; }
-
-    .step-lbl {
-      font-size: 11px;
-      color: var(--mid);
-      margin-bottom: 5px;
-    }
-
-    .code {
-      background: var(--paper);
-      border: 1px solid var(--rule);
-      padding: 10px 14px;
-      font-family: var(--mono);
-      font-size: 10.5px;
-      color: var(--text);
-      line-height: 1.65;
+    .prompt-block {
+      border: 1px solid var(--muted);
       cursor: pointer;
-      position: relative;
-      transition: background 0.1s, border-color 0.1s, color 0.1s;
-      user-select: all;
+      transition: border-color 0.12s;
     }
-
-    .code::after {
-      content: '';
-      position: absolute;
-      right: 12px; top: 50%;
-      transform: translateY(-50%);
-      font-size: 9px;
-      color: var(--mid);
-      letter-spacing: 0.04em;
-      font-family: var(--mono);
-      transition: opacity 0.1s;
-      opacity: 0;
-    }
-
-    .code:hover {
-      background: var(--text);
-      color: var(--white);
-      border-color: var(--text);
-    }
-
-    .code:hover::after { content: 'copy'; opacity: 0.5; color: var(--mid); }
-    .code.ok { background: var(--text); color: var(--white); border-color: var(--text); }
-    .code.ok::after { content: 'copied'; opacity: 1; color: var(--mid); }
-
-    .hr { height: 1px; background: var(--rule); margin: 22px 0; }
-
-    .note {
-      font-size: 12px;
-      color: var(--soft);
-      line-height: 1.75;
-    }
-
-    .note strong { color: var(--text); font-weight: 500; }
-
-    .gh-link {
-      display: inline-block;
-      margin-top: 10px;
-      font-family: var(--mono);
-      font-size: 10.5px;
-      color: var(--text);
-      text-decoration: none;
+    .prompt-block:hover { border-color: var(--soft); }
+    .prompt-topbar {
+      padding: 7px 10px;
       border-bottom: 1px solid var(--rule);
-      padding-bottom: 1px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .prompt-tag {
+      font-family: var(--mono); font-size: 9px;
+      color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase;
+    }
+    .copy-btn {
+      font-family: var(--mono); font-size: 9px;
+      color: var(--dim); letter-spacing: 0.06em; text-transform: uppercase;
+      transition: color 0.12s;
+    }
+    .copy-btn:hover { color: var(--text); }
+    .prompt-body {
+      padding: 10px; font-size: 11px;
+      line-height: 1.7; color: var(--mid); font-style: italic;
+    }
+    .prompt-body code {
+      font-family: var(--mono); font-size: 10px;
+      background: var(--surface); padding: 1px 4px;
+      font-style: normal; color: var(--soft);
+    }
+    .install-sub {
+      margin-top: 8px; font-size: 10.5px;
+      color: var(--muted); line-height: 1.5;
+    }
+    .install-sub a { color: var(--dim); }
+    .install-sub a:hover { color: var(--soft); }
+
+    /* ── Right panel ────────────────────────────────────── */
+    .right {
+      flex: 1; min-width: 0; height: 100%;
+      display: flex; flex-direction: column; overflow: hidden;
     }
 
-    .gh-link:hover { border-color: var(--text); }
+    /* Filter bar */
+    .filter-bar {
+      height: 42px; flex-shrink: 0;
+      border-bottom: 1px solid var(--rule);
+      display: flex; align-items: center;
+      padding: 0 22px; gap: 0;
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .filter-bar::-webkit-scrollbar { display: none; }
+    .ftab {
+      font-size: 11px; color: var(--dim);
+      padding: 4px 0; margin-right: 22px;
+      cursor: pointer; white-space: nowrap;
+      transition: color 0.12s;
+      position: relative; background: none;
+    }
+    .ftab::after {
+      content: ''; position: absolute;
+      bottom: -1px; left: 0; right: 0;
+      height: 1px; background: var(--text);
+      opacity: 0; transition: opacity 0.12s;
+    }
+    .ftab:hover { color: var(--text); }
+    .ftab.active { color: var(--text); }
+    .ftab.active::after { opacity: 1; }
+    .ftab-count {
+      font-family: var(--mono); font-size: 9px;
+      color: var(--muted); margin-left: 4px;
+    }
 
-    /* ─── ANIMATIONS ───────────────────────────────────────── */
-    @keyframes rise   { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: none; } }
-    @keyframes drop   { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
-    @keyframes appear { from { opacity: 0; } to { opacity: 1; } }
+    /* Skills list */
+    .skills-list {
+      flex: 1; overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--muted) transparent;
+    }
+    .skills-list::-webkit-scrollbar { width: 3px; }
+    .skills-list::-webkit-scrollbar-thumb { background: var(--muted); }
+
+    /* Skill row */
+    .skill {
+      display: flex; flex-direction: column;
+      padding: 0 22px;
+      border-bottom: 1px solid var(--rule);
+      border-left: 2px solid transparent;
+      transition: background 0.08s, border-left-color 0.1s;
+      cursor: pointer;
+    }
+    .skill:hover {
+      background: var(--hover);
+      border-left-color: var(--soft);
+    }
+    .skill-main {
+      display: flex; align-items: center;
+      padding: 12px 0; gap: 0;
+      width: 100%;
+    }
+    .skill-num {
+      font-family: var(--mono); font-size: 10px;
+      color: var(--muted); width: 30px; flex-shrink: 0;
+    }
+    .skill-cmd {
+      font-family: var(--mono); font-size: 12px;
+      color: var(--soft); width: 218px; flex-shrink: 0;
+      padding-right: 14px; margin-right: 14px;
+      border-right: 1px solid var(--rule);
+      transition: color 0.1s;
+    }
+    .skill:hover .skill-cmd { color: var(--text); }
+    .skill-name {
+      flex: 1; font-size: 12.5px;
+      color: var(--text); min-width: 0;
+    }
+    .skill-cat {
+      font-family: var(--mono); font-size: 9px;
+      color: var(--muted); margin-left: 12px;
+      flex-shrink: 0; letter-spacing: 0.04em;
+    }
+    .skill-arrow {
+      font-size: 13px; color: var(--dim);
+      margin-left: 10px; flex-shrink: 0;
+      opacity: 0; transform: translateX(-6px);
+      transition: opacity 0.12s, transform 0.12s;
+    }
+    .skill:hover .skill-arrow { opacity: 1; transform: translateX(0); }
+
+    /* Description expand — grid trick for smooth height */
+    .skill-expand {
+      display: grid; grid-template-rows: 0fr;
+      transition: grid-template-rows 0.18s ease;
+    }
+    .skill:hover .skill-expand { grid-template-rows: 1fr; }
+    .skill-expand-inner {
+      overflow: hidden;
+    }
+    .skill-desc {
+      font-size: 11px; color: var(--mid);
+      padding: 0 0 10px 30px; line-height: 1.5;
+    }
+
+    /* Entry animation */
+    @keyframes row-in {
+      from { opacity: 0; transform: translateY(3px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .skill {
+      opacity: 0;
+      animation: row-in 0.25s ease forwards;
+    }
+
+    /* ── Mobile ─────────────────────────────────────────── */
+    @media (max-width: 860px) {
+      html, body { overflow: auto; }
+      .shell { flex-direction: column; height: auto; }
+      .left {
+        width: 100%; min-width: 0;
+        height: auto; border-right: none;
+        border-bottom: 1px solid var(--rule);
+      }
+      .left-cats { display: none; }
+      .hero-title { font-size: 48px; }
+      .right { min-height: 60vh; height: auto; }
+      .skills-list { overflow-y: visible; }
+    }
+
+    @media (max-width: 520px) {
+      :root { --ticker-h: 28px; }
+      .left-header { padding: 14px 16px; }
+      .left-hero { padding: 18px 16px 14px; }
+      .hero-title { font-size: 38px; }
+      .hero-sub { display: none; }
+      .left-install { padding: 14px 16px; }
+      .filter-bar { padding: 0 16px; gap: 0; }
+      .skill { padding: 0 16px; }
+      .skill-cmd { width: 160px; font-size: 11px; }
+      .skill-cat { display: none; }
+    }
+
+    @media (max-width: 360px) {
+      .skill-cmd { width: 130px; }
+      .skill-name { font-size: 12px; }
+    }
   </style>
 </head>
 <body>
-<div class="shell">
 
-  <!-- LEFT ───────────────────────────────────────── -->
-  <aside class="left">
-    <div class="site-id">damilares-skills</div>
+  <!-- Ticker -->
+  <div class="ticker">
+    <div class="ticker-track" id="tickerTrack"></div>
+  </div>
 
-    <h1 class="headline">The<br>Arsenal</h1>
+  <div class="shell">
 
-    <p class="sub">Curated skills for AI coding harnesses. Design, Vue, animation, engineering — built so agents produce work that's actually excellent.</p>
+    <!-- ── Left panel ─────────────────────────────────── -->
+    <aside class="left">
 
-    <div class="counts">
-      <div class="count-cell">
-        <div class="count-n">57</div>
-        <div class="count-l">Skills</div>
+      <div class="left-header">
+        <a class="brand-mark" href="https://github.com/damilareoo/damilares-skills" target="_blank" rel="noopener">v</a>
+        <span class="brand-name">damilares-skills</span>
       </div>
-      <div class="count-cell">
-        <div class="count-n">8</div>
-        <div class="count-l">Categories</div>
+
+      <div class="left-hero">
+        <div class="hero-title">Expert<br>Modes</div>
+        <div class="hero-stats">
+          <div class="hero-num">57</div>
+          <div class="hero-unit">Skills</div>
+        </div>
+        <div class="hero-sub">Turn your AI into a specialist.<br>Works across Claude Code, Codex, Cursor, and Copilot.</div>
       </div>
-    </div>
 
-    <p class="works-with-label">Works with</p>
-    <div class="platforms">
-      <div class="platform primary">Claude Code</div>
-      <div class="platform">Codex</div>
-      <div class="platform">GitHub Copilot</div>
-      <div class="platform">Cursor / Windsurf</div>
-      <div class="platform">Any MCP agent</div>
-    </div>
+      <div class="left-cats" id="catNav"></div>
 
-    <div class="left-foot">
-      <a href="https://github.com/damilareoo/damilares-skills" target="_blank" rel="noopener">github.com/damilareoo/damilares-skills</a>
-    </div>
-  </aside>
-
-  <!-- CENTER ──────────────────────────────────────── -->
-  <main class="center">
-    <div class="tabs" id="tabs">
-      <button class="tab on" data-cat="all">All<sup>57</sup></button>
-      <button class="tab" data-cat="design">Design<sup>14</sup></button>
-      <button class="tab" data-cat="anim">Animation<sup>2</sup></button>
-      <button class="tab" data-cat="vue">Vue<sup>7</sup></button>
-      <button class="tab" data-cat="tooling">Tooling<sup>9</sup></button>
-      <button class="tab" data-cat="eng">Engineering<sup>12</sup></button>
-      <button class="tab" data-cat="a11y">Accessibility<sup>3</sup></button>
-      <button class="tab" data-cat="ios">iOS<sup>1</sup></button>
-      <button class="tab" data-cat="content">Content<sup>9</sup></button>
-    </div>
-
-    <div class="scroll">
-      <div class="grid" id="grid"></div>
-    </div>
-  </main>
-
-  <!-- RIGHT ───────────────────────────────────────── -->
-  <aside class="right">
-    <div class="right-head">
-      <div class="right-head-title">Install</div>
-      <div class="right-head-sub">two commands — 57 skills</div>
-    </div>
-
-    <div class="right-body">
-
-      <div class="install-block">
-        <div class="install-platform">Claude Code</div>
-        <div class="install-step">
-          <div class="step-lbl">Paste this into Claude Code — it handles the rest</div>
-          <div class="code" data-copy="Install damilares-skills: run `git clone --depth 1 https://github.com/damilareoo/damilares-skills.git /tmp/damilares-skills-install && rsync -a --exclude='.git' /tmp/damilares-skills-install/plugins/v-skills/skills/ ~/.claude/skills/ && rm -rf /tmp/damilares-skills-install` then confirm the skills were installed by listing ~/.claude/skills/">Install damilares-skills: run `git clone --depth 1<br>https://github.com/damilareoo/damilares-skills.git<br>/tmp/damilares-skills-install && rsync -a …`</div>
+      <div class="left-install">
+        <div class="install-heading">Add to Claude Code</div>
+        <div class="prompt-block" id="promptBlock" onclick="copyInstall()">
+          <div class="prompt-topbar">
+            <span class="prompt-tag">Paste into Claude</span>
+            <button class="copy-btn" id="copyBtn">Copy</button>
+          </div>
+          <div class="prompt-body">
+            Install damilares-skills: run <code>git clone --depth 1 https://github.com/damilareoo/damilares-skills.git /tmp/ds && rsync -a --exclude='.git' /tmp/ds/plugins/v-skills/skills/ ~/.claude/skills/ && rm -rf /tmp/ds</code> then confirm the skills were installed by listing <code>~/.claude/skills/</code>
+          </div>
+        </div>
+        <div class="install-sub">
+          Using Cursor, Copilot, or Codex? Grab any <a href="https://github.com/damilareoo/damilares-skills" target="_blank" rel="noopener">SKILL.md</a> and drop it into your system prompt.
         </div>
       </div>
 
-      <div class="hr"></div>
+    </aside>
 
-      <div class="install-block">
-        <div class="install-platform">Other Agents</div>
-        <p class="note">For <strong>Codex</strong>, <strong>Cursor</strong>, <strong>Copilot</strong>, and any agent that accepts context — use the raw <code style="font-family:var(--mono);font-size:10.5px">SKILL.md</code> files directly from the repo.</p>
-        <a href="https://github.com/damilareoo/damilares-skills" class="gh-link" target="_blank" rel="noopener">Browse all skills on GitHub →</a>
-      </div>
+    <!-- ── Right panel ────────────────────────────────── -->
+    <main class="right">
+      <div class="filter-bar" id="filterBar"></div>
+      <div class="skills-list" id="skillsList"></div>
+    </main>
 
-      <div class="hr"></div>
+  </div>
 
-      <div class="install-block">
-        <div class="install-platform">Auto-sync</div>
-        <p class="note">New skills push to the marketplace automatically. Installed skills refresh on next session.</p>
-      </div>
+  <script>
+    const INSTALL = `Install damilares-skills: run \`git clone --depth 1 https://github.com/damilareoo/damilares-skills.git /tmp/damilares-skills-install && rsync -a --exclude='.git' /tmp/damilares-skills-install/plugins/v-skills/skills/ ~/.claude/skills/ && rm -rf /tmp/damilares-skills-install\` then confirm the skills were installed by listing ~/.claude/skills/`;
 
-    </div>
-  </aside>
+    const CATS = [
+      { id: 'all',           label: 'All' },
+      { id: 'design',        label: 'Design' },
+      { id: 'animation',     label: 'Animation' },
+      { id: 'vue',           label: 'Vue' },
+      { id: 'tooling',       label: 'Tooling' },
+      { id: 'engineering',   label: 'Engineering' },
+      { id: 'accessibility', label: 'Accessibility' },
+      { id: 'ios',           label: 'iOS' },
+      { id: 'content',       label: 'Content' },
+    ];
 
-</div>
-<script>
-  const SKILLS = [
-    { slug: 'frontend-design',            cat: 'design',  desc: 'Production-grade UI with strong aesthetic direction' },
-    { slug: 'ui-ux-pro-max',              cat: 'design',  desc: 'Deep UI/UX design intelligence' },
-    { slug: 'interface-design',           cat: 'design',  desc: 'Interface composition and layout systems' },
-    { slug: 'interaction-design',         cat: 'design',  desc: 'Micro-interactions and motion design' },
-    { slug: 'design-lab',                 cat: 'design',  desc: 'Design interviews and creative exploration' },
-    { slug: 'design-system-enforcer',     cat: 'design',  desc: 'Enforces visual consistency at scale' },
-    { slug: 'refero-design',              cat: 'design',  desc: 'Research-first design methodology' },
-    { slug: 'canvas-design',              cat: 'design',  desc: 'Visual artwork and poster generation' },
-    { slug: 'algorithmic-art',            cat: 'design',  desc: 'Generative and algorithmic art creation' },
-    { slug: 'theme-factory',              cat: 'design',  desc: 'Design token and theme system generation' },
-    { slug: 'branding-system-skill',      cat: 'design',  desc: 'Brand identity systems and visual language' },
-    { slug: 'brand-guidelines',           cat: 'design',  desc: 'Brand guideline documentation' },
-    { slug: 'figma-to-code-skill',        cat: 'design',  desc: 'Figma design to production-ready code' },
-    { slug: 'baseline-ui',               cat: 'design',  desc: 'Opinionated UI baseline and defaults' },
-    { slug: '12-principles-of-animation', cat: 'anim',    desc: "Disney's 12 principles applied to UI" },
-    { slug: 'fixing-motion-performance',  cat: 'anim',    desc: 'Diagnose and fix janky animations' },
-    { slug: 'vue',                        cat: 'vue',     desc: 'Vue 3 Composition API patterns' },
-    { slug: 'nuxt',                       cat: 'vue',     desc: 'Nuxt full-stack application patterns' },
-    { slug: 'pinia',                      cat: 'vue',     desc: 'Pinia state management' },
-    { slug: 'vue-best-practices',         cat: 'vue',     desc: 'Vue code quality and conventions' },
-    { slug: 'vue-router-best-practices',  cat: 'vue',     desc: 'Vue Router navigation patterns' },
-    { slug: 'vue-testing-best-practices', cat: 'vue',     desc: 'Vue component and unit testing' },
-    { slug: 'vueuse-functions',           cat: 'vue',     desc: 'VueUse composables and utilities' },
-    { slug: 'vite',                       cat: 'tooling', desc: 'Vite build tool configuration' },
-    { slug: 'vitepress',                  cat: 'tooling', desc: 'VitePress documentation sites' },
-    { slug: 'vitest',                     cat: 'tooling', desc: 'Vitest unit testing framework' },
-    { slug: 'unocss',                     cat: 'tooling', desc: 'UnoCSS atomic CSS engine' },
-    { slug: 'tsdown',                     cat: 'tooling', desc: 'TypeScript library bundling' },
-    { slug: 'turborepo',                  cat: 'tooling', desc: 'Monorepo orchestration and caching' },
-    { slug: 'slidev',                     cat: 'tooling', desc: 'Code-driven presentation slides' },
-    { slug: 'pnpm',                       cat: 'tooling', desc: 'pnpm package manager workflows' },
-    { slug: 'antfu',                      cat: 'tooling', desc: "Anthony Fu's opinionated toolchain" },
-    { slug: 'plan-ceo-review',            cat: 'eng',     desc: 'CEO/founder lens on product plans' },
-    { slug: 'plan-eng-review',            cat: 'eng',     desc: 'Engineering manager plan review' },
-    { slug: 'review',                     cat: 'eng',     desc: 'Pre-landing PR review' },
-    { slug: 'ship',                       cat: 'eng',     desc: 'Structured ship workflow' },
-    { slug: 'retro',                      cat: 'eng',     desc: 'Engineering retrospective facilitation' },
-    { slug: 'qa',                         cat: 'eng',     desc: 'QA testing methodology' },
-    { slug: 'skill-creator',              cat: 'eng',     desc: 'Create and modify agent skills' },
-    { slug: 'mcp-builder',               cat: 'eng',     desc: 'MCP server development' },
-    { slug: 'schedule',                   cat: 'eng',     desc: 'Task and work scheduling' },
-    { slug: 'doc-coauthoring',            cat: 'eng',     desc: 'Collaborative documentation' },
-    { slug: 'setup-browser-cookies',      cat: 'eng',     desc: 'Browser cookie import and setup' },
-    { slug: 'interface-craft',            cat: 'eng',     desc: 'Interface crafting toolkit' },
-    { slug: 'fixing-accessibility',       cat: 'a11y',    desc: 'WCAG violation diagnosis and fixes' },
-    { slug: 'wcag-audit-patterns',        cat: 'a11y',    desc: 'WCAG 2.2 comprehensive audit' },
-    { slug: 'web-design-guidelines',      cat: 'a11y',    desc: 'Web interaction and design standards' },
-    { slug: 'swiftui-ui-patterns',        cat: 'ios',     desc: 'SwiftUI best practices and patterns' },
-    { slug: 'copywriting-skill',          cat: 'content', desc: 'Marketing and product copywriting' },
-    { slug: 'internal-comms',             cat: 'content', desc: 'Internal communication writing' },
-    { slug: 'fixing-metadata',            cat: 'content', desc: 'SEO and metadata optimization' },
-    { slug: 'pdf',                        cat: 'content', desc: 'PDF document processing and generation' },
-    { slug: 'docx',                       cat: 'content', desc: 'Word document handling' },
-    { slug: 'pptx',                       cat: 'content', desc: 'PowerPoint presentation handling' },
-    { slug: 'xlsx',                       cat: 'content', desc: 'Excel spreadsheet processing' },
-    { slug: 'slack-gif-creator',          cat: 'content', desc: 'Slack GIF and reaction creation' },
-    { slug: 'web-artifacts-builder',      cat: 'content', desc: 'Web content artifact generation' },
-  ];
+    const SKILLS = [
+      { id: 'frontend-design',            name: 'Frontend Design',              cat: 'design',        desc: 'Refuses generic AI aesthetics. Commits to a bold visual direction and actually ships something memorable.' },
+      { id: 'ui-ux-pro-max',              name: 'UI/UX Pro Max',                cat: 'design',        desc: 'Deep product design thinking — flows, hierarchy, interaction model. More than colors and fonts.' },
+      { id: 'interface-design',           name: 'Interface Design',             cat: 'design',        desc: 'Interface composition and layout systems.' },
+      { id: 'interaction-design',         name: 'Interaction Design',           cat: 'design',        desc: 'Micro-interactions with intent. Animates with purpose using Disney\'s 12 principles.' },
+      { id: 'design-lab',                 name: 'Design Lab',                   cat: 'design',        desc: 'Design interviews and creative exploration sessions.' },
+      { id: 'design-system-enforcer',     name: 'Design System Enforcer',       cat: 'design',        desc: 'Catches drift before it compounds. Enforces tokens, spacing rhythm, and component patterns.' },
+      { id: 'refero-design',              name: 'Refero Design',                cat: 'design',        desc: 'Goes to Refero for real production references before producing anything.' },
+      { id: 'canvas-design',              name: 'Canvas Design',                cat: 'design',        desc: 'Visual artwork and poster generation.' },
+      { id: 'algorithmic-art',            name: 'Algorithmic Art',              cat: 'design',        desc: 'Generative and algorithmic art creation.' },
+      { id: 'theme-factory',              name: 'Theme Factory',                cat: 'design',        desc: 'Design token and theme system generation.' },
+      { id: 'branding-system-skill',      name: 'Branding System',              cat: 'design',        desc: 'Brand identity systems and visual language from scratch.' },
+      { id: 'brand-guidelines',           name: 'Brand Guidelines',             cat: 'design',        desc: 'Brand guideline documentation.' },
+      { id: 'figma-to-code-skill',        name: 'Figma to Code',                cat: 'design',        desc: 'Makes the decisions Figma doesn\'t — component API, state, accessibility.' },
+      { id: 'baseline-ui',                name: 'Baseline UI',                  cat: 'design',        desc: 'Opinionated UI baseline and defaults.' },
+      { id: '12-principles-of-animation', name: '12 Principles of Animation',   cat: 'animation',     desc: 'Every animation evaluated against squash, anticipation, follow-through, timing. Real principles.' },
+      { id: 'fixing-motion-performance',  name: 'Fixing Motion Performance',    cat: 'animation',     desc: 'Diagnoses and fixes janky, expensive animations before they ship.' },
+      { id: 'vue',                        name: 'Vue',                          cat: 'vue',           desc: 'Composition API only. script setup, defineProps, defineEmits. Never touches Options API.' },
+      { id: 'nuxt',                       name: 'Nuxt',                         cat: 'vue',           desc: 'Nuxt full-stack application patterns.' },
+      { id: 'pinia',                      name: 'Pinia',                        cat: 'vue',           desc: 'Pinia state management — done right.' },
+      { id: 'vue-best-practices',         name: 'Vue Best Practices',           cat: 'vue',           desc: 'Vue code quality and conventions.' },
+      { id: 'vue-router-best-practices',  name: 'Vue Router Best Practices',    cat: 'vue',           desc: 'Vue Router navigation patterns.' },
+      { id: 'vue-testing-best-practices', name: 'Vue Testing Best Practices',   cat: 'vue',           desc: 'Vue component and unit testing.' },
+      { id: 'vueuse-functions',           name: 'VueUse Functions',             cat: 'vue',           desc: 'Knows the VueUse catalog. Uses the library instead of reinventing it.' },
+      { id: 'vite',                       name: 'Vite',                         cat: 'tooling',       desc: 'Vite build tool configuration and optimization.' },
+      { id: 'vitepress',                  name: 'VitePress',                    cat: 'tooling',       desc: 'VitePress documentation sites.' },
+      { id: 'vitest',                     name: 'Vitest',                       cat: 'tooling',       desc: 'Vitest unit testing framework.' },
+      { id: 'unocss',                     name: 'UnoCSS',                       cat: 'tooling',       desc: 'UnoCSS atomic CSS engine.' },
+      { id: 'tsdown',                     name: 'tsdown',                       cat: 'tooling',       desc: 'TypeScript library bundling.' },
+      { id: 'turborepo',                  name: 'Turborepo',                    cat: 'tooling',       desc: 'Monorepo orchestration and caching.' },
+      { id: 'slidev',                     name: 'Slidev',                       cat: 'tooling',       desc: 'Code-driven presentation slides.' },
+      { id: 'pnpm',                       name: 'pnpm',                         cat: 'tooling',       desc: 'pnpm package manager workflows.' },
+      { id: 'antfu',                      name: 'antfu',                        cat: 'tooling',       desc: 'Anthony Fu\'s opinionated toolchain.' },
+      { id: 'plan-ceo-review',            name: 'Plan CEO Review',              cat: 'engineering',   desc: 'CEO/founder lens on product plans.' },
+      { id: 'plan-eng-review',            name: 'Plan Eng Review',              cat: 'engineering',   desc: 'Engineering manager plan review.' },
+      { id: 'review',                     name: 'Review',                       cat: 'engineering',   desc: 'Paranoid staff engineer mode. Finds the race conditions and trust problems CI won\'t catch.' },
+      { id: 'ship',                       name: 'Ship',                         cat: 'engineering',   desc: 'Sync main, run tests, push, open PR. One command, done.' },
+      { id: 'retro',                      name: 'Retro',                        cat: 'engineering',   desc: 'Engineering retrospective facilitation.' },
+      { id: 'qa',                         name: 'QA',                           cat: 'engineering',   desc: 'Systematic testing methodology that actually covers your diff.' },
+      { id: 'skill-creator',             name: 'Skill Creator',                cat: 'engineering',   desc: 'Build new skills in this format. If your stack isn\'t covered, make one.' },
+      { id: 'mcp-builder',               name: 'MCP Builder',                  cat: 'engineering',   desc: 'Scaffolds MCP servers properly — schema, tools, error handling.' },
+      { id: 'schedule',                  name: 'Schedule',                     cat: 'engineering',   desc: 'Task and work scheduling.' },
+      { id: 'doc-coauthoring',           name: 'Doc Coauthoring',              cat: 'engineering',   desc: 'Collaborative documentation.' },
+      { id: 'setup-browser-cookies',     name: 'Setup Browser Cookies',        cat: 'engineering',   desc: 'Browser cookie import and setup.' },
+      { id: 'interface-craft',           name: 'Interface Craft',              cat: 'engineering',   desc: 'Interface crafting toolkit.' },
+      { id: 'fixing-accessibility',      name: 'Fixing Accessibility',         cat: 'accessibility', desc: 'WCAG violation diagnosis and fixes.' },
+      { id: 'wcag-audit-patterns',       name: 'WCAG Audit Patterns',          cat: 'accessibility', desc: 'Full WCAG 2.2 Level AA/AAA audit — not a quick alt-tag scan.' },
+      { id: 'web-design-guidelines',     name: 'Web Design Guidelines',        cat: 'accessibility', desc: 'Web interaction and design standards.' },
+      { id: 'swiftui-ui-patterns',       name: 'SwiftUI UI Patterns',          cat: 'ios',           desc: 'SwiftUI best practices and patterns.' },
+      { id: 'copywriting-skill',         name: 'Copywriting',                  cat: 'content',       desc: 'Marketing and product copywriting.' },
+      { id: 'internal-comms',            name: 'Internal Comms',               cat: 'content',       desc: 'Internal communication writing.' },
+      { id: 'fixing-metadata',           name: 'Fixing Metadata',              cat: 'content',       desc: 'SEO and metadata optimization.' },
+      { id: 'pdf',                       name: 'PDF',                          cat: 'content',       desc: 'PDF document processing and generation.' },
+      { id: 'docx',                      name: 'docx',                         cat: 'content',       desc: 'Word document handling.' },
+      { id: 'pptx',                      name: 'pptx',                         cat: 'content',       desc: 'PowerPoint presentation handling.' },
+      { id: 'xlsx',                      name: 'xlsx',                         cat: 'content',       desc: 'Excel spreadsheet processing.' },
+      { id: 'slack-gif-creator',         name: 'Slack GIF Creator',            cat: 'content',       desc: 'Slack GIF and reaction creation.' },
+      { id: 'web-artifacts-builder',     name: 'Web Artifacts Builder',        cat: 'content',       desc: 'Web content artifact generation.' },
+    ];
 
-  const grid = document.getElementById('grid');
-  const base = 'https://github.com/damilareoo/damilares-skills/tree/main/plugins/v-skills/skills/';
+    const GH = 'https://github.com/damilareoo/damilares-skills/tree/main/plugins/v-skills/skills';
 
-  function render(cat) {
-    const items = cat === 'all' ? SKILLS : SKILLS.filter(s => s.cat === cat);
-    grid.innerHTML = '';
-    items.forEach((s, i) => {
-      const a = document.createElement('a');
-      a.href = base + s.slug;
-      a.target = '_blank';
-      a.rel = 'noopener';
-      a.className = 'card';
-      a.style.animationDelay = `${Math.min(i * 0.018, 0.3)}s`;
-      a.innerHTML = `<div class="card-name">${s.slug}</div><div class="card-desc">${s.desc}</div>`;
-      grid.appendChild(a);
+    let active = 'all';
+
+    function count(cat) {
+      return cat === 'all' ? SKILLS.length : SKILLS.filter(s => s.cat === cat).length;
+    }
+
+    function buildTicker() {
+      const items = SKILLS.map(s =>
+        `<span class="ticker-cmd">/${s.id}</span><span class="ticker-dot">·</span>`
+      ).join('');
+      document.getElementById('tickerTrack').innerHTML = items + items;
+    }
+
+    function buildCatNav() {
+      document.getElementById('catNav').innerHTML = CATS.map(c => `
+        <div class="cat-row${c.id === 'all' ? ' active' : ''}" data-cat="${c.id}" onclick="filter('${c.id}')">
+          <div class="cat-left">
+            <div class="cat-dot"></div>
+            <div class="cat-name">${c.label}</div>
+          </div>
+          <div class="cat-num">${count(c.id)}</div>
+        </div>
+      `).join('');
+    }
+
+    function buildFilterBar() {
+      document.getElementById('filterBar').innerHTML = CATS.map(c => `
+        <button class="ftab${c.id === 'all' ? ' active' : ''}" data-cat="${c.id}" onclick="filter('${c.id}')">
+          ${c.label}<span class="ftab-count">${count(c.id)}</span>
+        </button>
+      `).join('');
+    }
+
+    function buildSkills(cat) {
+      const list = cat === 'all' ? SKILLS : SKILLS.filter(s => s.cat === cat);
+      document.getElementById('skillsList').innerHTML = list.map((s, i) => `
+        <a class="skill" href="${GH}/${s.id}" target="_blank" rel="noopener"
+           style="animation-delay:${Math.min(i * 16, 480)}ms">
+          <div class="skill-main">
+            <div class="skill-num">${String(i + 1).padStart(2, '0')}</div>
+            <div class="skill-cmd">/${s.id}</div>
+            <div class="skill-name">${s.name}</div>
+            <div class="skill-cat">${s.cat}</div>
+            <div class="skill-arrow">→</div>
+          </div>
+          <div class="skill-expand">
+            <div class="skill-expand-inner">
+              <div class="skill-desc">${s.desc}</div>
+            </div>
+          </div>
+        </a>
+      `).join('');
+    }
+
+    function filter(cat) {
+      active = cat;
+      document.querySelectorAll('.cat-row').forEach(el =>
+        el.classList.toggle('active', el.dataset.cat === cat));
+      document.querySelectorAll('.ftab').forEach(el =>
+        el.classList.toggle('active', el.dataset.cat === cat));
+      buildSkills(cat);
+    }
+
+    function copyInstall() {
+      navigator.clipboard.writeText(INSTALL).then(() => {
+        const btn = document.getElementById('copyBtn');
+        btn.textContent = 'Copied';
+        setTimeout(() => btn.textContent = 'Copy', 2200);
+      });
+    }
+
+    // Keyboard shortcuts: 1-9 for categories
+    document.addEventListener('keydown', e => {
+      const idx = parseInt(e.key) - 1;
+      if (idx >= 0 && idx < CATS.length) filter(CATS[idx].id);
     });
-  }
 
-  document.getElementById('tabs').addEventListener('click', e => {
-    const t = e.target.closest('.tab');
-    if (!t) return;
-    document.querySelectorAll('.tab').forEach(x => x.classList.remove('on'));
-    t.classList.add('on');
-    render(t.dataset.cat);
-  });
-
-  document.addEventListener('click', e => {
-    const b = e.target.closest('.code[data-copy]');
-    if (!b) return;
-    navigator.clipboard.writeText(b.dataset.copy).then(() => {
-      b.classList.add('ok');
-      setTimeout(() => b.classList.remove('ok'), 1500);
-    });
-  });
-
-  render('all');
-</script>
+    buildTicker();
+    buildCatNav();
+    buildFilterBar();
+    buildSkills('all');
+  </script>
 </body>
 </html>
