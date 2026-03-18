@@ -8,8 +8,11 @@ SKIP="gstack browse gstack-upgrade"
 CHANGED=0
 ADDED=()
 
-# Check both skill directories
-for base in "$HOME/.claude/skills" "$HOME/.agents/skills"; do
+# Check all skill directories including Claude desktop app
+DESKTOP_SKILLS=$(find "$HOME/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin" \
+  -mindepth 3 -maxdepth 3 -type d -name "skills" 2>/dev/null | head -1)
+
+for base in "$HOME/.claude/skills" "$HOME/.agents/skills" "$DESKTOP_SKILLS"; do
   [ -d "$base" ] || continue
   for dir in "$base"/*/; do
     [ -d "$dir" ] || continue
