@@ -10,18 +10,25 @@
 
 ---
 
-## Install everything in 2 commands
+## Install
 
-**Claude Code** — open Claude Code and run:
+### Claude Code
 
-```
-/plugin marketplace add github:damilareoo/damilares-skills
-/plugin install v-skills@damilareoo/damilares-skills
-```
+Open Claude Code and paste this. Claude will do the rest.
 
-That's it. All 57 skills are now available as slash commands in every Claude Code session.
+> Install damilares-skills: run `git clone --depth 1 https://github.com/damilareoo/damilares-skills.git /tmp/damilares-skills-install && rsync -a --exclude='.git' /tmp/damilares-skills-install/plugins/v-skills/skills/ ~/.claude/skills/ && rm -rf /tmp/damilares-skills-install` then confirm the skills were installed by listing `~/.claude/skills/`.
 
-**Other agents** (Codex, Cursor, Copilot, Windsurf) — browse the raw `SKILL.md` files at [damilares-skills.vercel.app](https://damilares-skills.vercel.app) and paste any skill's content into your agent's system prompt or context window.
+That's it. All 57 skills are available immediately — no restart needed.
+
+### Updating
+
+To pull the latest skills, paste this into Claude Code:
+
+> Update damilares-skills: run `git clone --depth 1 https://github.com/damilareoo/damilares-skills.git /tmp/damilares-skills-update && rsync -a --delete --exclude='.git' /tmp/damilares-skills-update/plugins/v-skills/skills/ ~/.claude/skills/ && rm -rf /tmp/damilares-skills-update` then confirm the update is complete.
+
+### Other agents (Codex, Cursor, Copilot, Windsurf)
+
+Browse the raw `SKILL.md` files at [damilares-skills.vercel.app](https://damilares-skills.vercel.app). Click any skill to open it on GitHub, then copy the file contents directly into your agent's system prompt or context window. Each `SKILL.md` is self-contained and works anywhere the model can read it.
 
 ---
 
@@ -244,13 +251,7 @@ Use this when you work with a stack that isn't covered here. The resulting skill
 
 ## Install
 
-Already covered at the top — two commands, done. Skills load immediately and are available as slash commands. To update:
-
-```
-/plugin update v-skills
-```
-
-**Other agents** — every skill is a plain Markdown file at `plugins/v-skills/skills/<name>/SKILL.md`. Copy the content into your agent's system prompt. Self-contained, works anywhere.
+See the install section at the top — paste the one-liner into Claude Code and it handles everything.
 
 ---
 
