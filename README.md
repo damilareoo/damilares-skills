@@ -1,8 +1,29 @@
-# v-skills
+# damilares-skills
 
-**v-skills turns Claude Code from a generic code-completer into a team of specialists who actually know their domains.**
+**Website: [damilares-skills.vercel.app](https://damilares-skills.vercel.app)**
+
+---
+
+**damilares-skills turns Claude Code from a generic code-completer into a team of specialists who actually know their domains.**
 
 57 opinionated skills for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — and for any AI coding agent that accepts context. Design systems, Vue, animation, accessibility, engineering workflows, and content — each skill gives the agent a specific mode of intelligence instead of the usual mushy all-purpose response.
+
+---
+
+## Install everything in 2 commands
+
+**Claude Code** — open Claude Code and run:
+
+```
+/plugin marketplace add github:damilareoo/damilares-skills
+/plugin install v-skills@damilareoo/damilares-skills
+```
+
+That's it. All 57 skills are now available as slash commands in every Claude Code session.
+
+**Other agents** (Codex, Cursor, Copilot, Windsurf) — browse the raw `SKILL.md` files at [damilares-skills.vercel.app](https://damilares-skills.vercel.app) and paste any skill's content into your agent's system prompt or context window.
+
+---
 
 ### Without v-skills
 
@@ -223,32 +244,13 @@ Use this when you work with a stack that isn't covered here. The resulting skill
 
 ## Install
 
-**Claude Code**
-
-```
-/plugin marketplace add github:damilareoo/damilares-skills
-/plugin install v-skills@damilareoo/damilares-skills
-```
-
-Done. All skills load immediately. Invoke any skill with its slash command.
-
-**Updating**
-
-Skills update when the marketplace syncs. To pull the latest:
+Already covered at the top — two commands, done. Skills load immediately and are available as slash commands. To update:
 
 ```
 /plugin update v-skills
 ```
 
-**Other agents** (Codex, Cursor, Copilot, Windsurf, etc.)
-
-Every skill is a plain Markdown file in `plugins/v-skills/skills/<name>/SKILL.md`. To use a skill in any agent that accepts context:
-
-1. Open the skill file on GitHub
-2. Copy the contents
-3. Paste into your agent's system prompt or context window
-
-The content is self-contained — it works anywhere the model can read it.
+**Other agents** — every skill is a plain Markdown file at `plugins/v-skills/skills/<name>/SKILL.md`. Copy the content into your agent's system prompt. Self-contained, works anywhere.
 
 ---
 
@@ -371,4 +373,4 @@ Every skill in this collection came from a real failure — a Vue component that
 
 These are not prompts for beginners who want help with basics. They are modes of expertise for developers who already use AI heavily and want the output to reflect actual domain knowledge.
 
-The website: [v-skills.vercel.app](https://v-skills.vercel.app)
+The website: [damilares-skills.vercel.app](https://damilares-skills.vercel.app)

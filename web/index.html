@@ -3,601 +3,623 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>v-skills — AI coding skills by Damilare</title>
+  <title>damilares-skills — AI coding skills by Damilare</title>
   <meta name="description" content="57 curated AI coding skills for Claude Code, Codex, and every intelligent harness.">
-  <meta property="og:title" content="v-skills — AI coding skills by Damilare">
+  <meta property="og:title" content="damilares-skills — AI coding skills by Damilare">
   <meta property="og:description" content="57 curated skills. Works across Claude Code, Codex, and every intelligent harness.">
-  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://damilares-skills.vercel.app">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --white:    #ffffff;
-      --off:      #f5f5f5;
-      --border:   #e4e4e4;
-      --mid:      #b0b0b0;
-      --soft:     #888888;
-      --dim:      #c8c8c8;
-      --black:    #0d0d0d;
-      --sans: 'Suisse Int\'l', 'Neue Helvetica', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      --mono: 'Suisse Mono', 'SF Mono', 'Fira Mono', 'Consolas', monospace;
+      --white:  #ffffff;
+      --paper:  #f8f8f6;
+      --rule:   #e2e2e0;
+      --mid:    #a8a8a5;
+      --soft:   #787874;
+      --text:   #111110;
+      --sans:   'Suisse Int\'l', 'Neue Helvetica', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      --mono:   'Suisse Mono', 'SF Mono', 'Fira Mono', 'Consolas', monospace;
     }
 
     html, body {
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       overflow: hidden;
       background: var(--white);
-      color: var(--black);
+      color: var(--text);
       font-family: var(--sans);
-      font-size: 12.5px;
-      line-height: 1.55;
       -webkit-font-smoothing: antialiased;
-      letter-spacing: -0.01em;
+      font-size: 13px;
     }
 
-    /* ─── LAYOUT ─────────────────────────────────── */
+    /* ─── TOP RULE ─────────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: var(--text);
+      z-index: 10;
+    }
+
+    /* ─── SHELL ────────────────────────────────────────────── */
     .shell {
       display: grid;
-      grid-template-columns: 240px 1fr 260px;
+      grid-template-columns: 280px 1fr 280px;
       width: 100vw;
       height: 100vh;
+    }
+
+    /* ─── LEFT ─────────────────────────────────────────────── */
+    .left {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--rule);
+      padding: 48px 36px 40px;
       overflow: hidden;
     }
 
-    /* ─── LEFT PANEL ─────────────────────────────── */
-    .panel-left {
-      display: flex;
-      flex-direction: column;
-      padding: 36px 28px;
-      border-right: 1px solid var(--border);
-    }
-
-    .wordmark {
+    .site-id {
       font-family: var(--mono);
       font-size: 10px;
-      letter-spacing: 0.06em;
-      color: var(--soft);
-      margin-bottom: 36px;
+      letter-spacing: 0.08em;
+      color: var(--mid);
+      text-transform: lowercase;
+      margin-bottom: 48px;
       opacity: 0;
-      animation: up 0.4s ease forwards 0.05s;
+      animation: rise 0.5s ease forwards 0.05s;
     }
 
-    .title {
-      font-size: 38px;
+    .headline {
+      font-size: 52px;
       font-weight: 500;
-      line-height: 1;
-      letter-spacing: -0.03em;
-      margin-bottom: 18px;
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      margin-bottom: 24px;
       opacity: 0;
-      animation: up 0.4s ease forwards 0.1s;
+      animation: rise 0.5s ease forwards 0.1s;
     }
 
-    .tagline {
-      font-size: 12px;
+    .sub {
+      font-size: 12.5px;
       font-weight: 400;
+      line-height: 1.7;
       color: var(--soft);
-      line-height: 1.65;
-      margin-bottom: 28px;
+      margin-bottom: 40px;
       opacity: 0;
-      animation: up 0.4s ease forwards 0.15s;
+      animation: rise 0.5s ease forwards 0.15s;
     }
 
-    .stats {
-      display: flex;
-      gap: 20px;
-      padding: 16px 0;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 28px;
+    .counts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-top: 1px solid var(--rule);
+      border-left: 1px solid var(--rule);
+      margin-bottom: 40px;
       opacity: 0;
-      animation: up 0.4s ease forwards 0.2s;
+      animation: rise 0.5s ease forwards 0.2s;
     }
 
-    .stat-n {
-      font-size: 22px;
+    .count-cell {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--rule);
+      border-right: 1px solid var(--rule);
+    }
+
+    .count-n {
+      font-size: 28px;
       font-weight: 500;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.04em;
       line-height: 1;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
     }
 
-    .stat-l {
-      font-size: 10px;
-      color: var(--soft);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-
-    .section-head {
-      font-size: 10px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--dim);
-      margin-bottom: 10px;
-    }
-
-    .platform-list {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-      opacity: 0;
-      animation: up 0.4s ease forwards 0.25s;
-    }
-
-    .platform-item {
-      font-size: 12px;
-      color: var(--soft);
-    }
-
-    .platform-item.primary {
-      color: var(--black);
-      font-weight: 500;
-    }
-
-    .footer {
-      margin-top: auto;
-      opacity: 0;
-      animation: up 0.4s ease forwards 0.3s;
-    }
-
-    .footer a {
+    .count-l {
       font-family: var(--mono);
-      font-size: 10px;
-      color: var(--soft);
-      text-decoration: none;
+      font-size: 9.5px;
+      letter-spacing: 0.06em;
+      color: var(--mid);
+      text-transform: uppercase;
     }
 
-    .footer a:hover { color: var(--black); }
+    .works-with-label {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 12px;
+    }
 
-    /* ─── CENTER PANEL ───────────────────────────── */
-    .panel-center {
+    .platforms {
       display: flex;
       flex-direction: column;
-      overflow: hidden;
-    }
-
-    .filter-bar {
-      padding: 0 24px;
-      border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
+      gap: 8px;
+      margin-bottom: 0;
       opacity: 0;
-      animation: up 0.4s ease forwards 0.1s;
+      animation: rise 0.5s ease forwards 0.25s;
     }
 
-    .filter-row {
+    .platform {
+      font-size: 12.5px;
+      color: var(--soft);
       display: flex;
       align-items: center;
-      gap: 0;
-      overflow-x: auto;
-      scrollbar-width: none;
+      gap: 10px;
     }
 
-    .filter-row::-webkit-scrollbar { display: none; }
+    .platform::before {
+      content: '';
+      width: 4px; height: 1px;
+      background: var(--mid);
+      flex-shrink: 0;
+    }
 
-    .filter-pill {
-      padding: 14px 14px 12px;
+    .platform.primary {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .platform.primary::before {
+      background: var(--text);
+      width: 12px;
+    }
+
+    .left-foot {
+      margin-top: auto;
+      opacity: 0;
+      animation: rise 0.5s ease forwards 0.3s;
+    }
+
+    .left-foot a {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--mid);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+    }
+
+    .left-foot a:hover { color: var(--text); }
+
+    /* ─── CENTER ───────────────────────────────────────────── */
+    .center {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-right: 1px solid var(--rule);
+    }
+
+    .tabs {
+      display: flex;
+      border-bottom: 1px solid var(--rule);
+      overflow-x: auto;
+      scrollbar-width: none;
+      flex-shrink: 0;
+      opacity: 0;
+      animation: drop 0.4s ease forwards 0.1s;
+    }
+
+    .tabs::-webkit-scrollbar { display: none; }
+
+    .tab {
+      padding: 15px 18px 13px;
       border: none;
       border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
       background: transparent;
       font-family: var(--sans);
-      font-size: 11.5px;
+      font-size: 12px;
       font-weight: 400;
-      color: var(--soft);
+      color: var(--mid);
       cursor: pointer;
-      transition: color 0.12s, border-color 0.12s;
       white-space: nowrap;
       letter-spacing: -0.01em;
+      transition: color 0.1s;
       outline: none;
     }
 
-    .filter-pill:hover { color: var(--black); }
+    .tab:hover { color: var(--text); }
 
-    .filter-pill.active {
-      color: var(--black);
-      border-bottom-color: var(--black);
+    .tab.on {
+      color: var(--text);
       font-weight: 500;
+      border-bottom-color: var(--text);
     }
 
-    .pill-count {
+    .tab sup {
       font-family: var(--mono);
-      font-size: 9px;
-      margin-left: 4px;
-      color: var(--dim);
+      font-size: 8.5px;
+      margin-left: 3px;
+      color: var(--rule);
+      vertical-align: top;
+      line-height: 2;
     }
 
-    .filter-pill.active .pill-count { color: var(--soft); }
+    .tab.on sup { color: var(--mid); }
 
-    /* ─── SKILLS ──────────────────────────────────── */
-    .skills-viewport {
+    /* ─── GRID ─────────────────────────────────────────────── */
+    .scroll {
       flex: 1;
       overflow-y: auto;
-      padding: 20px 24px;
+      padding: 28px 32px;
       scrollbar-width: thin;
-      scrollbar-color: var(--border) transparent;
+      scrollbar-color: var(--rule) transparent;
     }
 
-    .skills-viewport::-webkit-scrollbar { width: 3px; }
-    .skills-viewport::-webkit-scrollbar-thumb { background: var(--border); }
+    .scroll::-webkit-scrollbar { width: 3px; }
+    .scroll::-webkit-scrollbar-thumb { background: var(--rule); }
 
-    .skills-grid {
+    .grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1fr 1fr;
       gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
+      background: var(--rule);
+      outline: 1px solid var(--rule);
     }
 
-    .skill-card {
-      display: flex;
-      flex-direction: column;
-      padding: 14px 16px;
+    .card {
       background: var(--white);
-      cursor: pointer;
+      padding: 18px 20px;
       text-decoration: none;
       color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
       transition: background 0.1s;
       opacity: 0;
-      animation: fadeIn 0.3s ease forwards;
+      animation: appear 0.35s ease forwards;
     }
 
-    .skill-card:hover {
-      background: var(--off);
-    }
+    .card:hover { background: var(--paper); }
 
-    .skill-name {
+    .card-name {
       font-family: var(--mono);
-      font-size: 11px;
+      font-size: 11.5px;
       font-weight: 400;
-      color: var(--black);
-      margin-bottom: 4px;
+      color: var(--text);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    .skill-desc {
-      font-size: 11px;
+    .card-desc {
+      font-size: 11.5px;
       color: var(--soft);
       line-height: 1.5;
     }
 
-    /* ─── RIGHT PANEL ─────────────────────────────── */
-    .panel-right {
+    /* ─── RIGHT ────────────────────────────────────────────── */
+    .right {
       display: flex;
       flex-direction: column;
-      border-left: 1px solid var(--border);
+      overflow: hidden;
     }
 
-    .install-head {
-      padding: 22px 24px 18px;
-      border-bottom: 1px solid var(--border);
+    .right-head {
+      padding: 26px 32px 22px;
+      border-bottom: 1px solid var(--rule);
       flex-shrink: 0;
       opacity: 0;
-      animation: up 0.4s ease forwards 0.15s;
+      animation: drop 0.4s ease forwards 0.15s;
     }
 
-    .install-title {
-      font-size: 13px;
+    .right-head-title {
+      font-size: 14px;
       font-weight: 500;
       letter-spacing: -0.02em;
-      margin-bottom: 2px;
+      margin-bottom: 3px;
     }
 
-    .install-sub {
-      font-size: 11px;
-      color: var(--soft);
+    .right-head-sub {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--mid);
+      letter-spacing: 0.03em;
     }
 
-    .install-body {
+    .right-body {
       flex: 1;
       overflow-y: auto;
-      padding: 20px 24px;
+      padding: 28px 32px;
       scrollbar-width: thin;
-      scrollbar-color: var(--border) transparent;
+      scrollbar-color: var(--rule) transparent;
       opacity: 0;
-      animation: up 0.4s ease forwards 0.2s;
+      animation: rise 0.5s ease forwards 0.2s;
     }
 
-    .install-body::-webkit-scrollbar { width: 3px; }
-    .install-body::-webkit-scrollbar-thumb { background: var(--border); }
+    .right-body::-webkit-scrollbar { width: 3px; }
+    .right-body::-webkit-scrollbar-thumb { background: var(--rule); }
 
-    .install-group {
-      margin-bottom: 24px;
+    .install-block {
+      margin-bottom: 28px;
     }
 
     .install-platform {
-      font-size: 10px;
-      font-weight: 500;
-      letter-spacing: 0.06em;
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--mid);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .install-step {
-      margin-bottom: 8px;
+    .install-platform::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--rule);
     }
 
-    .step-label {
-      font-size: 10.5px;
-      color: var(--soft);
-      margin-bottom: 4px;
+    .install-step + .install-step { margin-top: 8px; }
+
+    .step-lbl {
+      font-size: 11px;
+      color: var(--mid);
+      margin-bottom: 5px;
     }
 
-    .code-block {
-      background: var(--off);
-      border: 1px solid var(--border);
-      padding: 9px 12px;
+    .code {
+      background: var(--paper);
+      border: 1px solid var(--rule);
+      padding: 10px 14px;
       font-family: var(--mono);
       font-size: 10.5px;
-      color: var(--black);
-      line-height: 1.6;
+      color: var(--text);
+      line-height: 1.65;
       cursor: pointer;
-      transition: background 0.1s, border-color 0.1s;
       position: relative;
+      transition: background 0.1s, border-color 0.1s, color 0.1s;
       user-select: all;
     }
 
-    .code-block:hover {
-      background: var(--black);
-      color: var(--white);
-      border-color: var(--black);
-    }
-
-    .code-block:hover::after {
-      content: 'copy';
+    .code::after {
+      content: '';
       position: absolute;
-      right: 10px;
-      top: 50%;
+      right: 12px; top: 50%;
       transform: translateY(-50%);
       font-size: 9px;
       color: var(--mid);
+      letter-spacing: 0.04em;
+      font-family: var(--mono);
+      transition: opacity 0.1s;
+      opacity: 0;
     }
 
-    .code-block.copied {
-      background: var(--black);
+    .code:hover {
+      background: var(--text);
       color: var(--white);
-      border-color: var(--black);
+      border-color: var(--text);
     }
 
-    .code-block.copied::after {
-      content: 'copied';
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 9px;
-      color: var(--mid);
-    }
+    .code:hover::after { content: 'copy'; opacity: 0.5; color: var(--mid); }
+    .code.ok { background: var(--text); color: var(--white); border-color: var(--text); }
+    .code.ok::after { content: 'copied'; opacity: 1; color: var(--mid); }
 
-    .hr { height: 1px; background: var(--border); margin: 20px 0; }
+    .hr { height: 1px; background: var(--rule); margin: 22px 0; }
 
     .note {
-      font-size: 11.5px;
+      font-size: 12px;
       color: var(--soft);
-      line-height: 1.7;
-      margin-bottom: 12px;
+      line-height: 1.75;
     }
 
-    .note strong { color: var(--black); font-weight: 500; }
+    .note strong { color: var(--text); font-weight: 500; }
 
-    .repo-link {
+    .gh-link {
+      display: inline-block;
+      margin-top: 10px;
       font-family: var(--mono);
       font-size: 10.5px;
-      color: var(--black);
+      color: var(--text);
       text-decoration: none;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 1px;
     }
 
-    .repo-link:hover { border-color: var(--black); }
+    .gh-link:hover { border-color: var(--text); }
 
-    /* ─── KEYFRAMES ───────────────────────────────── */
-    @keyframes up {
-      from { opacity: 0; transform: translateY(6px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
+    /* ─── ANIMATIONS ───────────────────────────────────────── */
+    @keyframes rise   { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: none; } }
+    @keyframes drop   { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: none; } }
+    @keyframes appear { from { opacity: 0; } to { opacity: 1; } }
   </style>
 </head>
 <body>
-  <div class="shell">
+<div class="shell">
 
-    <!-- LEFT -->
-    <aside class="panel-left">
-      <div class="wordmark">v-skills</div>
+  <!-- LEFT ───────────────────────────────────────── -->
+  <aside class="left">
+    <div class="site-id">damilares-skills</div>
 
-      <h1 class="title">The<br>Arsenal</h1>
+    <h1 class="headline">The<br>Arsenal</h1>
 
-      <p class="tagline">57 skills for AI coding harnesses. Design, Vue, animation, engineering — built to make agents excellent.</p>
+    <p class="sub">Curated skills for AI coding harnesses. Design, Vue, animation, engineering — built so agents produce work that's actually excellent.</p>
 
-      <div class="stats">
-        <div>
-          <div class="stat-n">57</div>
-          <div class="stat-l">Skills</div>
+    <div class="counts">
+      <div class="count-cell">
+        <div class="count-n">57</div>
+        <div class="count-l">Skills</div>
+      </div>
+      <div class="count-cell">
+        <div class="count-n">8</div>
+        <div class="count-l">Categories</div>
+      </div>
+    </div>
+
+    <p class="works-with-label">Works with</p>
+    <div class="platforms">
+      <div class="platform primary">Claude Code</div>
+      <div class="platform">Codex</div>
+      <div class="platform">GitHub Copilot</div>
+      <div class="platform">Cursor / Windsurf</div>
+      <div class="platform">Any MCP agent</div>
+    </div>
+
+    <div class="left-foot">
+      <a href="https://github.com/damilareoo/damilares-skills" target="_blank" rel="noopener">github.com/damilareoo/damilares-skills</a>
+    </div>
+  </aside>
+
+  <!-- CENTER ──────────────────────────────────────── -->
+  <main class="center">
+    <div class="tabs" id="tabs">
+      <button class="tab on" data-cat="all">All<sup>57</sup></button>
+      <button class="tab" data-cat="design">Design<sup>14</sup></button>
+      <button class="tab" data-cat="anim">Animation<sup>2</sup></button>
+      <button class="tab" data-cat="vue">Vue<sup>7</sup></button>
+      <button class="tab" data-cat="tooling">Tooling<sup>9</sup></button>
+      <button class="tab" data-cat="eng">Engineering<sup>12</sup></button>
+      <button class="tab" data-cat="a11y">Accessibility<sup>3</sup></button>
+      <button class="tab" data-cat="ios">iOS<sup>1</sup></button>
+      <button class="tab" data-cat="content">Content<sup>9</sup></button>
+    </div>
+
+    <div class="scroll">
+      <div class="grid" id="grid"></div>
+    </div>
+  </main>
+
+  <!-- RIGHT ───────────────────────────────────────── -->
+  <aside class="right">
+    <div class="right-head">
+      <div class="right-head-title">Install</div>
+      <div class="right-head-sub">two commands — 57 skills</div>
+    </div>
+
+    <div class="right-body">
+
+      <div class="install-block">
+        <div class="install-platform">Claude Code</div>
+        <div class="install-step">
+          <div class="step-lbl">Add marketplace</div>
+          <div class="code" data-copy="/plugin marketplace add github:damilareoo/damilares-skills">/plugin marketplace add<br>github:damilareoo/damilares-skills</div>
         </div>
-        <div>
-          <div class="stat-n">8</div>
-          <div class="stat-l">Categories</div>
+        <div class="install-step">
+          <div class="step-lbl">Install skills</div>
+          <div class="code" data-copy="/plugin install v-skills@damilareoo/damilares-skills">/plugin install<br>v-skills@damilareoo/damilares-skills</div>
         </div>
       </div>
 
-      <p class="section-head">Works with</p>
-      <div class="platform-list">
-        <div class="platform-item primary">Claude Code</div>
-        <div class="platform-item">Codex</div>
-        <div class="platform-item">GitHub Copilot</div>
-        <div class="platform-item">Cursor / Windsurf</div>
-        <div class="platform-item">Any MCP agent</div>
+      <div class="hr"></div>
+
+      <div class="install-block">
+        <div class="install-platform">Other Agents</div>
+        <p class="note">For <strong>Codex</strong>, <strong>Cursor</strong>, <strong>Copilot</strong>, and any agent that accepts context — use the raw <code style="font-family:var(--mono);font-size:10.5px">SKILL.md</code> files directly from the repo.</p>
+        <a href="https://github.com/damilareoo/damilares-skills" class="gh-link" target="_blank" rel="noopener">Browse all skills on GitHub →</a>
       </div>
 
-      <div class="footer">
-        <a href="https://github.com/damilareoo/damilares-skills" target="_blank" rel="noopener">github.com/damilareoo</a>
-      </div>
-    </aside>
+      <div class="hr"></div>
 
-    <!-- CENTER -->
-    <main class="panel-center">
-      <div class="filter-bar">
-        <div class="filter-row" id="filter-row">
-          <button class="filter-pill active" data-cat="all">All <span class="pill-count">57</span></button>
-          <button class="filter-pill" data-cat="design">Design <span class="pill-count">14</span></button>
-          <button class="filter-pill" data-cat="anim">Animation <span class="pill-count">2</span></button>
-          <button class="filter-pill" data-cat="vue">Vue <span class="pill-count">7</span></button>
-          <button class="filter-pill" data-cat="tooling">Tooling <span class="pill-count">9</span></button>
-          <button class="filter-pill" data-cat="eng">Engineering <span class="pill-count">12</span></button>
-          <button class="filter-pill" data-cat="a11y">Accessibility <span class="pill-count">3</span></button>
-          <button class="filter-pill" data-cat="ios">iOS <span class="pill-count">1</span></button>
-          <button class="filter-pill" data-cat="content">Content <span class="pill-count">9</span></button>
-        </div>
+      <div class="install-block">
+        <div class="install-platform">Auto-sync</div>
+        <p class="note">New skills push to the marketplace automatically. Installed skills refresh on next session.</p>
       </div>
 
-      <div class="skills-viewport">
-        <div class="skills-grid" id="skills-grid"></div>
-      </div>
-    </main>
+    </div>
+  </aside>
 
-    <!-- RIGHT -->
-    <aside class="panel-right">
-      <div class="install-head">
-        <div class="install-title">Install</div>
-        <p class="install-sub">Two commands. 57 skills.</p>
-      </div>
+</div>
+<script>
+  const SKILLS = [
+    { slug: 'frontend-design',            cat: 'design',  desc: 'Production-grade UI with strong aesthetic direction' },
+    { slug: 'ui-ux-pro-max',              cat: 'design',  desc: 'Deep UI/UX design intelligence' },
+    { slug: 'interface-design',           cat: 'design',  desc: 'Interface composition and layout systems' },
+    { slug: 'interaction-design',         cat: 'design',  desc: 'Micro-interactions and motion design' },
+    { slug: 'design-lab',                 cat: 'design',  desc: 'Design interviews and creative exploration' },
+    { slug: 'design-system-enforcer',     cat: 'design',  desc: 'Enforces visual consistency at scale' },
+    { slug: 'refero-design',              cat: 'design',  desc: 'Research-first design methodology' },
+    { slug: 'canvas-design',              cat: 'design',  desc: 'Visual artwork and poster generation' },
+    { slug: 'algorithmic-art',            cat: 'design',  desc: 'Generative and algorithmic art creation' },
+    { slug: 'theme-factory',              cat: 'design',  desc: 'Design token and theme system generation' },
+    { slug: 'branding-system-skill',      cat: 'design',  desc: 'Brand identity systems and visual language' },
+    { slug: 'brand-guidelines',           cat: 'design',  desc: 'Brand guideline documentation' },
+    { slug: 'figma-to-code-skill',        cat: 'design',  desc: 'Figma design to production-ready code' },
+    { slug: 'baseline-ui',               cat: 'design',  desc: 'Opinionated UI baseline and defaults' },
+    { slug: '12-principles-of-animation', cat: 'anim',    desc: "Disney's 12 principles applied to UI" },
+    { slug: 'fixing-motion-performance',  cat: 'anim',    desc: 'Diagnose and fix janky animations' },
+    { slug: 'vue',                        cat: 'vue',     desc: 'Vue 3 Composition API patterns' },
+    { slug: 'nuxt',                       cat: 'vue',     desc: 'Nuxt full-stack application patterns' },
+    { slug: 'pinia',                      cat: 'vue',     desc: 'Pinia state management' },
+    { slug: 'vue-best-practices',         cat: 'vue',     desc: 'Vue code quality and conventions' },
+    { slug: 'vue-router-best-practices',  cat: 'vue',     desc: 'Vue Router navigation patterns' },
+    { slug: 'vue-testing-best-practices', cat: 'vue',     desc: 'Vue component and unit testing' },
+    { slug: 'vueuse-functions',           cat: 'vue',     desc: 'VueUse composables and utilities' },
+    { slug: 'vite',                       cat: 'tooling', desc: 'Vite build tool configuration' },
+    { slug: 'vitepress',                  cat: 'tooling', desc: 'VitePress documentation sites' },
+    { slug: 'vitest',                     cat: 'tooling', desc: 'Vitest unit testing framework' },
+    { slug: 'unocss',                     cat: 'tooling', desc: 'UnoCSS atomic CSS engine' },
+    { slug: 'tsdown',                     cat: 'tooling', desc: 'TypeScript library bundling' },
+    { slug: 'turborepo',                  cat: 'tooling', desc: 'Monorepo orchestration and caching' },
+    { slug: 'slidev',                     cat: 'tooling', desc: 'Code-driven presentation slides' },
+    { slug: 'pnpm',                       cat: 'tooling', desc: 'pnpm package manager workflows' },
+    { slug: 'antfu',                      cat: 'tooling', desc: "Anthony Fu's opinionated toolchain" },
+    { slug: 'plan-ceo-review',            cat: 'eng',     desc: 'CEO/founder lens on product plans' },
+    { slug: 'plan-eng-review',            cat: 'eng',     desc: 'Engineering manager plan review' },
+    { slug: 'review',                     cat: 'eng',     desc: 'Pre-landing PR review' },
+    { slug: 'ship',                       cat: 'eng',     desc: 'Structured ship workflow' },
+    { slug: 'retro',                      cat: 'eng',     desc: 'Engineering retrospective facilitation' },
+    { slug: 'qa',                         cat: 'eng',     desc: 'QA testing methodology' },
+    { slug: 'skill-creator',              cat: 'eng',     desc: 'Create and modify agent skills' },
+    { slug: 'mcp-builder',               cat: 'eng',     desc: 'MCP server development' },
+    { slug: 'schedule',                   cat: 'eng',     desc: 'Task and work scheduling' },
+    { slug: 'doc-coauthoring',            cat: 'eng',     desc: 'Collaborative documentation' },
+    { slug: 'setup-browser-cookies',      cat: 'eng',     desc: 'Browser cookie import and setup' },
+    { slug: 'interface-craft',            cat: 'eng',     desc: 'Interface crafting toolkit' },
+    { slug: 'fixing-accessibility',       cat: 'a11y',    desc: 'WCAG violation diagnosis and fixes' },
+    { slug: 'wcag-audit-patterns',        cat: 'a11y',    desc: 'WCAG 2.2 comprehensive audit' },
+    { slug: 'web-design-guidelines',      cat: 'a11y',    desc: 'Web interaction and design standards' },
+    { slug: 'swiftui-ui-patterns',        cat: 'ios',     desc: 'SwiftUI best practices and patterns' },
+    { slug: 'copywriting-skill',          cat: 'content', desc: 'Marketing and product copywriting' },
+    { slug: 'internal-comms',             cat: 'content', desc: 'Internal communication writing' },
+    { slug: 'fixing-metadata',            cat: 'content', desc: 'SEO and metadata optimization' },
+    { slug: 'pdf',                        cat: 'content', desc: 'PDF document processing and generation' },
+    { slug: 'docx',                       cat: 'content', desc: 'Word document handling' },
+    { slug: 'pptx',                       cat: 'content', desc: 'PowerPoint presentation handling' },
+    { slug: 'xlsx',                       cat: 'content', desc: 'Excel spreadsheet processing' },
+    { slug: 'slack-gif-creator',          cat: 'content', desc: 'Slack GIF and reaction creation' },
+    { slug: 'web-artifacts-builder',      cat: 'content', desc: 'Web content artifact generation' },
+  ];
 
-      <div class="install-body">
+  const grid = document.getElementById('grid');
+  const base = 'https://github.com/damilareoo/damilares-skills/tree/main/plugins/v-skills/skills/';
 
-        <div class="install-group">
-          <div class="install-platform">Claude Code</div>
-          <div class="install-step">
-            <div class="step-label">Add marketplace</div>
-            <div class="code-block" data-copy="/plugin marketplace add github:damilareoo/damilares-skills">/plugin marketplace add<br>github:damilareoo/damilares-skills</div>
-          </div>
-          <div class="install-step">
-            <div class="step-label">Install skills</div>
-            <div class="code-block" data-copy="/plugin install v-skills@damilareoo/damilares-skills">/plugin install<br>v-skills@damilareoo/damilares-skills</div>
-          </div>
-        </div>
-
-        <div class="hr"></div>
-
-        <div class="install-group">
-          <div class="install-platform">Other Agents</div>
-          <p class="note">For <strong>Codex</strong>, <strong>Cursor</strong>, <strong>Copilot</strong>, and any agent that accepts context — reference the raw <code style="font-family:var(--mono);font-size:10px">SKILL.md</code> files directly from the repository.</p>
-          <a href="https://github.com/damilareoo/damilares-skills" class="repo-link" target="_blank" rel="noopener">Browse all skills on GitHub</a>
-        </div>
-
-        <div class="hr"></div>
-
-        <div class="install-group">
-          <div class="install-platform">Auto-sync</div>
-          <p class="note">Skills update automatically. New additions push to the marketplace on install.</p>
-        </div>
-
-      </div>
-    </aside>
-  </div>
-
-  <script>
-    const SKILLS = [
-      { slug: 'frontend-design',            cat: 'design',  desc: 'Production-grade UI with strong aesthetic direction' },
-      { slug: 'ui-ux-pro-max',              cat: 'design',  desc: 'Deep UI/UX design intelligence' },
-      { slug: 'interface-design',           cat: 'design',  desc: 'Interface composition and layout systems' },
-      { slug: 'interaction-design',         cat: 'design',  desc: 'Micro-interactions and motion design' },
-      { slug: 'design-lab',                 cat: 'design',  desc: 'Design interviews and creative exploration' },
-      { slug: 'design-system-enforcer',     cat: 'design',  desc: 'Enforces visual consistency at scale' },
-      { slug: 'refero-design',              cat: 'design',  desc: 'Research-first design methodology' },
-      { slug: 'canvas-design',              cat: 'design',  desc: 'Visual artwork and poster generation' },
-      { slug: 'algorithmic-art',            cat: 'design',  desc: 'Generative and algorithmic art creation' },
-      { slug: 'theme-factory',              cat: 'design',  desc: 'Design token and theme system generation' },
-      { slug: 'branding-system-skill',      cat: 'design',  desc: 'Brand identity systems and visual language' },
-      { slug: 'brand-guidelines',           cat: 'design',  desc: 'Brand guideline documentation' },
-      { slug: 'figma-to-code-skill',        cat: 'design',  desc: 'Figma design to production-ready code' },
-      { slug: 'baseline-ui',               cat: 'design',  desc: 'Opinionated UI baseline and defaults' },
-      { slug: '12-principles-of-animation', cat: 'anim',    desc: "Disney's 12 principles applied to UI" },
-      { slug: 'fixing-motion-performance',  cat: 'anim',    desc: 'Diagnose and fix janky animations' },
-      { slug: 'vue',                        cat: 'vue',     desc: 'Vue 3 Composition API patterns' },
-      { slug: 'nuxt',                       cat: 'vue',     desc: 'Nuxt full-stack application patterns' },
-      { slug: 'pinia',                      cat: 'vue',     desc: 'Pinia state management' },
-      { slug: 'vue-best-practices',         cat: 'vue',     desc: 'Vue code quality and conventions' },
-      { slug: 'vue-router-best-practices',  cat: 'vue',     desc: 'Vue Router navigation patterns' },
-      { slug: 'vue-testing-best-practices', cat: 'vue',     desc: 'Vue component and unit testing' },
-      { slug: 'vueuse-functions',           cat: 'vue',     desc: 'VueUse composables and utilities' },
-      { slug: 'vite',                       cat: 'tooling', desc: 'Vite build tool configuration' },
-      { slug: 'vitepress',                  cat: 'tooling', desc: 'VitePress documentation sites' },
-      { slug: 'vitest',                     cat: 'tooling', desc: 'Vitest unit testing framework' },
-      { slug: 'unocss',                     cat: 'tooling', desc: 'UnoCSS atomic CSS engine' },
-      { slug: 'tsdown',                     cat: 'tooling', desc: 'TypeScript library bundling' },
-      { slug: 'turborepo',                  cat: 'tooling', desc: 'Monorepo orchestration and caching' },
-      { slug: 'slidev',                     cat: 'tooling', desc: 'Code-driven presentation slides' },
-      { slug: 'pnpm',                       cat: 'tooling', desc: 'pnpm package manager workflows' },
-      { slug: 'antfu',                      cat: 'tooling', desc: "Anthony Fu's opinionated toolchain" },
-      { slug: 'plan-ceo-review',            cat: 'eng',     desc: 'CEO/founder lens on product plans' },
-      { slug: 'plan-eng-review',            cat: 'eng',     desc: 'Engineering manager plan review' },
-      { slug: 'review',                     cat: 'eng',     desc: 'Pre-landing PR review' },
-      { slug: 'ship',                       cat: 'eng',     desc: 'Structured ship workflow' },
-      { slug: 'retro',                      cat: 'eng',     desc: 'Engineering retrospective facilitation' },
-      { slug: 'qa',                         cat: 'eng',     desc: 'QA testing methodology' },
-      { slug: 'skill-creator',              cat: 'eng',     desc: 'Create and modify agent skills' },
-      { slug: 'mcp-builder',               cat: 'eng',     desc: 'MCP server development' },
-      { slug: 'schedule',                   cat: 'eng',     desc: 'Task and work scheduling' },
-      { slug: 'doc-coauthoring',            cat: 'eng',     desc: 'Collaborative documentation' },
-      { slug: 'setup-browser-cookies',      cat: 'eng',     desc: 'Browser cookie import and setup' },
-      { slug: 'interface-craft',            cat: 'eng',     desc: 'Interface crafting toolkit' },
-      { slug: 'fixing-accessibility',       cat: 'a11y',    desc: 'WCAG violation diagnosis and fixes' },
-      { slug: 'wcag-audit-patterns',        cat: 'a11y',    desc: 'WCAG 2.2 comprehensive audit' },
-      { slug: 'web-design-guidelines',      cat: 'a11y',    desc: 'Web interaction and design standards' },
-      { slug: 'swiftui-ui-patterns',        cat: 'ios',     desc: 'SwiftUI best practices and patterns' },
-      { slug: 'copywriting-skill',          cat: 'content', desc: 'Marketing and product copywriting' },
-      { slug: 'internal-comms',             cat: 'content', desc: 'Internal communication writing' },
-      { slug: 'fixing-metadata',            cat: 'content', desc: 'SEO and metadata optimization' },
-      { slug: 'pdf',                        cat: 'content', desc: 'PDF document processing and generation' },
-      { slug: 'docx',                       cat: 'content', desc: 'Word document handling' },
-      { slug: 'pptx',                       cat: 'content', desc: 'PowerPoint presentation handling' },
-      { slug: 'xlsx',                       cat: 'content', desc: 'Excel spreadsheet processing' },
-      { slug: 'slack-gif-creator',          cat: 'content', desc: 'Slack GIF and reaction creation' },
-      { slug: 'web-artifacts-builder',      cat: 'content', desc: 'Web content artifact generation' },
-    ];
-
-    const grid = document.getElementById('skills-grid');
-    const base = 'https://github.com/damilareoo/damilares-skills/tree/main/plugins/v-skills/skills/';
-
-    function render(filter) {
-      const items = filter === 'all' ? SKILLS : SKILLS.filter(s => s.cat === filter);
-      grid.innerHTML = '';
-      items.forEach((s, i) => {
-        const a = document.createElement('a');
-        a.href = base + s.slug;
-        a.target = '_blank';
-        a.rel = 'noopener';
-        a.className = 'skill-card';
-        a.style.animationDelay = `${Math.min(i * 0.02, 0.35)}s`;
-        a.innerHTML = `<div class="skill-name">${s.slug}</div><div class="skill-desc">${s.desc}</div>`;
-        grid.appendChild(a);
-      });
-    }
-
-    document.getElementById('filter-row').addEventListener('click', e => {
-      const pill = e.target.closest('.filter-pill');
-      if (!pill) return;
-      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-      pill.classList.add('active');
-      render(pill.dataset.cat);
+  function render(cat) {
+    const items = cat === 'all' ? SKILLS : SKILLS.filter(s => s.cat === cat);
+    grid.innerHTML = '';
+    items.forEach((s, i) => {
+      const a = document.createElement('a');
+      a.href = base + s.slug;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.className = 'card';
+      a.style.animationDelay = `${Math.min(i * 0.018, 0.3)}s`;
+      a.innerHTML = `<div class="card-name">${s.slug}</div><div class="card-desc">${s.desc}</div>`;
+      grid.appendChild(a);
     });
+  }
 
-    document.addEventListener('click', e => {
-      const b = e.target.closest('.code-block[data-copy]');
-      if (!b) return;
-      navigator.clipboard.writeText(b.dataset.copy).then(() => {
-        b.classList.add('copied');
-        setTimeout(() => b.classList.remove('copied'), 1600);
-      });
+  document.getElementById('tabs').addEventListener('click', e => {
+    const t = e.target.closest('.tab');
+    if (!t) return;
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('on'));
+    t.classList.add('on');
+    render(t.dataset.cat);
+  });
+
+  document.addEventListener('click', e => {
+    const b = e.target.closest('.code[data-copy]');
+    if (!b) return;
+    navigator.clipboard.writeText(b.dataset.copy).then(() => {
+      b.classList.add('ok');
+      setTimeout(() => b.classList.remove('ok'), 1500);
     });
+  });
 
-    render('all');
-  </script>
+  render('all');
+</script>
 </body>
 </html>
