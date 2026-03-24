@@ -364,14 +364,4 @@ Skills installed via the Claude Code desktop app or `~/.claude/skills` are auto-
 
 ---
 
-## Why I built this
-
-Created by [Damilare Osofisan](https://github.com/damilareoo).
-
-I got tired of telling AI to be better at design. "Make it more premium" is not a prompt. "Choose a typographic direction, commit to it, and refuse the defaults" is a prompt. The difference is a skill.
-
-Every skill in this collection came from a real failure — a Vue component that used the wrong API, an animation that violated follow-through, a UI that converged on the same aesthetic as every other AI-generated interface. I built the skill, internalized the pattern, and now the agent gets it right the first time.
-
-These are not prompts for beginners who want help with basics. They are modes of expertise for developers who already use AI heavily and want the output to reflect actual domain knowledge.
-
 The website: [damilares-skills.vercel.app](https://damilares-skills.vercel.app)
