@@ -17,451 +17,708 @@
   <meta name="twitter:title" content="damilares-skills — Expert Modes">
   <meta name="twitter:description" content="57 curated skills. Works across Claude Code, Codex, Cursor, and Copilot.">
   <meta name="twitter:image" content="https://damilares-skills.vercel.app/api/og">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
   <style>
-    /* ── Reset ─────────────────────────────────────────── */
+    /* ── Reset ──────────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     button { background: none; border: none; cursor: pointer; font-family: inherit; }
     a { text-decoration: none; color: inherit; }
+    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
-    /* ── Variables ──────────────────────────────────────── */
+    /* ── Tokens ─────────────────────────────────────────────────── */
     :root {
-      --bg:      #0c0c0a;
-      --surface: #121210;
-      --hover:   #161614;
-      --rule:    #1f1f1d;
-      --muted:   #383835;
-      --dim:     #565652;
-      --mid:     #7a7a75;
-      --soft:    #9e9e98;
-      --text:    #dedad2;
-      --bright:  #f0ece4;
-      --white:   #ffffff;
-      --sans:    'Suisse Int\'l','Neue Helvetica','Helvetica Neue',Helvetica,Arial,sans-serif;
-      --mono:    'Suisse Mono','Fira Code','SF Mono','Consolas',monospace;
-      --serif:   'DM Serif Display',Georgia,serif;
-      --ticker-h: 32px;
-      --panel-w:  304px;
+      --bg:         #0a0a09;
+      --s1:         #0f0f0e;
+      --s2:         #141413;
+      --b1:         #1c1c1a;
+      --b2:         #252523;
+      --text:       #e6e1d9;
+      --dim:        #636059;
+      --muted:      #2c2b28;
+      --accent:     #c8f130;
+      --accent-bg:  rgba(200,241,48,.07);
+
+      --f-sans:  'Syne', system-ui, sans-serif;
+      --f-serif: 'DM Serif Display', Georgia, serif;
+      --f-mono:  'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+
+      --sidebar: 296px;
+      --ticker:  32px;
+      --pad:     24px;
+      --spring:  cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* ── Base ───────────────────────────────────────────── */
+    /* ── Base ───────────────────────────────────────────────────── */
     html, body {
       width: 100%; height: 100%;
-      overflow: hidden;
       background: var(--bg);
       color: var(--text);
-      font-family: var(--sans);
-      -webkit-font-smoothing: antialiased;
+      font-family: var(--f-sans);
     }
 
-    /* ── Grain texture ──────────────────────────────────── */
+    /* ── Grain ──────────────────────────────────────────────────── */
     body::after {
       content: '';
       position: fixed; inset: 0;
-      z-index: 9999; pointer-events: none;
-      opacity: 0.045;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 180px 180px;
+      z-index: 9000; pointer-events: none;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
     }
 
-    /* ── Top border ─────────────────────────────────────── */
+    /* ── Top accent bar ─────────────────────────────────────────── */
     body::before {
       content: '';
       position: fixed; top: 0; left: 0; right: 0;
-      height: 1px; background: var(--text); z-index: 200;
+      height: 2px; background: var(--accent); z-index: 300;
     }
 
-    /* ── Ticker ─────────────────────────────────────────── */
+    /* ── Custom cursor ──────────────────────────────────────────── */
+    @media (hover: hover) {
+      body { cursor: none; }
+      .cursor {
+        position: fixed;
+        width: 5px; height: 5px;
+        background: var(--accent);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: width 200ms var(--spring), height 200ms var(--spring),
+                    background 200ms, border-radius 200ms;
+        will-change: left, top;
+      }
+      .cursor.big {
+        width: 28px; height: 28px;
+        background: transparent;
+        border: 1.5px solid var(--accent);
+        border-radius: 50%;
+      }
+    }
+    @media (hover: none) { .cursor { display: none; } }
+
+    /* ── Ticker ─────────────────────────────────────────────────── */
     .ticker {
-      position: fixed; top: 1px; left: 0; right: 0;
-      height: var(--ticker-h);
+      position: fixed; top: 2px; left: 0; right: 0;
+      height: var(--ticker);
       background: var(--bg);
-      border-bottom: 1px solid var(--rule);
+      border-bottom: 1px solid var(--b1);
       overflow: hidden; z-index: 100;
       display: flex; align-items: center;
     }
     .ticker-track {
       display: flex; white-space: nowrap;
-      animation: ticker-scroll 90s linear infinite;
+      animation: ticker-scroll 100s linear infinite;
     }
     .ticker-track:hover { animation-play-state: paused; }
     .ticker-cmd {
-      font-family: var(--mono); font-size: 10px;
-      color: var(--muted); letter-spacing: 0.03em;
-      padding: 0 14px;
+      font-family: var(--f-mono); font-size: 10px;
+      color: var(--muted); letter-spacing: 0.04em;
+      padding: 0 16px;
+      transition: color 120ms;
     }
-    .ticker-dot {
-      color: var(--rule); font-size: 10px;
-      flex-shrink: 0;
+    .ticker-cmd:hover { color: var(--dim); }
+    .ticker-sep {
+      color: var(--b2); font-size: 10px;
+      font-family: var(--f-mono); flex-shrink: 0;
     }
     @keyframes ticker-scroll {
       from { transform: translateX(0); }
       to   { transform: translateX(-50%); }
     }
 
-    /* ── Shell ──────────────────────────────────────────── */
+    /* ── Shell ──────────────────────────────────────────────────── */
     .shell {
       display: flex;
-      height: 100%;
-      padding-top: calc(1px + var(--ticker-h));
+      height: 100dvh;
+      padding-top: calc(2px + var(--ticker));
+      overflow: hidden;
     }
 
-    /* ── Left panel ─────────────────────────────────────── */
+    /* ── LEFT PANEL ─────────────────────────────────────────────── */
     .left {
-      width: var(--panel-w);
-      min-width: var(--panel-w);
+      width: var(--sidebar);
+      min-width: var(--sidebar);
       height: 100%;
-      border-right: 1px solid var(--rule);
+      border-right: 1px solid var(--b1);
       display: flex;
       flex-direction: column;
       overflow: hidden;
     }
 
-    /* Left — header */
-    .left-header {
-      padding: 18px 22px;
-      border-bottom: 1px solid var(--rule);
-      display: flex; align-items: center; gap: 10px;
+    /* — Header row — */
+    .left-head {
+      padding: 15px var(--pad) 13px;
+      border-bottom: 1px solid var(--b1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       flex-shrink: 0;
+      gap: 10px;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 8px;
     }
     .brand-mark {
-      width: 26px; height: 26px;
-      border: 1px solid var(--muted);
+      width: 22px; height: 22px;
+      border: 1px solid var(--b2);
       display: flex; align-items: center; justify-content: center;
-      font-family: var(--mono); font-size: 11px;
-      color: var(--mid); flex-shrink: 0;
-      transition: border-color 0.15s, color 0.15s;
+      font-family: var(--f-mono); font-size: 10px; font-weight: 500;
+      color: var(--dim); flex-shrink: 0;
+      transition: border-color 150ms, color 150ms;
     }
-    .brand-mark:hover { border-color: var(--soft); color: var(--text); }
+    .brand-mark:hover { border-color: var(--dim); color: var(--text); }
     .brand-name {
-      font-family: var(--mono); font-size: 10px;
-      color: var(--dim); letter-spacing: 0.05em;
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      text-transform: uppercase;
     }
-
-    /* Left — hero */
-    .left-hero {
-      padding: 24px 22px 20px;
-      border-bottom: 1px solid var(--rule);
+    .brand-badge {
+      font-size: 8.5px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-bg);
+      padding: 2px 6px;
+      border: 1px solid rgba(200,241,48,.18);
       flex-shrink: 0;
     }
-    .hero-title {
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: 58px;
-      line-height: 0.9;
-      letter-spacing: -0.015em;
-      color: var(--bright);
-      margin-bottom: 18px;
+
+    /* — Hero — */
+    .left-hero {
+      padding: 26px var(--pad) 22px;
+      border-bottom: 1px solid var(--b1);
+      flex-shrink: 0;
     }
-    .hero-stats {
-      display: flex; align-items: baseline; gap: 6px;
-      margin-bottom: 12px;
+    .hero-num-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      margin-bottom: 6px;
     }
     .hero-num {
-      font-size: 26px; font-weight: 500;
-      color: var(--bright); letter-spacing: -0.04em; line-height: 1;
+      font-family: var(--f-sans);
+      font-size: 96px;
+      font-weight: 800;
+      line-height: 0.85;
+      letter-spacing: -0.055em;
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
     }
     .hero-unit {
-      font-family: var(--mono); font-size: 9px;
-      color: var(--dim); letter-spacing: 0.1em; text-transform: uppercase;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--dim); padding-bottom: 10px;
+    }
+    .hero-title {
+      font-family: var(--f-serif);
+      font-style: italic;
+      font-size: 38px;
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 14px;
     }
     .hero-sub {
-      font-size: 11.5px; color: var(--mid); line-height: 1.65;
+      font-size: 11.5px; line-height: 1.7;
+      color: var(--dim); font-weight: 400;
+      max-width: 22ch;
     }
 
-    /* Left — categories */
+    /* — Categories — */
     .left-cats {
-      border-bottom: 1px solid var(--rule);
-      overflow-y: auto; flex-shrink: 0;
+      flex: 1;
+      overflow-y: auto;
       scrollbar-width: none;
     }
     .left-cats::-webkit-scrollbar { display: none; }
+    .cats-label {
+      padding: 13px var(--pad) 7px;
+      font-size: 8.5px; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid var(--b1);
+    }
     .cat-row {
       display: flex; align-items: center;
       justify-content: space-between;
-      padding: 8px 22px;
+      padding: 9px var(--pad);
+      border-bottom: 1px solid var(--b1);
       cursor: pointer;
-      transition: background 0.1s;
+      transition: background 100ms;
+      gap: 10px;
     }
-    .cat-row:hover { background: var(--hover); }
-    .cat-row.active { background: var(--hover); }
+    .cat-row:hover { background: var(--s1); }
+    .cat-row.active { background: var(--s1); }
     .cat-left { display: flex; align-items: center; gap: 10px; }
-    .cat-dot {
-      width: 5px; height: 5px;
-      border: 1px solid var(--muted);
-      border-radius: 50%; flex-shrink: 0;
-      transition: background 0.15s, border-color 0.15s;
+    .cat-indicator {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: var(--muted); flex-shrink: 0;
+      transition: background 150ms, transform 150ms;
     }
-    .cat-row.active .cat-dot { background: var(--text); border-color: var(--text); }
+    .cat-row.active .cat-indicator {
+      background: var(--accent); transform: scale(1.5);
+    }
     .cat-name {
-      font-size: 12px; color: var(--mid);
-      transition: color 0.12s;
+      font-size: 12.5px; font-weight: 500;
+      color: var(--dim); transition: color 100ms;
+      letter-spacing: -0.01em;
     }
     .cat-row:hover .cat-name,
     .cat-row.active .cat-name { color: var(--text); }
-    .cat-num {
-      font-family: var(--mono); font-size: 10px;
-      color: var(--muted);
+    .cat-count {
+      font-family: var(--f-mono); font-size: 10px;
+      font-weight: 300; color: var(--muted);
+      transition: color 100ms;
     }
-    .cat-row.active .cat-num { color: var(--dim); }
+    .cat-row.active .cat-count { color: var(--dim); }
 
-    /* Left — install */
+    .kbd-hint {
+      padding: 10px var(--pad) 12px;
+      display: flex; align-items: center;
+      gap: 4px; flex-wrap: wrap;
+    }
+    .kbd-hint-text { font-size: 10px; font-family: var(--f-mono); color: var(--muted); }
+    .kbd {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 16px; height: 15px; padding: 0 3px;
+      border: 1px solid var(--b2);
+      font-size: 9px; font-family: var(--f-mono); color: var(--muted);
+    }
+
+    /* — Install — */
     .left-install {
-      margin-top: auto;
-      padding: 18px 22px;
-      border-top: 1px solid var(--rule);
+      border-top: 1px solid var(--b1);
+      padding: 18px var(--pad);
       flex-shrink: 0;
     }
-    .install-heading {
-      font-family: var(--mono); font-size: 9px;
-      color: var(--dim); letter-spacing: 0.1em;
-      text-transform: uppercase; margin-bottom: 10px;
+    .install-label {
+      font-size: 8.5px; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 10px;
     }
-    .prompt-block {
-      border: 1px solid var(--muted);
+    .install-block {
+      border: 1px solid var(--b1);
+      background: var(--s1);
       cursor: pointer;
-      transition: border-color 0.12s;
+      transition: border-color 120ms, background 120ms;
     }
-    .prompt-block:hover { border-color: var(--soft); }
-    .prompt-topbar {
-      padding: 7px 10px;
-      border-bottom: 1px solid var(--rule);
+    .install-block:hover { border-color: var(--b2); background: var(--s2); }
+    .install-block.copied { border-color: rgba(200,241,48,.3); }
+    .install-bar {
       display: flex; justify-content: space-between; align-items: center;
+      padding: 6px 10px;
+      border-bottom: 1px solid var(--b1);
     }
-    .prompt-tag {
-      font-family: var(--mono); font-size: 9px;
-      color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase;
+    .install-tag {
+      font-family: var(--f-mono); font-size: 8.5px;
+      color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase;
     }
-    .copy-btn {
-      font-family: var(--mono); font-size: 9px;
-      color: var(--dim); letter-spacing: 0.06em; text-transform: uppercase;
-      transition: color 0.12s;
+    .install-copy {
+      font-family: var(--f-mono); font-size: 8.5px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); transition: color 120ms;
     }
-    .copy-btn:hover { color: var(--text); }
-    .prompt-body {
-      padding: 10px; font-size: 11px;
-      line-height: 1.7; color: var(--mid); font-style: italic;
+    .install-block:hover .install-copy { color: var(--dim); }
+    .install-block.copied .install-copy { color: var(--accent); }
+    .install-body {
+      padding: 9px 10px;
+      font-family: var(--f-mono); font-size: 9.5px;
+      line-height: 1.65; color: var(--dim);
+      font-style: italic; user-select: all;
     }
-    .prompt-body code {
-      font-family: var(--mono); font-size: 10px;
-      background: var(--surface); padding: 1px 4px;
-      font-style: normal; color: var(--soft);
+    .install-body code {
+      font-style: normal; color: var(--text);
+      background: var(--b1); padding: 1px 4px;
     }
     .install-sub {
-      margin-top: 8px; font-size: 10.5px;
-      color: var(--muted); line-height: 1.5;
+      margin-top: 10px; font-size: 10.5px;
+      line-height: 1.55; color: var(--muted);
     }
-    .install-sub a { color: var(--dim); }
-    .install-sub a:hover { color: var(--soft); }
+    .install-sub a {
+      color: var(--dim);
+      text-underline-offset: 2px; text-decoration: underline;
+      text-decoration-color: var(--muted); transition: color 120ms;
+    }
+    .install-sub a:hover { color: var(--text); }
 
-    /* ── Right panel ────────────────────────────────────── */
+    /* ── RIGHT PANEL ────────────────────────────────────────────── */
     .right {
       flex: 1; min-width: 0; height: 100%;
       display: flex; flex-direction: column; overflow: hidden;
     }
 
-    /* Filter bar */
+    /* — Filter bar — */
     .filter-bar {
       height: 42px; flex-shrink: 0;
-      border-bottom: 1px solid var(--rule);
-      display: flex; align-items: center;
-      padding: 0 22px; gap: 0;
+      border-bottom: 1px solid var(--b1);
+      display: flex; align-items: stretch;
+      padding: 0 22px;
       overflow-x: auto; scrollbar-width: none;
     }
     .filter-bar::-webkit-scrollbar { display: none; }
     .ftab {
-      font-size: 11px; color: var(--dim);
-      padding: 4px 0; margin-right: 22px;
+      font-size: 11px; font-weight: 500;
+      color: var(--dim); padding: 0 14px 0 0;
       cursor: pointer; white-space: nowrap;
-      transition: color 0.12s;
-      position: relative; background: none;
+      transition: color 120ms;
+      position: relative;
+      display: flex; align-items: center; gap: 5px;
+      background: none; border: none;
+      letter-spacing: -0.01em;
     }
     .ftab::after {
       content: ''; position: absolute;
-      bottom: -1px; left: 0; right: 0;
-      height: 1px; background: var(--text);
-      opacity: 0; transition: opacity 0.12s;
+      bottom: 0; left: 0; right: 14px;
+      height: 1.5px; background: var(--text);
+      opacity: 0; transition: opacity 120ms;
     }
     .ftab:hover { color: var(--text); }
     .ftab.active { color: var(--text); }
     .ftab.active::after { opacity: 1; }
-    .ftab-count {
-      font-family: var(--mono); font-size: 9px;
-      color: var(--muted); margin-left: 4px;
+    .ftab-ct {
+      font-family: var(--f-mono); font-size: 9px;
+      font-weight: 300; color: var(--muted);
     }
 
-    /* Skills list */
-    .skills-list {
+    /* — Skills scroll — */
+    .skills-scroll {
       flex: 1; overflow-y: auto;
       scrollbar-width: thin;
-      scrollbar-color: var(--muted) transparent;
+      scrollbar-color: var(--b2) transparent;
     }
-    .skills-list::-webkit-scrollbar { width: 3px; }
-    .skills-list::-webkit-scrollbar-thumb { background: var(--muted); }
+    .skills-scroll::-webkit-scrollbar { width: 3px; }
+    .skills-scroll::-webkit-scrollbar-track { background: transparent; }
+    .skills-scroll::-webkit-scrollbar-thumb { background: var(--b2); }
 
-    /* Skill row */
-    .skill {
-      display: flex; flex-direction: column;
-      padding: 0 22px;
-      border-bottom: 1px solid var(--rule);
-      border-left: 2px solid transparent;
-      transition: background 0.08s, border-left-color 0.1s;
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(248px, 1fr));
+      gap: 1px;
+      background: var(--b1);
+    }
+
+    /* — Skill card — */
+    .skill-card {
+      background: var(--bg);
+      padding: 18px 20px;
       cursor: pointer;
+      display: flex; flex-direction: column;
+      gap: 5px;
+      position: relative; overflow: hidden;
+      transition: background 100ms;
     }
-    .skill:hover {
-      background: var(--hover);
-      border-left-color: var(--soft);
+    .skill-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: var(--accent-bg);
+      opacity: 0; transition: opacity 180ms var(--spring);
+      pointer-events: none;
     }
-    .skill-main {
-      display: flex; align-items: center;
-      padding: 12px 0; gap: 0;
-      width: 100%;
-    }
-    .skill-num {
-      font-family: var(--mono); font-size: 10px;
-      color: var(--muted); width: 30px; flex-shrink: 0;
-    }
-    .skill-cmd {
-      font-family: var(--mono); font-size: 12px;
-      color: var(--soft); width: 218px; flex-shrink: 0;
-      padding-right: 14px; margin-right: 14px;
-      border-right: 1px solid var(--rule);
-      transition: color 0.1s;
-    }
-    .skill:hover .skill-cmd { color: var(--text); }
-    .skill-name {
-      flex: 1; font-size: 12.5px;
-      color: var(--text); min-width: 0;
-    }
-    .skill-cat {
-      font-family: var(--mono); font-size: 9px;
-      color: var(--muted); margin-left: 12px;
-      flex-shrink: 0; letter-spacing: 0.04em;
-    }
-    .skill-arrow {
-      font-size: 13px; color: var(--dim);
-      margin-left: 10px; flex-shrink: 0;
-      opacity: 0; transform: translateX(-6px);
-      transition: opacity 0.12s, transform 0.12s;
-    }
-    .skill:hover .skill-arrow { opacity: 1; transform: translateX(0); }
+    .skill-card:hover { background: var(--s1); }
+    .skill-card:hover::before { opacity: 1; }
 
-    /* Description expand — grid trick for smooth height */
-    .skill-expand {
-      display: grid; grid-template-rows: 0fr;
-      transition: grid-template-rows 0.18s ease;
+    .s-cat {
+      font-size: 8.5px; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--accent); opacity: 0.75;
     }
-    .skill:hover .skill-expand { grid-template-rows: 1fr; }
-    .skill-expand-inner {
-      overflow: hidden;
+    .s-name {
+      font-size: 13.5px; font-weight: 700;
+      letter-spacing: -0.025em; line-height: 1.2;
+      color: var(--text);
     }
-    .skill-desc {
-      font-size: 11px; color: var(--mid);
-      padding: 0 0 10px 30px; line-height: 1.5;
+    .s-desc {
+      font-size: 11px; line-height: 1.65;
+      color: var(--dim);
+      max-height: 0; overflow: hidden;
+      transition: max-height 280ms var(--spring), opacity 180ms var(--spring);
+      opacity: 0;
+    }
+    .skill-card:hover .s-desc { max-height: 80px; opacity: 1; }
+    .s-link {
+      font-size: 9.5px; font-family: var(--f-mono);
+      color: var(--muted); opacity: 0; margin-top: 2px;
+      transition: opacity 120ms var(--spring), color 120ms;
+    }
+    .skill-card:hover .s-link { opacity: 1; color: var(--accent); }
+    .skill-card.hidden { display: none; }
+
+    /* ── MOBILE (< 768px) ───────────────────────────────────────── */
+    @media (max-width: 767px) {
+      :root { --pad: 16px; --ticker: 28px; }
+
+      body { cursor: auto; }
+      .cursor { display: none !important; }
+      html, body { height: auto; overflow: auto; }
+
+      .shell {
+        height: auto; overflow: visible;
+        flex-direction: column;
+        padding-top: calc(2px + var(--ticker));
+      }
+
+      .left {
+        width: 100%; min-width: 0; height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--b1);
+        flex-direction: row; align-items: center;
+        flex-wrap: nowrap; overflow: visible;
+      }
+
+      .left-head {
+        padding: 11px var(--pad);
+        border-bottom: none;
+        flex: 1; min-width: 0;
+      }
+
+      .brand-name { display: none; }
+      .brand-badge { display: none; }
+
+      /* Inline hero for mobile */
+      .hero-mini {
+        display: flex; align-items: baseline;
+        gap: 8px; flex-wrap: nowrap;
+        min-width: 0; flex: 1;
+      }
+      .hero-num-mini {
+        font-size: 30px; font-weight: 800;
+        letter-spacing: -0.05em; color: var(--accent);
+        line-height: 1; flex-shrink: 0;
+      }
+      .hero-title-mini {
+        font-family: var(--f-serif); font-style: italic;
+        font-size: 17px; line-height: 1;
+        letter-spacing: -0.01em; color: var(--text);
+        white-space: nowrap; overflow: hidden;
+        text-overflow: ellipsis; min-width: 0;
+      }
+
+      .left-hero,
+      .left-cats,
+      .left-install { display: none; }
+
+      /* Mobile category strip */
+      .mobile-cats {
+        display: flex !important;
+        overflow-x: auto; scrollbar-width: none;
+        background: var(--bg);
+        border-bottom: 1px solid var(--b1);
+        padding: 0 var(--pad);
+        position: sticky;
+        top: calc(2px + var(--ticker));
+        z-index: 50;
+        -webkit-overflow-scrolling: touch;
+      }
+      .mobile-cats::-webkit-scrollbar { display: none; }
+      .mob-cat {
+        flex-shrink: 0; padding: 10px 12px;
+        font-size: 11px; font-weight: 600;
+        color: var(--dim);
+        border-bottom: 2px solid transparent;
+        cursor: pointer; white-space: nowrap;
+        transition: color 100ms, border-color 100ms;
+        display: flex; align-items: center; gap: 4px;
+        letter-spacing: -0.01em;
+      }
+      .mob-cat:hover { color: var(--text); }
+      .mob-cat.active { color: var(--accent); border-bottom-color: var(--accent); }
+      .mob-cat-ct { font-family: var(--f-mono); font-size: 9px; font-weight: 300; opacity: 0.6; }
+
+      .filter-bar { display: none; }
+
+      .right { height: auto; overflow: visible; }
+      .skills-scroll { overflow: visible; flex: none; }
+      .skills-grid { grid-template-columns: 1fr; }
+
+      /* Always show desc */
+      .s-desc { max-height: 60px !important; opacity: 1 !important; }
+      .s-link { opacity: 0.45 !important; }
+
+      /* Mobile footer */
+      .mobile-footer {
+        display: flex !important;
+        padding: 20px var(--pad) 32px;
+        border-top: 1px solid var(--b1);
+        flex-direction: column; gap: 12px;
+      }
+      .mobile-install-btn {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 12px 14px;
+        background: var(--s1);
+        border: 1px solid var(--b1);
+        cursor: pointer; transition: border-color 120ms;
+        width: 100%;
+      }
+      .mobile-install-btn:hover { border-color: var(--b2); }
+      .mobile-install-btn.copied { border-color: rgba(200,241,48,.3); }
+      .mobile-install-label {
+        font-size: 11px; font-weight: 600; color: var(--dim);
+      }
+      .mobile-install-btn.copied .mobile-install-label { color: var(--accent); }
+      .mobile-install-icon { font-family: var(--f-mono); font-size: 10px; color: var(--muted); }
+      .mobile-agent-note {
+        font-size: 10.5px; color: var(--muted);
+        line-height: 1.55; text-align: center;
+      }
+      .mobile-agent-note a {
+        color: var(--dim); text-decoration: underline;
+        text-underline-offset: 2px; text-decoration-color: var(--muted);
+      }
     }
 
-    /* Entry animation */
-    @keyframes row-in {
-      from { opacity: 0; transform: translateY(3px); }
+    /* ── Tablet (768–1023px) ────────────────────────────────────── */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      :root { --sidebar: 252px; --pad: 20px; }
+      .hero-num { font-size: 72px; }
+      .hero-title { font-size: 30px; }
+      .mobile-cats { display: none !important; }
+      .mobile-footer { display: none !important; }
+      .hero-mini { display: none !important; }
+      .skills-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+    }
+
+    /* ── Desktop (>= 1024px) ────────────────────────────────────── */
+    @media (min-width: 1024px) {
+      .mobile-cats { display: none !important; }
+      .mobile-footer { display: none !important; }
+      .hero-mini { display: none !important; }
+    }
+
+    /* ── Large (>= 1440px) ──────────────────────────────────────── */
+    @media (min-width: 1440px) {
+      :root { --sidebar: 320px; }
+      .hero-num { font-size: 108px; }
+    }
+
+    /* ── Card entrance animation ────────────────────────────────── */
+    @keyframes card-in {
+      from { opacity: 0; transform: translateY(5px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .skill {
-      opacity: 0;
-      animation: row-in 0.25s ease forwards;
-    }
+    .skill-card { animation: card-in 0.22s var(--spring) both; }
+    .skill-card:nth-child(1)  { animation-delay:   0ms; }
+    .skill-card:nth-child(2)  { animation-delay:  16ms; }
+    .skill-card:nth-child(3)  { animation-delay:  32ms; }
+    .skill-card:nth-child(4)  { animation-delay:  48ms; }
+    .skill-card:nth-child(5)  { animation-delay:  64ms; }
+    .skill-card:nth-child(6)  { animation-delay:  80ms; }
+    .skill-card:nth-child(7)  { animation-delay:  96ms; }
+    .skill-card:nth-child(8)  { animation-delay: 112ms; }
+    .skill-card:nth-child(9)  { animation-delay: 128ms; }
+    .skill-card:nth-child(10) { animation-delay: 144ms; }
+    .skill-card:nth-child(11) { animation-delay: 160ms; }
+    .skill-card:nth-child(12) { animation-delay: 176ms; }
 
-    /* ── Mobile ─────────────────────────────────────────── */
-    @media (max-width: 860px) {
-      html, body { overflow: auto; }
-      .shell { flex-direction: column; height: auto; }
-      .left {
-        width: 100%; min-width: 0;
-        height: auto; border-right: none;
-        border-bottom: 1px solid var(--rule);
-      }
-      .left-cats { display: none; }
-      .hero-title { font-size: 48px; }
-      .right { min-height: 60vh; height: auto; }
-      .skills-list { overflow-y: visible; }
-    }
-
-    @media (max-width: 520px) {
-      :root { --ticker-h: 28px; }
-      .left-header { padding: 14px 16px; }
-      .left-hero { padding: 18px 16px 14px; }
-      .hero-title { font-size: 38px; }
-      .hero-sub { display: none; }
-      .left-install { padding: 14px 16px; }
-      .filter-bar { padding: 0 16px; gap: 0; }
-      .skill { padding: 0 16px; }
-      .skill-cmd { width: 160px; font-size: 11px; }
-      .skill-cat { display: none; }
-    }
-
-    @media (max-width: 360px) {
-      .skill-cmd { width: 130px; }
-      .skill-name { font-size: 12px; }
+    /* ── Reduced motion ─────────────────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      .ticker-track { animation: none; }
+      .skill-card { animation: none; }
+      .cursor { transition: none; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Ticker -->
-  <div class="ticker">
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+
+  <div class="ticker" aria-hidden="true">
     <div class="ticker-track" id="tickerTrack"></div>
   </div>
 
   <div class="shell">
 
-    <!-- ── Left panel ─────────────────────────────────── -->
-    <aside class="left">
+    <!-- LEFT PANEL -->
+    <aside class="left" role="complementary" aria-label="Navigation">
 
-      <div class="left-header">
-        <a class="brand-mark" href="https://github.com/damilareoo/damilares-skills" target="_blank" rel="noopener">v</a>
-        <span class="brand-name">damilares-skills</span>
+      <div class="left-head">
+        <a href="https://github.com/damilareoo/damilares-skills" class="brand"
+           target="_blank" rel="noopener" aria-label="damilares-skills on GitHub">
+          <div class="brand-mark">v</div>
+          <span class="brand-name">damilares-skills</span>
+        </a>
+        <span class="brand-badge">Beta</span>
+        <!-- Mobile inline hero -->
+        <div class="hero-mini">
+          <span class="hero-num-mini">57</span>
+          <span class="hero-title-mini">Expert Modes</span>
+        </div>
       </div>
 
       <div class="left-hero">
-        <div class="hero-title">Expert<br>Modes</div>
-        <div class="hero-stats">
-          <div class="hero-num">57</div>
-          <div class="hero-unit">Skills</div>
+        <div class="hero-num-row">
+          <span class="hero-num">57</span>
+          <span class="hero-unit">Skills</span>
         </div>
-        <div class="hero-sub">Turn your AI into a specialist.<br>Works across Claude Code, Codex, Cursor, and Copilot.</div>
+        <h1 class="hero-title">Expert<br>Modes</h1>
+        <p class="hero-sub">Turn your AI into a specialist. Works across Claude Code, Codex, Cursor, and Copilot.</p>
       </div>
 
-      <div class="left-cats" id="catNav"></div>
+      <nav class="left-cats" aria-label="Filter by category">
+        <div class="cats-label">Browse</div>
+        <div id="catNav"></div>
+        <div class="kbd-hint" aria-hidden="true">
+          <span class="kbd-hint-text">press&nbsp;</span>
+          <span class="kbd">1</span>
+          <span class="kbd-hint-text">–</span>
+          <span class="kbd">9</span>
+          <span class="kbd-hint-text">&nbsp;to filter</span>
+        </div>
+      </nav>
 
       <div class="left-install">
-        <div class="install-heading">Add to Claude Code</div>
-        <div class="prompt-block" id="promptBlock" onclick="copyInstall()">
-          <div class="prompt-topbar">
-            <span class="prompt-tag">Paste into Claude</span>
-            <button class="copy-btn" id="copyBtn">Copy</button>
+        <div class="install-label">Install</div>
+        <div class="install-block" id="installBlock"
+             role="button" tabindex="0" aria-label="Copy install command">
+          <div class="install-bar">
+            <span class="install-tag">shell</span>
+            <span class="install-copy" id="copyText">Copy</span>
           </div>
-          <div class="prompt-body">
-            Install damilares-skills: run <code>git clone --depth 1 https://github.com/damilareoo/damilares-skills.git /tmp/ds && rsync -a --exclude='.git' /tmp/ds/plugins/v-skills/skills/ ~/.claude/skills/ && rm -rf /tmp/ds</code> then confirm the skills were installed by listing <code>~/.claude/skills/</code>
+          <div class="install-body">
+            Install damilares-skills: run <code>git clone --depth 1 https://github.com/damilareoo/damilares-skills.git /tmp/damilares-skills-install && rsync -a --exclude='.git' /tmp/damilares-skills-install/plugins/v-skills/skills/ ~/.claude/skills/ && rm -rf /tmp/damilares-skills-install</code> then confirm the skills were installed by listing <code>~/.claude/skills/</code>
           </div>
         </div>
         <div class="install-sub">
-          Using Cursor, Copilot, or Codex? Grab any <a href="https://github.com/damilareoo/damilares-skills" target="_blank" rel="noopener">SKILL.md</a> and drop it into your system prompt.
+          Using Cursor, Copilot, or Codex? Grab any
+          <a href="https://github.com/damilareoo/damilares-skills/tree/main/plugins/v-skills/skills"
+             target="_blank" rel="noopener">SKILL.md</a> and drop it into your system prompt.
         </div>
       </div>
 
     </aside>
 
-    <!-- ── Right panel ────────────────────────────────── -->
-    <main class="right">
-      <div class="filter-bar" id="filterBar"></div>
-      <div class="skills-list" id="skillsList"></div>
-    </main>
+    <!-- RIGHT PANEL -->
+    <main class="right" role="main">
 
+      <div class="mobile-cats" id="mobileCats" aria-label="Filter by category"></div>
+
+      <div class="filter-bar" role="tablist" aria-label="Filter" id="filterBar"></div>
+
+      <div class="skills-scroll">
+        <div class="skills-grid" id="skillsGrid" role="list" aria-label="Skills"></div>
+
+        <div class="mobile-footer">
+          <button class="mobile-install-btn" id="mobileInstallBtn"
+                  aria-label="Copy install command">
+            <span class="mobile-install-label">Copy install command</span>
+            <span class="mobile-install-icon">⌘C</span>
+          </button>
+          <p class="mobile-agent-note">
+            Cursor, Copilot, or Codex? Grab a
+            <a href="https://github.com/damilareoo/damilares-skills/tree/main/plugins/v-skills/skills"
+               target="_blank" rel="noopener">SKILL.md</a>.
+          </p>
+        </div>
+      </div>
+
+    </main>
   </div>
 
   <script>
-    const INSTALL = `Install damilares-skills: run \`git clone --depth 1 https://github.com/damilareoo/damilares-skills.git /tmp/damilares-skills-install && rsync -a --exclude='.git' /tmp/damilares-skills-install/plugins/v-skills/skills/ ~/.claude/skills/ && rm -rf /tmp/damilares-skills-install\` then confirm the skills were installed by listing ~/.claude/skills/`;
+    const INSTALL_CMD = `git clone --depth 1 https://github.com/damilareoo/damilares-skills.git /tmp/damilares-skills-install && rsync -a --exclude='.git' /tmp/damilares-skills-install/plugins/v-skills/skills/ ~/.claude/skills/ && rm -rf /tmp/damilares-skills-install`;
 
     const CATS = [
       { id: 'all',           label: 'All' },
@@ -479,7 +736,7 @@
       { id: 'frontend-design',            name: 'Frontend Design',              cat: 'design',        desc: 'Refuses generic AI aesthetics. Commits to a bold visual direction and actually ships something memorable.' },
       { id: 'ui-ux-pro-max',              name: 'UI/UX Pro Max',                cat: 'design',        desc: 'Deep product design thinking — flows, hierarchy, interaction model. More than colors and fonts.' },
       { id: 'interface-design',           name: 'Interface Design',             cat: 'design',        desc: 'Interface composition and layout systems.' },
-      { id: 'interaction-design',         name: 'Interaction Design',           cat: 'design',        desc: 'Micro-interactions with intent. Animates with purpose using Disney\'s 12 principles.' },
+      { id: 'interaction-design',         name: 'Interaction Design',           cat: 'design',        desc: "Micro-interactions with intent. Animates with purpose using Disney's 12 principles." },
       { id: 'design-lab',                 name: 'Design Lab',                   cat: 'design',        desc: 'Design interviews and creative exploration sessions.' },
       { id: 'design-system-enforcer',     name: 'Design System Enforcer',       cat: 'design',        desc: 'Catches drift before it compounds. Enforces tokens, spacing rhythm, and component patterns.' },
       { id: 'refero-design',              name: 'Refero Design',                cat: 'design',        desc: 'Goes to Refero for real production references before producing anything.' },
@@ -488,7 +745,7 @@
       { id: 'theme-factory',              name: 'Theme Factory',                cat: 'design',        desc: 'Design token and theme system generation.' },
       { id: 'branding-system-skill',      name: 'Branding System',              cat: 'design',        desc: 'Brand identity systems and visual language from scratch.' },
       { id: 'brand-guidelines',           name: 'Brand Guidelines',             cat: 'design',        desc: 'Brand guideline documentation.' },
-      { id: 'figma-to-code-skill',        name: 'Figma to Code',                cat: 'design',        desc: 'Makes the decisions Figma doesn\'t — component API, state, accessibility.' },
+      { id: 'figma-to-code-skill',        name: 'Figma to Code',                cat: 'design',        desc: "Makes the decisions Figma doesn't — component API, state, accessibility." },
       { id: 'baseline-ui',                name: 'Baseline UI',                  cat: 'design',        desc: 'Opinionated UI baseline and defaults.' },
       { id: '12-principles-of-animation', name: '12 Principles of Animation',   cat: 'animation',     desc: 'Every animation evaluated against squash, anticipation, follow-through, timing. Real principles.' },
       { id: 'fixing-motion-performance',  name: 'Fixing Motion Performance',    cat: 'animation',     desc: 'Diagnoses and fixes janky, expensive animations before they ship.' },
@@ -507,32 +764,32 @@
       { id: 'turborepo',                  name: 'Turborepo',                    cat: 'tooling',       desc: 'Monorepo orchestration and caching.' },
       { id: 'slidev',                     name: 'Slidev',                       cat: 'tooling',       desc: 'Code-driven presentation slides.' },
       { id: 'pnpm',                       name: 'pnpm',                         cat: 'tooling',       desc: 'pnpm package manager workflows.' },
-      { id: 'antfu',                      name: 'antfu',                        cat: 'tooling',       desc: 'Anthony Fu\'s opinionated toolchain.' },
+      { id: 'antfu',                      name: 'antfu',                        cat: 'tooling',       desc: "Anthony Fu's opinionated toolchain." },
       { id: 'plan-ceo-review',            name: 'Plan CEO Review',              cat: 'engineering',   desc: 'CEO/founder lens on product plans.' },
       { id: 'plan-eng-review',            name: 'Plan Eng Review',              cat: 'engineering',   desc: 'Engineering manager plan review.' },
-      { id: 'review',                     name: 'Review',                       cat: 'engineering',   desc: 'Paranoid staff engineer mode. Finds the race conditions and trust problems CI won\'t catch.' },
+      { id: 'review',                     name: 'Review',                       cat: 'engineering',   desc: "Paranoid staff engineer mode. Finds the race conditions and trust problems CI won't catch." },
       { id: 'ship',                       name: 'Ship',                         cat: 'engineering',   desc: 'Sync main, run tests, push, open PR. One command, done.' },
       { id: 'retro',                      name: 'Retro',                        cat: 'engineering',   desc: 'Engineering retrospective facilitation.' },
       { id: 'qa',                         name: 'QA',                           cat: 'engineering',   desc: 'Systematic testing methodology that actually covers your diff.' },
-      { id: 'skill-creator',             name: 'Skill Creator',                cat: 'engineering',   desc: 'Build new skills in this format. If your stack isn\'t covered, make one.' },
-      { id: 'mcp-builder',               name: 'MCP Builder',                  cat: 'engineering',   desc: 'Scaffolds MCP servers properly — schema, tools, error handling.' },
-      { id: 'schedule',                  name: 'Schedule',                     cat: 'engineering',   desc: 'Task and work scheduling.' },
-      { id: 'doc-coauthoring',           name: 'Doc Coauthoring',              cat: 'engineering',   desc: 'Collaborative documentation.' },
-      { id: 'setup-browser-cookies',     name: 'Setup Browser Cookies',        cat: 'engineering',   desc: 'Browser cookie import and setup.' },
-      { id: 'interface-craft',           name: 'Interface Craft',              cat: 'engineering',   desc: 'Interface crafting toolkit.' },
-      { id: 'fixing-accessibility',      name: 'Fixing Accessibility',         cat: 'accessibility', desc: 'WCAG violation diagnosis and fixes.' },
-      { id: 'wcag-audit-patterns',       name: 'WCAG Audit Patterns',          cat: 'accessibility', desc: 'Full WCAG 2.2 Level AA/AAA audit — not a quick alt-tag scan.' },
-      { id: 'web-design-guidelines',     name: 'Web Design Guidelines',        cat: 'accessibility', desc: 'Web interaction and design standards.' },
-      { id: 'swiftui-ui-patterns',       name: 'SwiftUI UI Patterns',          cat: 'ios',           desc: 'SwiftUI best practices and patterns.' },
-      { id: 'copywriting-skill',         name: 'Copywriting',                  cat: 'content',       desc: 'Marketing and product copywriting.' },
-      { id: 'internal-comms',            name: 'Internal Comms',               cat: 'content',       desc: 'Internal communication writing.' },
-      { id: 'fixing-metadata',           name: 'Fixing Metadata',              cat: 'content',       desc: 'SEO and metadata optimization.' },
-      { id: 'pdf',                       name: 'PDF',                          cat: 'content',       desc: 'PDF document processing and generation.' },
-      { id: 'docx',                      name: 'docx',                         cat: 'content',       desc: 'Word document handling.' },
-      { id: 'pptx',                      name: 'pptx',                         cat: 'content',       desc: 'PowerPoint presentation handling.' },
-      { id: 'xlsx',                      name: 'xlsx',                         cat: 'content',       desc: 'Excel spreadsheet processing.' },
-      { id: 'slack-gif-creator',         name: 'Slack GIF Creator',            cat: 'content',       desc: 'Slack GIF and reaction creation.' },
-      { id: 'web-artifacts-builder',     name: 'Web Artifacts Builder',        cat: 'content',       desc: 'Web content artifact generation.' },
+      { id: 'skill-creator',              name: 'Skill Creator',                cat: 'engineering',   desc: "Build new skills in this format. If your stack isn't covered, make one." },
+      { id: 'mcp-builder',                name: 'MCP Builder',                  cat: 'engineering',   desc: 'Scaffolds MCP servers properly — schema, tools, error handling.' },
+      { id: 'schedule',                   name: 'Schedule',                     cat: 'engineering',   desc: 'Task and work scheduling.' },
+      { id: 'doc-coauthoring',            name: 'Doc Coauthoring',              cat: 'engineering',   desc: 'Collaborative documentation.' },
+      { id: 'setup-browser-cookies',      name: 'Setup Browser Cookies',        cat: 'engineering',   desc: 'Browser cookie import and setup.' },
+      { id: 'interface-craft',            name: 'Interface Craft',              cat: 'engineering',   desc: 'Interface crafting toolkit.' },
+      { id: 'fixing-accessibility',       name: 'Fixing Accessibility',         cat: 'accessibility', desc: 'WCAG violation diagnosis and fixes.' },
+      { id: 'wcag-audit-patterns',        name: 'WCAG Audit Patterns',          cat: 'accessibility', desc: 'Full WCAG 2.2 Level AA/AAA audit — not a quick alt-tag scan.' },
+      { id: 'web-design-guidelines',      name: 'Web Design Guidelines',        cat: 'accessibility', desc: 'Web interaction and design standards.' },
+      { id: 'swiftui-ui-patterns',        name: 'SwiftUI UI Patterns',          cat: 'ios',           desc: 'SwiftUI best practices and patterns.' },
+      { id: 'copywriting-skill',          name: 'Copywriting',                  cat: 'content',       desc: 'Marketing and product copywriting.' },
+      { id: 'internal-comms',             name: 'Internal Comms',               cat: 'content',       desc: 'Internal communication writing.' },
+      { id: 'fixing-metadata',            name: 'Fixing Metadata',              cat: 'content',       desc: 'SEO and metadata optimization.' },
+      { id: 'pdf',                        name: 'PDF',                          cat: 'content',       desc: 'PDF document processing and generation.' },
+      { id: 'docx',                       name: 'docx',                         cat: 'content',       desc: 'Word document handling.' },
+      { id: 'pptx',                       name: 'pptx',                         cat: 'content',       desc: 'PowerPoint presentation handling.' },
+      { id: 'xlsx',                       name: 'xlsx',                         cat: 'content',       desc: 'Excel spreadsheet processing.' },
+      { id: 'slack-gif-creator',          name: 'Slack GIF Creator',            cat: 'content',       desc: 'Slack GIF and reaction creation.' },
+      { id: 'web-artifacts-builder',      name: 'Web Artifacts Builder',        cat: 'content',       desc: 'Web content artifact generation.' },
     ];
 
     const GH = 'https://github.com/damilareoo/damilares-skills/tree/main/plugins/v-skills/skills';
@@ -542,82 +799,142 @@
     function count(cat) {
       return cat === 'all' ? SKILLS.length : SKILLS.filter(s => s.cat === cat).length;
     }
+    function catLabel(id) {
+      return CATS.find(c => c.id === id)?.label || id;
+    }
 
     function buildTicker() {
-      const items = SKILLS.map(s =>
-        `<span class="ticker-cmd">/${s.id}</span><span class="ticker-dot">·</span>`
+      const seg = SKILLS.map(s =>
+        `<span class="ticker-cmd">/${s.id}</span><span class="ticker-sep">·</span>`
       ).join('');
-      document.getElementById('tickerTrack').innerHTML = items + items;
+      document.getElementById('tickerTrack').innerHTML = seg + seg;
     }
 
     function buildCatNav() {
       document.getElementById('catNav').innerHTML = CATS.map(c => `
-        <div class="cat-row${c.id === 'all' ? ' active' : ''}" data-cat="${c.id}" onclick="filter('${c.id}')">
+        <div class="cat-row${c.id === active ? ' active' : ''}" data-cat="${c.id}"
+             role="button" tabindex="0" aria-pressed="${c.id === active}"
+             onclick="setActive('${c.id}')"
+             onkeydown="if(event.key==='Enter'||event.key===' ')setActive('${c.id}')">
           <div class="cat-left">
-            <div class="cat-dot"></div>
+            <div class="cat-indicator"></div>
             <div class="cat-name">${c.label}</div>
           </div>
-          <div class="cat-num">${count(c.id)}</div>
+          <div class="cat-count">${count(c.id)}</div>
         </div>
       `).join('');
     }
 
     function buildFilterBar() {
       document.getElementById('filterBar').innerHTML = CATS.map(c => `
-        <button class="ftab${c.id === 'all' ? ' active' : ''}" data-cat="${c.id}" onclick="filter('${c.id}')">
-          ${c.label}<span class="ftab-count">${count(c.id)}</span>
+        <button class="ftab${c.id === active ? ' active' : ''}" data-cat="${c.id}"
+                role="tab" aria-selected="${c.id === active}"
+                onclick="setActive('${c.id}')">
+          ${c.label}
+          <span class="ftab-ct">${count(c.id)}</span>
         </button>
       `).join('');
     }
 
-    function buildSkills(cat) {
-      const list = cat === 'all' ? SKILLS : SKILLS.filter(s => s.cat === cat);
-      document.getElementById('skillsList').innerHTML = list.map((s, i) => `
-        <a class="skill" href="${GH}/${s.id}" target="_blank" rel="noopener"
-           style="animation-delay:${Math.min(i * 16, 480)}ms">
-          <div class="skill-main">
-            <div class="skill-num">${String(i + 1).padStart(2, '0')}</div>
-            <div class="skill-cmd">/${s.id}</div>
-            <div class="skill-name">${s.name}</div>
-            <div class="skill-cat">${s.cat}</div>
-            <div class="skill-arrow">→</div>
-          </div>
-          <div class="skill-expand">
-            <div class="skill-expand-inner">
-              <div class="skill-desc">${s.desc}</div>
-            </div>
-          </div>
+    function buildMobileCats() {
+      document.getElementById('mobileCats').innerHTML = CATS.map(c => `
+        <button class="mob-cat${c.id === active ? ' active' : ''}" data-cat="${c.id}"
+                role="tab" aria-selected="${c.id === active}"
+                onclick="setActive('${c.id}')">
+          ${c.label}
+          <span class="mob-cat-ct">${count(c.id)}</span>
+        </button>
+      `).join('');
+    }
+
+    function buildSkills() {
+      const visible = active === 'all' ? SKILLS : SKILLS.filter(s => s.cat === active);
+      document.getElementById('skillsGrid').innerHTML = visible.map(s => `
+        <a class="skill-card" href="${GH}/${s.id}" target="_blank" rel="noopener"
+           role="listitem" aria-label="${s.name}">
+          <span class="s-cat">${catLabel(s.cat)}</span>
+          <span class="s-name">${s.name}</span>
+          <span class="s-desc">${s.desc}</span>
+          <span class="s-link">view skill →</span>
         </a>
       `).join('');
     }
 
-    function filter(cat) {
+    function setActive(cat) {
       active = cat;
-      document.querySelectorAll('.cat-row').forEach(el =>
-        el.classList.toggle('active', el.dataset.cat === cat));
-      document.querySelectorAll('.ftab').forEach(el =>
-        el.classList.toggle('active', el.dataset.cat === cat));
-      buildSkills(cat);
+      document.querySelectorAll('[data-cat]').forEach(el => {
+        const on = el.dataset.cat === cat;
+        el.classList.toggle('active', on);
+        if (el.hasAttribute('aria-pressed'))   el.setAttribute('aria-pressed',  on);
+        if (el.hasAttribute('aria-selected'))  el.setAttribute('aria-selected', on);
+      });
+      buildSkills();
+      const mob = document.querySelector('#mobileCats .mob-cat.active');
+      if (mob) mob.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
 
-    function copyInstall() {
-      navigator.clipboard.writeText(INSTALL).then(() => {
-        const btn = document.getElementById('copyBtn');
-        btn.textContent = 'Copied';
-        setTimeout(() => btn.textContent = 'Copy', 2200);
+    function doCopy(id, textId) {
+      const el   = document.getElementById(id);
+      const txt  = document.getElementById(textId);
+      if (!el) return;
+      navigator.clipboard.writeText(INSTALL_CMD).then(() => {
+        el.classList.add('copied');
+        if (txt) txt.textContent = 'Copied!';
+        setTimeout(() => {
+          el.classList.remove('copied');
+          if (txt) txt.textContent = 'Copy';
+        }, 2000);
       });
     }
 
-    // Keyboard shortcuts: 1-9 for categories
-    document.addEventListener('keydown', e => {
-      const idx = parseInt(e.key) - 1;
-      if (idx >= 0 && idx < CATS.length) filter(CATS[idx].id);
+    document.getElementById('installBlock').addEventListener('click',  () => doCopy('installBlock', 'copyText'));
+    document.getElementById('installBlock').addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') doCopy('installBlock', 'copyText');
     });
+    document.getElementById('mobileInstallBtn').addEventListener('click', () => {
+      const btn = document.getElementById('mobileInstallBtn');
+      const lbl = btn.querySelector('.mobile-install-label');
+      navigator.clipboard.writeText(INSTALL_CMD).then(() => {
+        btn.classList.add('copied');
+        lbl.textContent = 'Copied!';
+        setTimeout(() => { btn.classList.remove('copied'); lbl.textContent = 'Copy install command'; }, 2000);
+      });
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return;
+      if (['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName)) return;
+      const n = parseInt(e.key, 10);
+      if (n >= 1 && n <= 9) { const c = CATS[n - 1]; if (c) setActive(c.id); }
+    });
+
+    /* Custom cursor */
+    (function () {
+      const cur = document.getElementById('cursor');
+      if (!cur || !window.matchMedia('(hover: hover)').matches) return;
+      let mx = 0, my = 0, cx = 0, cy = 0;
+      document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; }, { passive: true });
+      document.addEventListener('mouseleave', () => cur.style.opacity = '0');
+      document.addEventListener('mouseenter', () => cur.style.opacity = '1');
+      let hov = false;
+      document.addEventListener('mouseover', e => {
+        const on = !!e.target.closest('a,button,[role="button"]');
+        if (on !== hov) { hov = on; cur.classList.toggle('big', on); }
+      }, { passive: true });
+      const lerp = (a, b, t) => a + (b - a) * t;
+      const tick = () => {
+        cx = lerp(cx, mx, 0.2); cy = lerp(cy, my, 0.2);
+        cur.style.left = cx + 'px'; cur.style.top = cy + 'px';
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    })();
 
     buildTicker();
     buildCatNav();
     buildFilterBar();
-    buildSkills('all');
+    buildMobileCats();
+    buildSkills();
   </script>
 </body>
 </html>
