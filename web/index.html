@@ -20,64 +20,82 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;1,14..32,400&family=DM+Serif+Display:ital@1&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
-    /* ── Reset ──────────────────────────────────────────────────── */
+    /* ── Tokens ─────────────────────────────────────────── */
+    :root {
+      --bg:     #0a0a0a;
+      --bg1:    #0d0d0d;
+      --b1:     #1a1a1a;
+      --b2:     #2a2a2a;
+      --b3:     #404040;
+      --text:   #fafafa;
+      --t1:     #a1a1a1;
+      --t2:     #737373;
+      --t3:     #525252;
+      --accent: #c8f130;
+      --aglow:  rgba(200,241,48,.06);
+
+      --f:   'Inter', system-ui, sans-serif;
+      --fs:  'DM Serif Display', Georgia, serif;
+      --fm:  'JetBrains Mono', monospace;
+
+      --col:    520px;
+      --ticker: 32px;
+      --pad:    clamp(20px, 4vw, 48px);
+      --spring: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ── Reset ──────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    button { background: none; border: none; cursor: pointer; font-family: inherit; }
-    a { text-decoration: none; color: inherit; }
+    button { font-family: inherit; background: none; border: none; cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
     html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
-    /* ── Tokens ─────────────────────────────────────────────────── */
-    :root {
-      --bg:         #0a0a09;
-      --s1:         #0f0f0e;
-      --s2:         #141413;
-      --b1:         #1c1c1a;
-      --b2:         #252523;
-      --text:       #e6e1d9;
-      --dim:        #636059;
-      --muted:      #2c2b28;
-      --accent:     #c8f130;
-      --accent-bg:  rgba(200,241,48,.07);
-
-      --f-sans:  'Syne', system-ui, sans-serif;
-      --f-serif: 'DM Serif Display', Georgia, serif;
-      --f-mono:  'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
-
-      --sidebar: 296px;
-      --ticker:  32px;
-      --pad:     24px;
-      --spring:  cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    /* ── Base ───────────────────────────────────────────────────── */
-    html, body {
-      width: 100%; height: 100%;
+    /* ── Base ───────────────────────────────────────────── */
+    body {
       background: var(--bg);
       color: var(--text);
-      font-family: var(--f-sans);
+      font-family: var(--f);
+      font-size: 14px;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
 
-    /* ── Grain ──────────────────────────────────────────────────── */
+    /* ── Grain ──────────────────────────────────────────── */
     body::after {
       content: '';
       position: fixed; inset: 0;
       z-index: 9000; pointer-events: none;
-      opacity: 0.04;
+      opacity: 0.035;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
       background-size: 200px 200px;
     }
 
-    /* ── Top accent bar ─────────────────────────────────────────── */
+    /* ── Accent top bar ─────────────────────────────────── */
     body::before {
       content: '';
       position: fixed; top: 0; left: 0; right: 0;
-      height: 2px; background: var(--accent); z-index: 300;
+      height: 2px; background: var(--accent);
+      z-index: 500;
     }
 
-    /* ── Custom cursor ──────────────────────────────────────────── */
+    /* ── Vertical guide lines (matching damilareoo.xyz) ─── */
+    .guide {
+      position: fixed;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: var(--b1);
+      pointer-events: none;
+      z-index: 10;
+      display: none;
+    }
+    .guide-l { left:  calc(50% - var(--col)); }
+    .guide-r { right: calc(50% - var(--col)); }
+    @media (min-width: 900px) { .guide { display: block; } }
+
+    /* ── Custom cursor ──────────────────────────────────── */
     @media (hover: hover) {
       body { cursor: none; }
       .cursor {
@@ -88,20 +106,18 @@
         pointer-events: none;
         z-index: 9999;
         transform: translate(-50%, -50%);
-        transition: width 200ms var(--spring), height 200ms var(--spring),
-                    background 200ms, border-radius 200ms;
+        transition: width 180ms var(--spring), height 180ms var(--spring), background 180ms;
         will-change: left, top;
       }
       .cursor.big {
-        width: 28px; height: 28px;
+        width: 24px; height: 24px;
         background: transparent;
-        border: 1.5px solid var(--accent);
-        border-radius: 50%;
+        border: 1px solid var(--accent);
       }
     }
-    @media (hover: none) { .cursor { display: none; } }
+    @media (hover: none) { .cursor { display: none !important; } }
 
-    /* ── Ticker ─────────────────────────────────────────────────── */
+    /* ── Ticker ─────────────────────────────────────────── */
     .ticker {
       position: fixed; top: 2px; left: 0; right: 0;
       height: var(--ticker);
@@ -112,53 +128,36 @@
     }
     .ticker-track {
       display: flex; white-space: nowrap;
-      animation: ticker-scroll 100s linear infinite;
+      animation: tick 100s linear infinite;
     }
     .ticker-track:hover { animation-play-state: paused; }
-    .ticker-cmd {
-      font-family: var(--f-mono); font-size: 10px;
-      color: var(--muted); letter-spacing: 0.04em;
-      padding: 0 16px;
-      transition: color 120ms;
+    .t-cmd {
+      font-family: var(--fm); font-size: 10px;
+      color: var(--t3); padding: 0 16px;
+      letter-spacing: 0.04em; transition: color 100ms;
     }
-    .ticker-cmd:hover { color: var(--dim); }
-    .ticker-sep {
-      color: var(--b2); font-size: 10px;
-      font-family: var(--f-mono); flex-shrink: 0;
-    }
-    @keyframes ticker-scroll {
+    .t-cmd:hover { color: var(--t2); }
+    .t-dot { color: var(--b2); font-family: var(--fm); font-size: 10px; }
+    @keyframes tick {
       from { transform: translateX(0); }
       to   { transform: translateX(-50%); }
     }
 
-    /* ── Shell ──────────────────────────────────────────────────── */
-    .shell {
-      display: flex;
-      height: 100dvh;
-      padding-top: calc(2px + var(--ticker));
-      overflow: hidden;
-    }
+    /* ── Page ───────────────────────────────────────────── */
+    .page { padding-top: calc(2px + var(--ticker)); }
 
-    /* ── LEFT PANEL ─────────────────────────────────────────────── */
-    .left {
-      width: var(--sidebar);
-      min-width: var(--sidebar);
-      height: 100%;
-      border-right: 1px solid var(--b1);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
+    /* ── Full-width rule utility ────────────────────────── */
+    .rule { height: 1px; background: var(--b1); }
 
-    /* — Header row — */
-    .left-head {
-      padding: 15px var(--pad) 13px;
-      border-bottom: 1px solid var(--b1);
+    /* ── Header ─────────────────────────────────────────── */
+
+    /* Brand bar */
+    .header-brand {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-shrink: 0;
-      gap: 10px;
+      padding: 14px var(--pad);
+      border-bottom: 1px solid var(--b1);
     }
     .brand {
       display: flex; align-items: center; gap: 8px;
@@ -167,558 +166,381 @@
       width: 22px; height: 22px;
       border: 1px solid var(--b2);
       display: flex; align-items: center; justify-content: center;
-      font-family: var(--f-mono); font-size: 10px; font-weight: 500;
-      color: var(--dim); flex-shrink: 0;
+      font-family: var(--fm); font-size: 10px; font-weight: 400;
+      color: var(--t2);
       transition: border-color 150ms, color 150ms;
     }
-    .brand-mark:hover { border-color: var(--dim); color: var(--text); }
+    .brand-mark:hover { border-color: var(--t3); color: var(--text); }
     .brand-name {
-      font-size: 10px; font-weight: 600;
-      letter-spacing: 0.04em;
-      color: var(--muted);
-      text-transform: uppercase;
+      font-family: var(--fm); font-size: 10px;
+      color: var(--t3); letter-spacing: 0.04em;
     }
-    .brand-badge {
-      font-size: 8.5px; font-weight: 700;
+    .hdr-copy {
+      font-family: var(--fm); font-size: 8.5px;
       letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--accent);
-      background: var(--accent-bg);
-      padding: 2px 6px;
-      border: 1px solid rgba(200,241,48,.18);
-      flex-shrink: 0;
+      color: var(--t3); padding: 5px 10px;
+      border: 1px solid var(--b2);
+      transition: border-color 120ms, color 120ms;
     }
+    .hdr-copy:hover { border-color: var(--t3); color: var(--t1); }
+    .hdr-copy.copied { color: var(--accent); border-color: rgba(200,241,48,.3); }
 
-    /* — Hero — */
-    .left-hero {
-      padding: 26px var(--pad) 22px;
-      border-bottom: 1px solid var(--b1);
-      flex-shrink: 0;
-    }
-    .hero-num-row {
+    /* Hero block */
+    .header-hero {
       display: flex;
       align-items: flex-end;
-      gap: 8px;
-      margin-bottom: 6px;
+      justify-content: space-between;
+      padding: 48px var(--pad) 44px;
+      border-bottom: 1px solid var(--b1);
+      gap: 32px;
     }
+    .hero-l { display: flex; flex-direction: column; gap: 6px; }
     .hero-num {
-      font-family: var(--f-sans);
-      font-size: 96px;
-      font-weight: 800;
+      font-family: var(--f);
+      font-size: clamp(72px, 10vw, 112px);
+      font-weight: 600;
       line-height: 0.85;
-      letter-spacing: -0.055em;
+      letter-spacing: -0.06em;
       color: var(--accent);
       font-variant-numeric: tabular-nums;
     }
     .hero-unit {
-      font-size: 10px; font-weight: 700;
-      letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--dim); padding-bottom: 10px;
+      font-family: var(--fm);
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--t3);
+    }
+    .hero-r {
+      display: flex; flex-direction: column;
+      align-items: flex-end; gap: 12px;
     }
     .hero-title {
-      font-family: var(--f-serif);
+      font-family: var(--fs);
       font-style: italic;
-      font-size: 38px;
-      line-height: 0.95;
-      letter-spacing: -0.01em;
+      font-size: clamp(36px, 5vw, 60px);
+      line-height: 0.9;
+      letter-spacing: -0.02em;
       color: var(--text);
-      margin-bottom: 14px;
+      text-align: right;
     }
     .hero-sub {
-      font-size: 11.5px; line-height: 1.7;
-      color: var(--dim); font-weight: 400;
-      max-width: 22ch;
+      font-size: 12px; line-height: 1.65;
+      color: var(--t2); text-align: right;
+      max-width: 38ch;
     }
 
-    /* — Categories — */
-    .left-cats {
-      flex: 1;
-      overflow-y: auto;
-      scrollbar-width: none;
-    }
-    .left-cats::-webkit-scrollbar { display: none; }
-    .cats-label {
-      padding: 13px var(--pad) 7px;
-      font-size: 8.5px; font-weight: 700;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--muted);
+    /* ── Category nav ────────────────────────────────────── */
+    .cat-wrap {
       border-bottom: 1px solid var(--b1);
-    }
-    .cat-row {
-      display: flex; align-items: center;
-      justify-content: space-between;
-      padding: 9px var(--pad);
-      border-bottom: 1px solid var(--b1);
-      cursor: pointer;
-      transition: background 100ms;
-      gap: 10px;
-    }
-    .cat-row:hover { background: var(--s1); }
-    .cat-row.active { background: var(--s1); }
-    .cat-left { display: flex; align-items: center; gap: 10px; }
-    .cat-indicator {
-      width: 4px; height: 4px; border-radius: 50%;
-      background: var(--muted); flex-shrink: 0;
-      transition: background 150ms, transform 150ms;
-    }
-    .cat-row.active .cat-indicator {
-      background: var(--accent); transform: scale(1.5);
-    }
-    .cat-name {
-      font-size: 12.5px; font-weight: 500;
-      color: var(--dim); transition: color 100ms;
-      letter-spacing: -0.01em;
-    }
-    .cat-row:hover .cat-name,
-    .cat-row.active .cat-name { color: var(--text); }
-    .cat-count {
-      font-family: var(--f-mono); font-size: 10px;
-      font-weight: 300; color: var(--muted);
-      transition: color 100ms;
-    }
-    .cat-row.active .cat-count { color: var(--dim); }
-
-    .kbd-hint {
-      padding: 10px var(--pad) 12px;
-      display: flex; align-items: center;
-      gap: 4px; flex-wrap: wrap;
-    }
-    .kbd-hint-text { font-size: 10px; font-family: var(--f-mono); color: var(--muted); }
-    .kbd {
-      display: inline-flex; align-items: center; justify-content: center;
-      min-width: 16px; height: 15px; padding: 0 3px;
-      border: 1px solid var(--b2);
-      font-size: 9px; font-family: var(--f-mono); color: var(--muted);
-    }
-
-    /* — Install — */
-    .left-install {
-      border-top: 1px solid var(--b1);
-      padding: 18px var(--pad);
-      flex-shrink: 0;
-    }
-    .install-label {
-      font-size: 8.5px; font-weight: 700;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--muted); margin-bottom: 10px;
-    }
-    .install-block {
-      border: 1px solid var(--b1);
-      background: var(--s1);
-      cursor: pointer;
-      transition: border-color 120ms, background 120ms;
-    }
-    .install-block:hover { border-color: var(--b2); background: var(--s2); }
-    .install-block.copied { border-color: rgba(200,241,48,.3); }
-    .install-bar {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 6px 10px;
-      border-bottom: 1px solid var(--b1);
-    }
-    .install-tag {
-      font-family: var(--f-mono); font-size: 8.5px;
-      color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase;
-    }
-    .install-copy {
-      font-family: var(--f-mono); font-size: 8.5px; font-weight: 500;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--muted); transition: color 120ms;
-    }
-    .install-block:hover .install-copy { color: var(--dim); }
-    .install-block.copied .install-copy { color: var(--accent); }
-    .install-body {
-      padding: 9px 10px;
-      font-family: var(--f-mono); font-size: 9.5px;
-      line-height: 1.65; color: var(--dim);
-      font-style: italic; user-select: all;
-    }
-    .install-body code {
-      font-style: normal; color: var(--text);
-      background: var(--b1); padding: 1px 4px;
-    }
-    .install-sub {
-      margin-top: 10px; font-size: 10.5px;
-      line-height: 1.55; color: var(--muted);
-    }
-    .install-sub a {
-      color: var(--dim);
-      text-underline-offset: 2px; text-decoration: underline;
-      text-decoration-color: var(--muted); transition: color 120ms;
-    }
-    .install-sub a:hover { color: var(--text); }
-
-    /* ── RIGHT PANEL ────────────────────────────────────────────── */
-    .right {
-      flex: 1; min-width: 0; height: 100%;
-      display: flex; flex-direction: column; overflow: hidden;
-    }
-
-    /* — Filter bar — */
-    .filter-bar {
-      height: 42px; flex-shrink: 0;
-      border-bottom: 1px solid var(--b1);
-      display: flex; align-items: stretch;
-      padding: 0 22px;
       overflow-x: auto; scrollbar-width: none;
+      position: sticky;
+      top: calc(2px + var(--ticker));
+      background: var(--bg);
+      z-index: 50;
     }
-    .filter-bar::-webkit-scrollbar { display: none; }
-    .ftab {
-      font-size: 11px; font-weight: 500;
-      color: var(--dim); padding: 0 14px 0 0;
-      cursor: pointer; white-space: nowrap;
-      transition: color 120ms;
-      position: relative;
+    .cat-wrap::-webkit-scrollbar { display: none; }
+    .cat-nav {
+      display: flex;
+      padding: 0 var(--pad);
+    }
+    .cat-btn {
       display: flex; align-items: center; gap: 5px;
+      height: 42px; padding: 0 10px;
+      font-family: var(--fm); font-size: 10px;
+      font-weight: 400; letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--t3);
       background: none; border: none;
-      letter-spacing: -0.01em;
+      border-bottom: 2px solid transparent;
+      cursor: pointer; white-space: nowrap;
+      transition: color 100ms, border-color 100ms;
+      margin-bottom: -1px;
     }
-    .ftab::after {
-      content: ''; position: absolute;
-      bottom: 0; left: 0; right: 14px;
-      height: 1.5px; background: var(--text);
-      opacity: 0; transition: opacity 120ms;
-    }
-    .ftab:hover { color: var(--text); }
-    .ftab.active { color: var(--text); }
-    .ftab.active::after { opacity: 1; }
-    .ftab-ct {
-      font-family: var(--f-mono); font-size: 9px;
-      font-weight: 300; color: var(--muted);
+    .cat-btn:first-child { padding-left: 0; }
+    .cat-btn:hover { color: var(--t1); }
+    .cat-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+    .cat-ct { font-size: 9px; font-weight: 300; opacity: 0.5; }
+
+    /* ── Skills grid ─────────────────────────────────────── */
+    .skills-outer {
+      border-bottom: 1px solid var(--b1);
     }
 
-    /* — Skills scroll — */
-    .skills-scroll {
-      flex: 1; overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: var(--b2) transparent;
-    }
-    .skills-scroll::-webkit-scrollbar { width: 3px; }
-    .skills-scroll::-webkit-scrollbar-track { background: transparent; }
-    .skills-scroll::-webkit-scrollbar-thumb { background: var(--b2); }
-
+    /* Gap creates the line grid — background of wrapper shows through */
     .skills-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(248px, 1fr));
+      grid-template-columns: repeat(4, 1fr);
       gap: 1px;
       background: var(--b1);
     }
 
-    /* — Skill card — */
+    /* ── Skill card ──────────────────────────────────────── */
     .skill-card {
       background: var(--bg);
-      padding: 18px 20px;
-      cursor: pointer;
-      display: flex; flex-direction: column;
-      gap: 5px;
-      position: relative; overflow: hidden;
+      padding: 20px;
+      display: flex; flex-direction: column; gap: 5px;
       transition: background 100ms;
+      position: relative; overflow: hidden;
     }
     .skill-card::before {
       content: ''; position: absolute; inset: 0;
-      background: var(--accent-bg);
-      opacity: 0; transition: opacity 180ms var(--spring);
+      background: var(--aglow);
+      opacity: 0; transition: opacity 200ms var(--spring);
       pointer-events: none;
     }
-    .skill-card:hover { background: var(--s1); }
+    .skill-card:hover { background: var(--bg1); }
     .skill-card:hover::before { opacity: 1; }
 
-    .s-cat {
-      font-size: 8.5px; font-weight: 700;
-      letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--accent); opacity: 0.75;
+    .sc-cat {
+      font-family: var(--fm); font-size: 8px;
+      font-weight: 500; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--t3);
+      transition: color 100ms;
     }
-    .s-name {
-      font-size: 13.5px; font-weight: 700;
-      letter-spacing: -0.025em; line-height: 1.2;
+    .skill-card:hover .sc-cat { color: var(--accent); }
+    .sc-name {
+      font-size: 13.5px; font-weight: 600;
+      letter-spacing: -0.02em; line-height: 1.25;
       color: var(--text);
     }
-    .s-desc {
-      font-size: 11px; line-height: 1.65;
-      color: var(--dim);
-      max-height: 0; overflow: hidden;
+    .sc-desc {
+      font-size: 11px; line-height: 1.65; color: var(--t2);
+      max-height: 0; overflow: hidden; opacity: 0;
       transition: max-height 280ms var(--spring), opacity 180ms var(--spring);
-      opacity: 0;
     }
-    .skill-card:hover .s-desc { max-height: 80px; opacity: 1; }
-    .s-link {
-      font-size: 9.5px; font-family: var(--f-mono);
-      color: var(--muted); opacity: 0; margin-top: 2px;
-      transition: opacity 120ms var(--spring), color 120ms;
+    .skill-card:hover .sc-desc { max-height: 80px; opacity: 1; }
+    .sc-arrow {
+      font-family: var(--fm); font-size: 9.5px;
+      color: var(--t3); opacity: 0; margin-top: 2px;
+      transition: opacity 100ms, color 100ms;
     }
-    .skill-card:hover .s-link { opacity: 1; color: var(--accent); }
+    .skill-card:hover .sc-arrow { opacity: 1; color: var(--accent); }
     .skill-card.hidden { display: none; }
 
-    /* ── MOBILE (< 768px) ───────────────────────────────────────── */
-    @media (max-width: 767px) {
-      :root { --pad: 16px; --ticker: 28px; }
+    /* Empty grid filler cell */
+    .skill-empty {
+      background: var(--bg);
+      min-height: 90px;
+    }
 
+    /* ── Footer ──────────────────────────────────────────── */
+    .footer {
+      padding: 22px var(--pad) 28px;
+      position: relative;
+    }
+    /* Corner brackets — matching damilareoo.xyz */
+    .footer::before {
+      content: ''; position: absolute;
+      bottom: 0; left: 0;
+      width: 14px; height: 14px;
+      border-left: 1px solid var(--b2);
+      border-bottom: 1px solid var(--b2);
+    }
+    .footer::after {
+      content: ''; position: absolute;
+      bottom: 0; right: 0;
+      width: 14px; height: 14px;
+      border-right: 1px solid var(--b2);
+      border-bottom: 1px solid var(--b2);
+    }
+    .footer-inner {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .install-row {
+      display: flex; align-items: center;
+      gap: 10px; overflow: hidden; flex: 1;
+    }
+    .install-lbl {
+      font-family: var(--fm); font-size: 8.5px;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--t3); flex-shrink: 0;
+    }
+    .install-cmd {
+      font-family: var(--fm); font-size: 10px;
+      color: var(--t2); overflow: hidden;
+      text-overflow: ellipsis; white-space: nowrap;
+      flex: 1; min-width: 0;
+    }
+    .install-copy {
+      flex-shrink: 0; font-family: var(--fm);
+      font-size: 8.5px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--t3);
+      padding: 5px 10px;
+      border: 1px solid var(--b2);
+      transition: border-color 120ms, color 120ms;
+    }
+    .install-copy:hover { border-color: var(--t3); color: var(--t1); }
+    .install-copy.copied { color: var(--accent); border-color: rgba(200,241,48,.3); }
+    .footer-note {
+      font-size: 11px; color: var(--t3);
+      white-space: nowrap; flex-shrink: 0;
+    }
+    .footer-note a {
+      color: var(--t2); text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-color: var(--b3);
+      transition: color 120ms;
+    }
+    .footer-note a:hover { color: var(--t1); }
+
+    /* ── Keyboard shortcut hint ───────────────────────────── */
+    .kbd-hint {
+      display: flex; align-items: center; gap: 3px;
+      padding: 0 var(--pad) 10px;
+    }
+    .kbd-hint-t { font-family: var(--fm); font-size: 10px; color: var(--t3); }
+    .kbd {
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 15px; height: 15px; padding: 0 2px;
+      border: 1px solid var(--b2);
+      font-family: var(--fm); font-size: 9px; color: var(--t3);
+    }
+
+    /* ── Responsive: 5 cols ───────────────────────────────── */
+    @media (min-width: 1400px) {
+      :root { --col: 620px; }
+      .skills-grid { grid-template-columns: repeat(5, 1fr); }
+    }
+
+    /* ── Responsive: 3 cols ───────────────────────────────── */
+    @media (max-width: 960px) and (min-width: 600px) {
+      .skills-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* ── Responsive: Mobile ───────────────────────────────── */
+    @media (max-width: 599px) {
+      :root { --pad: 16px; --ticker: 28px; }
       body { cursor: auto; }
       .cursor { display: none !important; }
-      html, body { height: auto; overflow: auto; }
+      .guide { display: none !important; }
 
-      .shell {
-        height: auto; overflow: visible;
+      .header-hero {
         flex-direction: column;
-        padding-top: calc(2px + var(--ticker));
+        align-items: flex-start;
+        padding: 32px var(--pad) 28px;
+        gap: 20px;
       }
+      .hero-r { align-items: flex-start; }
+      .hero-title { text-align: left; }
+      .hero-sub { text-align: left; }
 
-      .left {
-        width: 100%; min-width: 0; height: auto;
-        border-right: none;
-        border-bottom: 1px solid var(--b1);
-        flex-direction: row; align-items: center;
-        flex-wrap: nowrap; overflow: visible;
-      }
+      .skills-grid { grid-template-columns: repeat(2, 1fr); }
 
-      .left-head {
-        padding: 11px var(--pad);
-        border-bottom: none;
-        flex: 1; min-width: 0;
-      }
+      /* Always show desc on mobile */
+      .sc-desc { max-height: 60px !important; opacity: 1 !important; }
+      .sc-arrow { opacity: 0.4 !important; }
 
-      .brand-name { display: none; }
-      .brand-badge { display: none; }
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .install-cmd { display: none; }
+      .footer-note { white-space: normal; }
+      .kbd-hint { display: none; }
+    }
 
-      /* Inline hero for mobile */
-      .hero-mini {
-        display: flex; align-items: baseline;
-        gap: 8px; flex-wrap: nowrap;
-        min-width: 0; flex: 1;
-      }
-      .hero-num-mini {
-        font-size: 30px; font-weight: 800;
-        letter-spacing: -0.05em; color: var(--accent);
-        line-height: 1; flex-shrink: 0;
-      }
-      .hero-title-mini {
-        font-family: var(--f-serif); font-style: italic;
-        font-size: 17px; line-height: 1;
-        letter-spacing: -0.01em; color: var(--text);
-        white-space: nowrap; overflow: hidden;
-        text-overflow: ellipsis; min-width: 0;
-      }
-
-      .left-hero,
-      .left-cats,
-      .left-install { display: none; }
-
-      /* Mobile category strip */
-      .mobile-cats {
-        display: flex !important;
-        overflow-x: auto; scrollbar-width: none;
-        background: var(--bg);
-        border-bottom: 1px solid var(--b1);
-        padding: 0 var(--pad);
-        position: sticky;
-        top: calc(2px + var(--ticker));
-        z-index: 50;
-        -webkit-overflow-scrolling: touch;
-      }
-      .mobile-cats::-webkit-scrollbar { display: none; }
-      .mob-cat {
-        flex-shrink: 0; padding: 10px 12px;
-        font-size: 11px; font-weight: 600;
-        color: var(--dim);
-        border-bottom: 2px solid transparent;
-        cursor: pointer; white-space: nowrap;
-        transition: color 100ms, border-color 100ms;
-        display: flex; align-items: center; gap: 4px;
-        letter-spacing: -0.01em;
-      }
-      .mob-cat:hover { color: var(--text); }
-      .mob-cat.active { color: var(--accent); border-bottom-color: var(--accent); }
-      .mob-cat-ct { font-family: var(--f-mono); font-size: 9px; font-weight: 300; opacity: 0.6; }
-
-      .filter-bar { display: none; }
-
-      .right { height: auto; overflow: visible; }
-      .skills-scroll { overflow: visible; flex: none; }
+    @media (max-width: 380px) {
       .skills-grid { grid-template-columns: 1fr; }
-
-      /* Always show desc */
-      .s-desc { max-height: 60px !important; opacity: 1 !important; }
-      .s-link { opacity: 0.45 !important; }
-
-      /* Mobile footer */
-      .mobile-footer {
-        display: flex !important;
-        padding: 20px var(--pad) 32px;
-        border-top: 1px solid var(--b1);
-        flex-direction: column; gap: 12px;
-      }
-      .mobile-install-btn {
-        display: flex; align-items: center; justify-content: space-between;
-        padding: 12px 14px;
-        background: var(--s1);
-        border: 1px solid var(--b1);
-        cursor: pointer; transition: border-color 120ms;
-        width: 100%;
-      }
-      .mobile-install-btn:hover { border-color: var(--b2); }
-      .mobile-install-btn.copied { border-color: rgba(200,241,48,.3); }
-      .mobile-install-label {
-        font-size: 11px; font-weight: 600; color: var(--dim);
-      }
-      .mobile-install-btn.copied .mobile-install-label { color: var(--accent); }
-      .mobile-install-icon { font-family: var(--f-mono); font-size: 10px; color: var(--muted); }
-      .mobile-agent-note {
-        font-size: 10.5px; color: var(--muted);
-        line-height: 1.55; text-align: center;
-      }
-      .mobile-agent-note a {
-        color: var(--dim); text-decoration: underline;
-        text-underline-offset: 2px; text-decoration-color: var(--muted);
-      }
     }
 
-    /* ── Tablet (768–1023px) ────────────────────────────────────── */
-    @media (min-width: 768px) and (max-width: 1023px) {
-      :root { --sidebar: 252px; --pad: 20px; }
-      .hero-num { font-size: 72px; }
-      .hero-title { font-size: 30px; }
-      .mobile-cats { display: none !important; }
-      .mobile-footer { display: none !important; }
-      .hero-mini { display: none !important; }
-      .skills-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
-    }
-
-    /* ── Desktop (>= 1024px) ────────────────────────────────────── */
-    @media (min-width: 1024px) {
-      .mobile-cats { display: none !important; }
-      .mobile-footer { display: none !important; }
-      .hero-mini { display: none !important; }
-    }
-
-    /* ── Large (>= 1440px) ──────────────────────────────────────── */
-    @media (min-width: 1440px) {
-      :root { --sidebar: 320px; }
-      .hero-num { font-size: 108px; }
-    }
-
-    /* ── Card entrance animation ────────────────────────────────── */
+    /* ── Card entrance ────────────────────────────────────── */
     @keyframes card-in {
-      from { opacity: 0; transform: translateY(5px); }
+      from { opacity: 0; transform: translateY(4px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .skill-card { animation: card-in 0.22s var(--spring) both; }
+    .skill-card {
+      animation: card-in 0.2s var(--spring) both;
+    }
     .skill-card:nth-child(1)  { animation-delay:   0ms; }
-    .skill-card:nth-child(2)  { animation-delay:  16ms; }
-    .skill-card:nth-child(3)  { animation-delay:  32ms; }
-    .skill-card:nth-child(4)  { animation-delay:  48ms; }
-    .skill-card:nth-child(5)  { animation-delay:  64ms; }
-    .skill-card:nth-child(6)  { animation-delay:  80ms; }
-    .skill-card:nth-child(7)  { animation-delay:  96ms; }
-    .skill-card:nth-child(8)  { animation-delay: 112ms; }
-    .skill-card:nth-child(9)  { animation-delay: 128ms; }
-    .skill-card:nth-child(10) { animation-delay: 144ms; }
-    .skill-card:nth-child(11) { animation-delay: 160ms; }
-    .skill-card:nth-child(12) { animation-delay: 176ms; }
+    .skill-card:nth-child(2)  { animation-delay:  14ms; }
+    .skill-card:nth-child(3)  { animation-delay:  28ms; }
+    .skill-card:nth-child(4)  { animation-delay:  42ms; }
+    .skill-card:nth-child(5)  { animation-delay:  56ms; }
+    .skill-card:nth-child(6)  { animation-delay:  70ms; }
+    .skill-card:nth-child(7)  { animation-delay:  84ms; }
+    .skill-card:nth-child(8)  { animation-delay:  98ms; }
+    .skill-card:nth-child(9)  { animation-delay: 112ms; }
+    .skill-card:nth-child(10) { animation-delay: 126ms; }
+    .skill-card:nth-child(11) { animation-delay: 140ms; }
+    .skill-card:nth-child(12) { animation-delay: 154ms; }
 
-    /* ── Reduced motion ─────────────────────────────────────────── */
     @media (prefers-reduced-motion: reduce) {
       .ticker-track { animation: none; }
       .skill-card { animation: none; }
-      .cursor { transition: none; }
     }
   </style>
 </head>
 <body>
 
+  <div class="guide guide-l" aria-hidden="true"></div>
+  <div class="guide guide-r" aria-hidden="true"></div>
   <div class="cursor" id="cursor" aria-hidden="true"></div>
 
   <div class="ticker" aria-hidden="true">
     <div class="ticker-track" id="tickerTrack"></div>
   </div>
 
-  <div class="shell">
+  <div class="page">
 
-    <!-- LEFT PANEL -->
-    <aside class="left" role="complementary" aria-label="Navigation">
+    <!-- Brand bar -->
+    <div class="header-brand">
+      <a href="https://github.com/damilareoo/damilares-skills"
+         class="brand" target="_blank" rel="noopener" aria-label="damilares-skills on GitHub">
+        <div class="brand-mark">v</div>
+        <span class="brand-name">damilares-skills</span>
+      </a>
+      <button class="hdr-copy" id="hdrCopyBtn" aria-label="Copy install command">Copy install</button>
+    </div>
 
-      <div class="left-head">
-        <a href="https://github.com/damilareoo/damilares-skills" class="brand"
-           target="_blank" rel="noopener" aria-label="damilares-skills on GitHub">
-          <div class="brand-mark">v</div>
-          <span class="brand-name">damilares-skills</span>
-        </a>
-        <span class="brand-badge">Beta</span>
-        <!-- Mobile inline hero -->
-        <div class="hero-mini">
-          <span class="hero-num-mini">57</span>
-          <span class="hero-title-mini">Expert Modes</span>
-        </div>
+    <!-- Hero -->
+    <div class="header-hero">
+      <div class="hero-l">
+        <div class="hero-num">57</div>
+        <div class="hero-unit">Expert Skills</div>
       </div>
-
-      <div class="left-hero">
-        <div class="hero-num-row">
-          <span class="hero-num">57</span>
-          <span class="hero-unit">Skills</span>
-        </div>
+      <div class="hero-r">
         <h1 class="hero-title">Expert<br>Modes</h1>
         <p class="hero-sub">Turn your AI into a specialist. Works across Claude Code, Codex, Cursor, and Copilot.</p>
       </div>
+    </div>
 
-      <nav class="left-cats" aria-label="Filter by category">
-        <div class="cats-label">Browse</div>
-        <div id="catNav"></div>
-        <div class="kbd-hint" aria-hidden="true">
-          <span class="kbd-hint-text">press&nbsp;</span>
-          <span class="kbd">1</span>
-          <span class="kbd-hint-text">–</span>
-          <span class="kbd">9</span>
-          <span class="kbd-hint-text">&nbsp;to filter</span>
+    <!-- Category nav -->
+    <div class="cat-wrap" role="navigation" aria-label="Filter skills">
+      <div class="cat-nav" id="catNav" role="tablist"></div>
+    </div>
+
+    <!-- Skills -->
+    <div class="skills-outer">
+      <div class="skills-grid" id="skillsGrid" role="list" aria-label="Skills"></div>
+    </div>
+
+    <!-- Keyboard hint -->
+    <div class="kbd-hint" aria-hidden="true">
+      <span class="kbd-hint-t">press&nbsp;</span>
+      <span class="kbd">1</span>
+      <span class="kbd-hint-t">–</span>
+      <span class="kbd">9</span>
+      <span class="kbd-hint-t">&nbsp;to filter</span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-inner">
+        <div class="install-row">
+          <span class="install-lbl">Install</span>
+          <span class="install-cmd">git clone --depth 1 https://github.com/damilareoo/damilares-skills.git /tmp/damilares-skills-install &amp;&amp; rsync -a --exclude='.git' /tmp/damilares-skills-install/plugins/v-skills/skills/ ~/.claude/skills/ &amp;&amp; rm -rf /tmp/damilares-skills-install</span>
+          <button class="install-copy" id="footCopyBtn" aria-label="Copy install command">Copy</button>
         </div>
-      </nav>
-
-      <div class="left-install">
-        <div class="install-label">Install</div>
-        <div class="install-block" id="installBlock"
-             role="button" tabindex="0" aria-label="Copy install command">
-          <div class="install-bar">
-            <span class="install-tag">shell</span>
-            <span class="install-copy" id="copyText">Copy</span>
-          </div>
-          <div class="install-body">
-            Install damilares-skills: run <code>git clone --depth 1 https://github.com/damilareoo/damilares-skills.git /tmp/damilares-skills-install && rsync -a --exclude='.git' /tmp/damilares-skills-install/plugins/v-skills/skills/ ~/.claude/skills/ && rm -rf /tmp/damilares-skills-install</code> then confirm the skills were installed by listing <code>~/.claude/skills/</code>
-          </div>
-        </div>
-        <div class="install-sub">
-          Using Cursor, Copilot, or Codex? Grab any
-          <a href="https://github.com/damilareoo/damilares-skills/tree/main/plugins/v-skills/skills"
-             target="_blank" rel="noopener">SKILL.md</a> and drop it into your system prompt.
-        </div>
-      </div>
-
-    </aside>
-
-    <!-- RIGHT PANEL -->
-    <main class="right" role="main">
-
-      <div class="mobile-cats" id="mobileCats" aria-label="Filter by category"></div>
-
-      <div class="filter-bar" role="tablist" aria-label="Filter" id="filterBar"></div>
-
-      <div class="skills-scroll">
-        <div class="skills-grid" id="skillsGrid" role="list" aria-label="Skills"></div>
-
-        <div class="mobile-footer">
-          <button class="mobile-install-btn" id="mobileInstallBtn"
-                  aria-label="Copy install command">
-            <span class="mobile-install-label">Copy install command</span>
-            <span class="mobile-install-icon">⌘C</span>
-          </button>
-          <p class="mobile-agent-note">
-            Cursor, Copilot, or Codex? Grab a
-            <a href="https://github.com/damilareoo/damilares-skills/tree/main/plugins/v-skills/skills"
-               target="_blank" rel="noopener">SKILL.md</a>.
-          </p>
+        <div class="footer-note">
+          Cursor, Copilot, Codex? Grab a <a href="https://github.com/damilareoo/damilares-skills/tree/main/plugins/v-skills/skills" target="_blank" rel="noopener">SKILL.md</a>.
         </div>
       </div>
+    </footer>
 
-    </main>
   </div>
 
   <script>
     const INSTALL_CMD = `git clone --depth 1 https://github.com/damilareoo/damilares-skills.git /tmp/damilares-skills-install && rsync -a --exclude='.git' /tmp/damilares-skills-install/plugins/v-skills/skills/ ~/.claude/skills/ && rm -rf /tmp/damilares-skills-install`;
+    const GH = 'https://github.com/damilareoo/damilares-skills/tree/main/plugins/v-skills/skills';
 
     const CATS = [
       { id: 'all',           label: 'All' },
@@ -792,115 +614,88 @@
       { id: 'web-artifacts-builder',      name: 'Web Artifacts Builder',        cat: 'content',       desc: 'Web content artifact generation.' },
     ];
 
-    const GH = 'https://github.com/damilareoo/damilares-skills/tree/main/plugins/v-skills/skills';
-
     let active = 'all';
 
-    function count(cat) {
-      return cat === 'all' ? SKILLS.length : SKILLS.filter(s => s.cat === cat).length;
-    }
-    function catLabel(id) {
-      return CATS.find(c => c.id === id)?.label || id;
+    /* ── Helpers ─────────────────────────────────────────── */
+    const count = cat => cat === 'all' ? SKILLS.length : SKILLS.filter(s => s.cat === cat).length;
+    const catLabel = id => CATS.find(c => c.id === id)?.label || id;
+
+    function getColCount() {
+      const w = window.innerWidth;
+      if (w >= 1400) return 5;
+      if (w >= 960)  return 4;
+      if (w >= 600)  return 3;
+      if (w >= 380)  return 2;
+      return 1;
     }
 
+    /* ── Ticker ──────────────────────────────────────────── */
     function buildTicker() {
       const seg = SKILLS.map(s =>
-        `<span class="ticker-cmd">/${s.id}</span><span class="ticker-sep">·</span>`
+        `<span class="t-cmd">/${s.id}</span><span class="t-dot">·</span>`
       ).join('');
       document.getElementById('tickerTrack').innerHTML = seg + seg;
     }
 
+    /* ── Category nav ────────────────────────────────────── */
     function buildCatNav() {
       document.getElementById('catNav').innerHTML = CATS.map(c => `
-        <div class="cat-row${c.id === active ? ' active' : ''}" data-cat="${c.id}"
-             role="button" tabindex="0" aria-pressed="${c.id === active}"
-             onclick="setActive('${c.id}')"
-             onkeydown="if(event.key==='Enter'||event.key===' ')setActive('${c.id}')">
-          <div class="cat-left">
-            <div class="cat-indicator"></div>
-            <div class="cat-name">${c.label}</div>
-          </div>
-          <div class="cat-count">${count(c.id)}</div>
-        </div>
-      `).join('');
-    }
-
-    function buildFilterBar() {
-      document.getElementById('filterBar').innerHTML = CATS.map(c => `
-        <button class="ftab${c.id === active ? ' active' : ''}" data-cat="${c.id}"
-                role="tab" aria-selected="${c.id === active}"
+        <button class="cat-btn${c.id === active ? ' active' : ''}"
+                data-cat="${c.id}" role="tab" aria-selected="${c.id === active}"
                 onclick="setActive('${c.id}')">
-          ${c.label}
-          <span class="ftab-ct">${count(c.id)}</span>
+          ${c.label} <span class="cat-ct">${count(c.id)}</span>
         </button>
       `).join('');
     }
 
-    function buildMobileCats() {
-      document.getElementById('mobileCats').innerHTML = CATS.map(c => `
-        <button class="mob-cat${c.id === active ? ' active' : ''}" data-cat="${c.id}"
-                role="tab" aria-selected="${c.id === active}"
-                onclick="setActive('${c.id}')">
-          ${c.label}
-          <span class="mob-cat-ct">${count(c.id)}</span>
-        </button>
-      `).join('');
-    }
-
+    /* ── Skills grid ─────────────────────────────────────── */
     function buildSkills() {
       const visible = active === 'all' ? SKILLS : SKILLS.filter(s => s.cat === active);
-      document.getElementById('skillsGrid').innerHTML = visible.map(s => `
-        <a class="skill-card" href="${GH}/${s.id}" target="_blank" rel="noopener"
-           role="listitem" aria-label="${s.name}">
-          <span class="s-cat">${catLabel(s.cat)}</span>
-          <span class="s-name">${s.name}</span>
-          <span class="s-desc">${s.desc}</span>
-          <span class="s-link">view skill →</span>
+      const cols = getColCount();
+      const rem  = visible.length % cols;
+      const fill = rem > 0 ? cols - rem : 0;
+
+      const cards = visible.map(s => `
+        <a class="skill-card" href="${GH}/${s.id}" target="_blank"
+           rel="noopener" role="listitem" aria-label="${s.name}">
+          <span class="sc-cat">${catLabel(s.cat)}</span>
+          <span class="sc-name">${s.name}</span>
+          <span class="sc-desc">${s.desc}</span>
+          <span class="sc-arrow">view skill →</span>
         </a>
       `).join('');
+
+      const empties = Array(fill).fill('<div class="skill-empty" aria-hidden="true"></div>').join('');
+      document.getElementById('skillsGrid').innerHTML = cards + empties;
     }
 
+    /* ── Set active category ─────────────────────────────── */
     function setActive(cat) {
       active = cat;
       document.querySelectorAll('[data-cat]').forEach(el => {
         const on = el.dataset.cat === cat;
         el.classList.toggle('active', on);
-        if (el.hasAttribute('aria-pressed'))   el.setAttribute('aria-pressed',  on);
-        if (el.hasAttribute('aria-selected'))  el.setAttribute('aria-selected', on);
+        if (el.hasAttribute('aria-selected')) el.setAttribute('aria-selected', on);
       });
       buildSkills();
-      const mob = document.querySelector('#mobileCats .mob-cat.active');
-      if (mob) mob.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
     }
 
-    function doCopy(id, textId) {
-      const el   = document.getElementById(id);
-      const txt  = document.getElementById(textId);
-      if (!el) return;
+    /* ── Copy ────────────────────────────────────────────── */
+    function doCopy(btnId) {
+      const btn = document.getElementById(btnId);
+      if (!btn) return;
       navigator.clipboard.writeText(INSTALL_CMD).then(() => {
-        el.classList.add('copied');
-        if (txt) txt.textContent = 'Copied!';
-        setTimeout(() => {
-          el.classList.remove('copied');
-          if (txt) txt.textContent = 'Copy';
-        }, 2000);
-      });
-    }
-
-    document.getElementById('installBlock').addEventListener('click',  () => doCopy('installBlock', 'copyText'));
-    document.getElementById('installBlock').addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') doCopy('installBlock', 'copyText');
-    });
-    document.getElementById('mobileInstallBtn').addEventListener('click', () => {
-      const btn = document.getElementById('mobileInstallBtn');
-      const lbl = btn.querySelector('.mobile-install-label');
-      navigator.clipboard.writeText(INSTALL_CMD).then(() => {
+        const orig = btn.textContent;
         btn.classList.add('copied');
-        lbl.textContent = 'Copied!';
-        setTimeout(() => { btn.classList.remove('copied'); lbl.textContent = 'Copy install command'; }, 2000);
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.classList.remove('copied'); btn.textContent = orig; }, 2000);
       });
-    });
+    }
 
+    document.getElementById('hdrCopyBtn').addEventListener('click',  () => doCopy('hdrCopyBtn'));
+    document.getElementById('footCopyBtn').addEventListener('click',  () => doCopy('footCopyBtn'));
+
+    /* ── Keyboard shortcuts ──────────────────────────────── */
     document.addEventListener('keydown', e => {
       if (e.metaKey || e.ctrlKey || e.altKey || e.shiftKey) return;
       if (['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName)) return;
@@ -908,32 +703,36 @@
       if (n >= 1 && n <= 9) { const c = CATS[n - 1]; if (c) setActive(c.id); }
     });
 
-    /* Custom cursor */
-    (function () {
+    /* ── Custom cursor ───────────────────────────────────── */
+    (function() {
       const cur = document.getElementById('cursor');
       if (!cur || !window.matchMedia('(hover: hover)').matches) return;
-      let mx = 0, my = 0, cx = 0, cy = 0;
+      let mx = 0, my = 0, cx = 0, cy = 0, hov = false;
       document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; }, { passive: true });
       document.addEventListener('mouseleave', () => cur.style.opacity = '0');
       document.addEventListener('mouseenter', () => cur.style.opacity = '1');
-      let hov = false;
       document.addEventListener('mouseover', e => {
         const on = !!e.target.closest('a,button,[role="button"]');
         if (on !== hov) { hov = on; cur.classList.toggle('big', on); }
       }, { passive: true });
       const lerp = (a, b, t) => a + (b - a) * t;
-      const tick = () => {
+      (function tick() {
         cx = lerp(cx, mx, 0.2); cy = lerp(cy, my, 0.2);
         cur.style.left = cx + 'px'; cur.style.top = cy + 'px';
         requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick);
+      })();
     })();
 
+    /* ── Rebuild on resize (column count may change) ─────── */
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(buildSkills, 150);
+    });
+
+    /* ── Init ────────────────────────────────────────────── */
     buildTicker();
     buildCatNav();
-    buildFilterBar();
-    buildMobileCats();
     buildSkills();
   </script>
 </body>
