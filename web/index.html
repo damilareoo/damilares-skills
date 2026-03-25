@@ -130,39 +130,48 @@
       max-width: 460px;
       line-height: 1.7;
       font-weight: 300;
+      margin-bottom: 32px;
     }
 
-    /* ── Stats ──────────────────────────────────────────── */
-    .stats {
-      display: flex; gap: clamp(28px, 4vw, 64px);
-      padding: 30px var(--pad);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+    /* ── Hero copy CTA ──────────────────────────────────── */
+    .hero-copy {
+      display: inline-flex; align-items: center; gap: 9px;
+      font-family: var(--f); font-size: 13px; font-weight: 400;
+      color: var(--mid);
+      padding: 8px 0;
+      background: none; border: none; cursor: pointer;
+      transition: color .15s;
+      position: relative;
     }
-    .stat-num {
-      font-family: var(--fs);
-      font-style: normal;
-      font-size: clamp(26px, 3vw, 36px);
-      font-weight: 400;
-      letter-spacing: -0.03em;
-      line-height: 1;
-      margin-bottom: 5px;
-      color: var(--text);
+    .hero-copy::after {
+      content: '';
+      position: absolute; bottom: 4px; left: 0; right: 18px;
+      height: 1px; background: var(--border);
+      transition: background .15s;
     }
-    .stat-label {
-      font-family: var(--fm);
-      font-size: 10px;
-      color: var(--muted);
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
+    .hero-copy:hover { color: var(--text); }
+    .hero-copy:hover::after { background: var(--mid); }
+    .hero-copy-icon {
+      display: flex; align-items: center; justify-content: center;
+      width: 15px; height: 15px; flex-shrink: 0; position: relative;
     }
+    .hero-copy-icon svg {
+      width: 14px; height: 14px;
+      position: absolute;
+      transition: opacity .2s, transform .2s;
+    }
+    .icon-check { opacity: 0; transform: scale(0.7); color: #2d7a3a; }
+    .hero-copy.copied { color: #2d7a3a; }
+    .hero-copy.copied::after { background: #b7dbbe; }
+    .hero-copy.copied .icon-copy { opacity: 0; transform: scale(0.7); }
+    .hero-copy.copied .icon-check { opacity: 1; transform: scale(1); }
 
     /* ── Filter ─────────────────────────────────────────── */
     .filter-bar {
       display: flex; flex-wrap: wrap; gap: 2px; align-items: center;
       padding: 12px var(--pad);
       border-bottom: 1px solid var(--border);
-      position: sticky; top: 57px;
+      position: sticky; top: 59px;
       background: var(--bg);
       z-index: 90;
     }
@@ -345,22 +354,14 @@
   <section class="hero">
     <h1 class="hero-title">Teach Claude Code<br>a specialty.</h1>
     <p class="hero-sub">57 skills across 9 domains. Each one turns a generalist into an expert — design, Vue, engineering, accessibility, and more.</p>
+    <button class="hero-copy" id="heroCopyBtn" aria-label="Copy install command">
+      <span class="hero-copy-text">Copy install command</span>
+      <span class="hero-copy-icon" aria-hidden="true">
+        <svg class="icon-copy" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M3 11H2a1 1 0 01-1-1V2a1 1 0 011-1h8a1 1 0 011 1v1"/></svg>
+        <svg class="icon-check" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 8.5l4 4 7-7"/></svg>
+      </span>
+    </button>
   </section>
-
-  <div class="stats">
-    <div>
-      <div class="stat-num">57</div>
-      <div class="stat-label">Skills</div>
-    </div>
-    <div>
-      <div class="stat-num">9</div>
-      <div class="stat-label">Domains</div>
-    </div>
-    <div>
-      <div class="stat-num">4</div>
-      <div class="stat-label">AI Editors</div>
-    </div>
-  </div>
 
   <nav class="filter-bar" id="catNav" role="tablist" aria-label="Filter by category"></nav>
 
@@ -516,7 +517,18 @@
       buildList();
     }
 
-    // Copy button
+    // Copy helper
+    function copyCmd(btn, resetMs = 2200) {
+      navigator.clipboard.writeText(INSTALL_CMD).then(() => {
+        btn.classList.add('copied');
+        setTimeout(() => btn.classList.remove('copied'), resetMs);
+      });
+    }
+
+    document.getElementById('heroCopyBtn').addEventListener('click', function() {
+      copyCmd(this);
+    });
+
     document.getElementById('copyBtn').addEventListener('click', function() {
       navigator.clipboard.writeText(INSTALL_CMD).then(() => {
         this.textContent = 'Copied';
@@ -524,9 +536,7 @@
         setTimeout(() => {
           this.textContent = 'Copy';
           this.classList.remove('copied');
-        }, 2000);
-      }).catch(() => {
-        this.textContent = 'Copy';
+        }, 2200);
       });
     });
 
