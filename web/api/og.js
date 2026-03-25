@@ -135,7 +135,7 @@ export function GET() {
                       lineHeight: '0.9',
                       fontFamily: 'Georgia, serif',
                     },
-                    children: 'Teach Claude Code\na specialty.',
+                    children: 'Teach Claude\nCode a specialty.',
                   },
                 },
               ],
