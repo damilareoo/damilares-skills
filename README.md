@@ -6,7 +6,7 @@
 
 **damilares-skills turns Claude Code from a generic code-completer into a team of specialists who actually know their domains.**
 
-57 opinionated skills for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — and for any AI coding agent that accepts context. Design systems, Vue, animation, accessibility, engineering workflows, and content — each skill gives the agent a specific mode of intelligence instead of the usual mushy all-purpose response.
+67 opinionated skills for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — and for any AI coding agent that accepts context. Design systems, Vue, animation, accessibility, engineering workflows, and content — each skill gives the agent a specific mode of intelligence instead of the usual mushy all-purpose response.
 
 ---
 
@@ -18,7 +18,7 @@ Open Claude Code and paste this. Claude will do the rest.
 
 > Install damilares-skills: run `git clone --depth 1 https://github.com/damilareoo/damilares-skills.git /tmp/damilares-skills-install && rsync -a --exclude='.git' /tmp/damilares-skills-install/plugins/v-skills/skills/ ~/.claude/skills/ && rm -rf /tmp/damilares-skills-install` then confirm the skills were installed by listing `~/.claude/skills/`.
 
-That's it. All 57 skills are available immediately — no restart needed.
+That's it. All 67 skills are available immediately — no restart needed.
 
 ### Updating
 
@@ -255,13 +255,19 @@ See the install section at the top — paste the one-liner into Claude Code and 
 
 ---
 
-## All 57 skills
+## All 67 skills
 
 ### Design
 
 | Skill | Description |
 |---|---|
 | `frontend-design` | Production-grade UI with strong aesthetic direction |
+| `emil-design-eng` | Emil Kowalski's philosophy on UI polish and taste |
+| `better-ui` | Design-engineering principles for interface polish |
+| `better-interface` | The judgment layer over raw components |
+| `better-layout` | Grouping, alignment, reading order, adaptivity |
+| `better-typography` | Web typography from pairing to accessibility |
+| `better-colors` | OKLCH color, palettes, contrast, and meaning |
 | `ui-ux-pro-max` | Deep UI/UX design intelligence |
 | `interface-design` | Interface composition and layout systems |
 | `interaction-design` | Micro-interactions and motion design |
@@ -282,6 +288,8 @@ See the install section at the top — paste the one-liner into Claude Code and 
 |---|---|
 | `12-principles-of-animation` | Disney's 12 principles applied to UI |
 | `fixing-motion-performance` | Diagnose and fix janky animations |
+| `review-animations` | Reviews motion code against a high craft bar |
+| `animation-vocabulary` | Plain description → the exact motion term |
 
 ### Vue
 
@@ -330,6 +338,7 @@ See the install section at the top — paste the one-liner into Claude Code and 
 
 | Skill | Description |
 |---|---|
+| `better-accessibility` | Focus, keyboard, ARIA, forms, screen readers |
 | `fixing-accessibility` | WCAG violation diagnosis and fixes |
 | `wcag-audit-patterns` | WCAG 2.2 comprehensive audit |
 | `web-design-guidelines` | Web interaction and design standards |
@@ -344,6 +353,7 @@ See the install section at the top — paste the one-liner into Claude Code and 
 
 | Skill | Description |
 |---|---|
+| `better-writing` | Clear, concise product and interface writing |
 | `copywriting-skill` | Marketing and product copywriting |
 | `internal-comms` | Internal communication writing |
 | `fixing-metadata` | SEO and metadata optimization |
@@ -361,6 +371,21 @@ See the install section at the top — paste the one-liner into Claude Code and 
 Drop a `skills/<skill-name>/SKILL.md` into `plugins/v-skills/skills/` and push. Anyone with the plugin installed gets it on their next update.
 
 Skills installed via the Claude Code desktop app or `~/.claude/skills` are auto-synced to this repository via a launchd watcher.
+
+---
+
+## Credits
+
+This is a curated collection. Many skills are the work of their original authors, included here under their respective licenses and credited on the [website](https://damilares-skills.vercel.app):
+
+- **[Anthropic](https://github.com/anthropics/skills)** — `frontend-design`, `canvas-design`, `algorithmic-art`, `theme-factory`, `brand-guidelines`, `skill-creator`, `mcp-builder`, `internal-comms`, `slack-gif-creator`, `web-artifacts-builder`, `pdf`, `docx`, `pptx`, `xlsx`
+- **[Anthony Fu](https://github.com/antfu)** — `vue`, `nuxt`, `pinia`, `vite`, `vitepress`, `vitest`, `unocss`, `slidev`, `pnpm`, `antfu`
+- **[Jakub Krehel](https://github.com/jakubkrehel/skills)** — the `better-*` skills (MIT)
+- **[vuejs-ai](https://github.com/vuejs-ai)** — `vue-best-practices`, `vue-router-best-practices`, `vue-testing-best-practices` · **[SerKo](https://github.com/serkodev)** — `vueuse-functions`
+- **[Vercel](https://github.com/vercel)** — `web-design-guidelines`, `turborepo` · **[VoidZero](https://github.com/voidzero-dev)** — `tsdown`
+- **[Refero](https://refero.design)** — `refero-design` · **[Josh Puckett](https://github.com/jpuckett)** — `interface-craft` · **[Emil Kowalski](https://emilkowalski.com)** — `emil-design-eng` · **[raphael-salaja](https://github.com/raphaelsalaja)** — `12-principles-of-animation`
+
+The remaining skills are original to [@damilareoo](https://github.com/damilareoo). If any attribution here is wrong, please open an issue.
 
 ---
 
