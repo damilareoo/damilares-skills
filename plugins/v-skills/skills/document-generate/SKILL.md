@@ -1,0 +1,1 @@
+/Users/v/.claude/skills/gstack/document-generate/SKILL.md
