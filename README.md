@@ -6,7 +6,7 @@
 
 **damilares-skills turns Claude Code from a generic code-completer into a team of specialists who actually know their domains.**
 
-67 opinionated skills for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — and for any AI coding agent that accepts context. Design systems, Vue, animation, accessibility, engineering workflows, and content — each skill gives the agent a specific mode of intelligence instead of the usual mushy all-purpose response.
+102 opinionated skills for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — and for any AI coding agent that accepts context. Design systems, Vue, animation, accessibility, engineering workflows, and content — each skill gives the agent a specific mode of intelligence instead of the usual mushy all-purpose response.
 
 ---
 
@@ -18,7 +18,7 @@ Open Claude Code and paste this. Claude will do the rest.
 
 > Install damilares-skills: run `git clone --depth 1 https://github.com/damilareoo/damilares-skills.git /tmp/damilares-skills-install && rsync -a --exclude='.git' /tmp/damilares-skills-install/plugins/v-skills/skills/ ~/.claude/skills/ && rm -rf /tmp/damilares-skills-install` then confirm the skills were installed by listing `~/.claude/skills/`.
 
-That's it. All 67 skills are available immediately — no restart needed.
+That's it. All 102 skills are available immediately — no restart needed.
 
 ### Updating
 
@@ -255,7 +255,7 @@ See the install section at the top — paste the one-liner into Claude Code and 
 
 ---
 
-## All 67 skills
+## All 102 skills
 
 ### Design
 
@@ -316,6 +316,11 @@ See the install section at the top — paste the one-liner into Claude Code and 
 | `slidev` | Code-driven presentation slides |
 | `pnpm` | pnpm package manager workflows |
 | `antfu` | Anthony Fu's opinionated toolchain |
+| `git-guardrails-claude-code` | Hooks that block destructive git commands before they run |
+| `setup-pre-commit` | Husky + lint-staged: format, typecheck, test on commit |
+| `migrate-to-shoehorn` | Replace `as` assertions in tests with shoehorn |
+| `setup-ts-deep-modules` | dependency-cruiser wiring for deep TypeScript modules |
+| `scaffold-exercises` | Scaffold exercise directories that pass lint |
 
 ### Engineering
 
@@ -333,6 +338,29 @@ See the install section at the top — paste the one-liner into Claude Code and 
 | `doc-coauthoring` | Collaborative documentation |
 | `setup-browser-cookies` | Browser cookie import and setup |
 | `interface-craft` | Interface crafting toolkit |
+| `code-review` | Review changes against repo standards and the spec |
+| `tdd` | Red-green-refactor, integration tests first |
+| `implement` | Execute a spec or set of tickets without drift |
+| `research` | Investigate against primary sources, capture as Markdown |
+| `diagnosing-bugs` | Diagnosis loop for hard bugs and perf regressions |
+| `domain-modeling` | CONTEXT.md, ADRs, and a shared project vocabulary |
+| `codebase-design` | Deep modules, narrow interfaces, and where seams go |
+| `improve-codebase-architecture` | Scan for deepening opportunities, report, then grill |
+| `prototype` | Throwaway code to answer one design question |
+| `triage` | Move issues and external PRs through a triage state machine |
+| `wayfinder` | Map oversized work as decision tickets, resolve one at a time |
+| `to-spec` | Turn the current conversation into a tracker spec |
+| `to-tickets` | Break a plan into tracer-bullet tickets with blocking edges |
+| `grill-with-docs` | Relentless plan interview that leaves ADRs behind |
+| `grill-me` | Relentless interview to sharpen a plan or design |
+| `grilling` | Stress-test any plan, decision, or idea |
+| `resolving-merge-conflicts` | Work an in-progress merge or rebase conflict |
+| `wizard` | Generate an interactive bash wizard for human-only steps |
+| `handoff` | Compact the conversation into a handoff document |
+| `claude-handoff` | Hand the conversation to a fresh background agent |
+| `loop-me` | Grill me about the specs for workflows I want to build |
+| `ask-matt` | Router over Matt Pocock's skills |
+| `setup-matt-pocock-skills` | One-time repo setup for the engineering track |
 
 ### Accessibility
 
@@ -363,6 +391,13 @@ See the install section at the top — paste the one-liner into Claude Code and 
 | `xlsx` | Excel spreadsheet processing |
 | `slack-gif-creator` | Slack GIF and reaction creation |
 | `web-artifacts-builder` | Web content artifact generation |
+| `writing-for-agents` | Write documents agents actually follow |
+| `writing-fragments` | Explore: mine raw fragments before structure |
+| `writing-shape` | Exploit: shape raw material paragraph by paragraph |
+| `writing-beats` | Assemble raw material into a journey of beats |
+| `teach` | Teach a concept inside your workspace |
+| `to-questionnaire` | Turn an unanswerable decision into a questionnaire |
+| `wait-what` | That last message did not land — re-pitch it |
 
 ---
 
@@ -383,6 +418,7 @@ This is a curated collection. Many skills are the work of their original authors
 - **[Jakub Krehel](https://github.com/jakubkrehel/skills)** — the `better-*` skills (MIT)
 - **[vuejs-ai](https://github.com/vuejs-ai)** — `vue-best-practices`, `vue-router-best-practices`, `vue-testing-best-practices` · **[SerKo](https://github.com/serkodev)** — `vueuse-functions`
 - **[Vercel](https://github.com/vercel)** — `web-design-guidelines`, `turborepo` · **[VoidZero](https://github.com/voidzero-dev)** — `tsdown`
+- **[Matt Pocock](https://github.com/mattpocock/skills)** — the engineering track (`code-review`, `tdd`, `implement`, `research`, `triage`, `wayfinder`, `wizard`, and the rest), the `grill*`/`writing-*` skills, and `handoff` (MIT)
 - **[Refero](https://refero.design)** — `refero-design` · **[Josh Puckett](https://github.com/jpuckett)** — `interface-craft` · **[Emil Kowalski](https://emilkowalski.com)** — `emil-design-eng` · **[raphael-salaja](https://github.com/raphaelsalaja)** — `12-principles-of-animation`
 
 The remaining skills are original to [@damilareoo](https://github.com/damilareoo). If any attribution here is wrong, please open an issue.
