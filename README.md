@@ -319,10 +319,12 @@ See the install section at the top — paste the one-liner into Claude Code and 
 | `git-guardrails-claude-code` | Hooks that block destructive git commands before they run |
 | `setup-pre-commit` | Husky + lint-staged: format, typecheck, test on commit |
 | `migrate-to-shoehorn` | Replace `as` assertions in tests with shoehorn |
-| `setup-ts-deep-modules` | dependency-cruiser wiring for deep TypeScript modules |
+| `setup-ts-deep-modules` | dependency-cruiser wiring for deep TypeScript modules (unfinished upstream) |
 | `scaffold-exercises` | Scaffold exercise directories that pass lint |
 
 ### Engineering
+
+The Matt Pocock engineering track (`triage`, `to-spec`, `to-tickets`, `wayfinder`, `domain-modeling`) reads and writes a per-repo issue tracker and domain doc layout. Run `/setup-matt-pocock-skills` once in a repo before using them — it picks the tracker (GitHub, GitLab, or local markdown), the triage labels, and where `CONTEXT.md` and ADRs live.
 
 | Skill | Description |
 |---|---|
@@ -357,10 +359,10 @@ See the install section at the top — paste the one-liner into Claude Code and 
 | `resolving-merge-conflicts` | Work an in-progress merge or rebase conflict |
 | `wizard` | Generate an interactive bash wizard for human-only steps |
 | `handoff` | Compact the conversation into a handoff document |
-| `claude-handoff` | Hand the conversation to a fresh background agent |
-| `loop-me` | Grill me about the specs for workflows I want to build |
+| `claude-handoff` | Hand the conversation to a fresh background agent (unfinished upstream) |
+| `loop-me` | Grill me about the specs for workflows I want to build (unfinished upstream) |
 | `ask-matt` | Router over Matt Pocock's skills |
-| `setup-matt-pocock-skills` | One-time repo setup for the engineering track |
+| `setup-matt-pocock-skills` | Run first — per-repo setup for the engineering track |
 
 ### Accessibility
 
@@ -392,9 +394,9 @@ See the install section at the top — paste the one-liner into Claude Code and 
 | `slack-gif-creator` | Slack GIF and reaction creation |
 | `web-artifacts-builder` | Web content artifact generation |
 | `writing-for-agents` | Write documents agents actually follow |
-| `writing-fragments` | Explore: mine raw fragments before structure |
-| `writing-shape` | Exploit: shape raw material paragraph by paragraph |
-| `writing-beats` | Assemble raw material into a journey of beats |
+| `writing-fragments` | Explore: mine raw fragments before structure (unfinished upstream) |
+| `writing-shape` | Exploit: shape raw material paragraph by paragraph (unfinished upstream) |
+| `writing-beats` | Assemble raw material into a journey of beats (unfinished upstream) |
 | `teach` | Teach a concept inside your workspace |
 | `to-questionnaire` | Turn an unanswerable decision into a questionnaire |
 | `wait-what` | That last message did not land — re-pitch it |
@@ -418,7 +420,7 @@ This is a curated collection. Many skills are the work of their original authors
 - **[Jakub Krehel](https://github.com/jakubkrehel/skills)** — the `better-*` skills (MIT)
 - **[vuejs-ai](https://github.com/vuejs-ai)** — `vue-best-practices`, `vue-router-best-practices`, `vue-testing-best-practices` · **[SerKo](https://github.com/serkodev)** — `vueuse-functions`
 - **[Vercel](https://github.com/vercel)** — `web-design-guidelines`, `turborepo` · **[VoidZero](https://github.com/voidzero-dev)** — `tsdown`
-- **[Matt Pocock](https://github.com/mattpocock/skills)** — the engineering track (`code-review`, `tdd`, `implement`, `research`, `triage`, `wayfinder`, `wizard`, and the rest), the `grill*`/`writing-*` skills, and `handoff` (MIT)
+- **[Matt Pocock](https://github.com/mattpocock/skills)** — the engineering track (`code-review`, `tdd`, `implement`, `research`, `triage`, `wayfinder`, `wizard`, and the rest), the `grill*`/`writing-*` skills, and `handoff` (MIT). Six are marked *unfinished upstream* — they ship from his `in-progress/` folder and may change.
 - **[Refero](https://refero.design)** — `refero-design` · **[Josh Puckett](https://github.com/jpuckett)** — `interface-craft` · **[Emil Kowalski](https://emilkowalski.com)** — `emil-design-eng` · **[raphael-salaja](https://github.com/raphaelsalaja)** — `12-principles-of-animation`
 
 The remaining skills are original to [@damilareoo](https://github.com/damilareoo). If any attribution here is wrong, please open an issue.
