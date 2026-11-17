@@ -6,7 +6,7 @@
 
 **damilares-skills turns Claude Code from a generic code-completer into a team of specialists who actually know their domains.**
 
-105 opinionated skills for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — and for any AI coding agent that accepts context. Design systems, Vue, animation, accessibility, engineering workflows, and content — each skill gives the agent a specific mode of intelligence instead of the usual mushy all-purpose response.
+106 opinionated skills for [Claude Code](https://docs.anthropic.com/en/docs/claude-code) — and for any AI coding agent that accepts context. Design systems, Vue, animation, accessibility, engineering workflows, and content — each skill gives the agent a specific mode of intelligence instead of the usual mushy all-purpose response.
 
 ---
 
@@ -18,7 +18,7 @@ Open Claude Code and paste this. Claude will do the rest.
 
 > Install damilares-skills: run `git clone --depth 1 https://github.com/damilareoo/damilares-skills.git /tmp/damilares-skills-install && rsync -a --exclude='.git' /tmp/damilares-skills-install/plugins/v-skills/skills/ ~/.claude/skills/ && rm -rf /tmp/damilares-skills-install` then confirm the skills were installed by listing `~/.claude/skills/`.
 
-That's it. All 105 skills are available immediately — no restart needed.
+That's it. All 106 skills are available immediately — no restart needed.
 
 ### Updating
 
@@ -256,7 +256,7 @@ See the install section at the top — paste the one-liner into Claude Code and 
 
 ---
 
-## All 105 skills
+## All 106 skills
 
 ### Design
 
@@ -325,6 +325,7 @@ See the install section at the top — paste the one-liner into Claude Code and 
 | `migrate-to-shoehorn` | Replace `as` assertions in tests with shoehorn |
 | `setup-ts-deep-modules` | dependency-cruiser wiring for deep TypeScript modules (unfinished upstream) |
 | `scaffold-exercises` | Scaffold exercise directories that pass lint |
+| `agent-browser` | Headless browser CLI: open, snapshot, click by ref, screenshot |
 
 ### Engineering
 
@@ -423,7 +424,7 @@ This is a curated collection. Many skills are the work of their original authors
 - **[Anthony Fu](https://github.com/antfu)** — `vue`, `nuxt`, `pinia`, `vite`, `vitepress`, `vitest`, `unocss`, `slidev`, `pnpm`, `antfu`
 - **[Jakub Krehel](https://github.com/jakubkrehel/skills)** — the `better-*` skills (MIT)
 - **[vuejs-ai](https://github.com/vuejs-ai)** — `vue-best-practices`, `vue-router-best-practices`, `vue-testing-best-practices` · **[SerKo](https://github.com/serkodev)** — `vueuse-functions`
-- **[Vercel](https://github.com/vercel)** — `web-design-guidelines`, `turborepo` · **[VoidZero](https://github.com/voidzero-dev)** — `tsdown`
+- **[Vercel](https://github.com/vercel)** — `web-design-guidelines`, `turborepo`, `agent-browser` · **[VoidZero](https://github.com/voidzero-dev)** — `tsdown`
 - **[Matt Pocock](https://github.com/mattpocock/skills)** — the engineering track (`code-review`, `tdd`, `implement`, `research`, `triage`, `wayfinder`, `wizard`, and the rest), the `grill*`/`writing-*` skills, and `handoff` (MIT). Six are marked *unfinished upstream* — they ship from his `in-progress/` folder and may change.
 - **[Jakub Antalik](https://github.com/Jakubantalik/transitions.dev)** — `transitions-dev`, `transitions-polish`, `transitions-ui-generation`
 - **[Refero](https://refero.design)** — `refero-design` · **[Josh Puckett](https://github.com/jpuckett)** — `interface-craft` · **[Emil Kowalski](https://emilkowalski.com)** — `emil-design-eng` · **[raphael-salaja](https://github.com/raphaelsalaja)** — `12-principles-of-animation`
